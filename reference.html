@@ -1,0 +1,659 @@
+<html class="light" lang="de"><head></head><body class="bg-background text-on-background antialiased">```html
+
+    <meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#5a4300",
+                        "on-secondary-container": "#60665a",
+                        "outline": "#7e7667",
+                        "primary-container": "#8c712d",
+                        "primary-fixed": "#ffdf97",
+                        "on-background": "#1c1c1b",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1c1c1b",
+                        "surface-container-low": "#f6f3f1",
+                        "on-tertiary-container": "#fefcff",
+                        "secondary-fixed": "#dfe5d6",
+                        "background": "#fcf9f6",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#e4c375",
+                        "surface-container-high": "#eae8e5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#5a6055",
+                        "on-tertiary-fixed": "#061844",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#4d4639",
+                        "surface-bright": "#fcf9f6",
+                        "tertiary-fixed-dim": "#b6c5fa",
+                        "on-secondary-fixed": "#181d14",
+                        "on-secondary-fixed-variant": "#43493e",
+                        "secondary-container": "#dfe5d6",
+                        "surface-dim": "#dcd9d7",
+                        "tertiary-container": "#6473a3",
+                        "primary": "#715915",
+                        "on-primary-container": "#fffbff",
+                        "inverse-surface": "#31302f",
+                        "surface-container-highest": "#e5e2e0",
+                        "surface": "#fcf9f6",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#e4c375",
+                        "surface-container": "#f0edeb",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#dbe1ff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#364572",
+                        "inverse-on-surface": "#f3f0ee",
+                        "surface-tint": "#745b18",
+                        "tertiary": "#4b5a89",
+                        "secondary-fixed-dim": "#c3c9ba",
+                        "outline-variant": "#d0c5b4",
+                        "on-primary-fixed": "#251a00",
+                        "surface-variant": "#e5e2e0",
+                        "gold": "#A68942"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Newsreader"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, .newsreader { font-family: 'Newsreader', serif; }
+        .glass-header {
+            background-color: rgba(252, 249, 246, 0.8);
+            backdrop-filter: blur(24px);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 glass-header shadow-sm transition-all duration-300">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<a class="font-['Newsreader'] text-2xl font-bold tracking-tighter text-[#1c1c1b] dark:text-[#fcf9f6]" href="#">
+                Unternehmertage Mallorca
+            </a>
+<nav class="hidden md:flex items-center space-x-8 font-['Newsreader'] text-lg font-semibold">
+<a class="text-[#715915] border-b-2 border-[#715915] pb-1 hover:text-[#715915] transition-colors duration-300" href="#">Speakers</a>
+<a class="text-[#1c1c1b]/70 dark:text-[#fcf9f6]/70 hover:text-[#715915] transition-colors duration-300" href="#">Program</a>
+<a class="text-[#1c1c1b]/70 dark:text-[#fcf9f6]/70 hover:text-[#715915] transition-colors duration-300" href="#">Location</a>
+<a class="text-[#1c1c1b]/70 dark:text-[#fcf9f6]/70 hover:text-[#715915] transition-colors duration-300" href="#">Gallery</a>
+<a class="text-[#1c1c1b]/70 dark:text-[#fcf9f6]/70 hover:text-[#715915] transition-colors duration-300" href="#">FAQ</a>
+</nav>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-semibold hover:opacity-90 active:scale-95 transition-all">
+                Apply Now
+            </button>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover brightness-50" data-alt="luxury mediterranean villa terrace overlooking the ocean at sunset with soft golden light reflecting on stone architecture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO2wFTec2t7OiiIkLbitf_AZsfH8Hx6O9BSZ63FH2GoDhC7wSmS6FmOd4FXyfqctNAfORaq7pFb2RKPcBlogl3S-ZDP2w2XAc-nNzZrdZTFjqz5lk0LvK-QbLuUIL2O6lIdbYyLdNvIJhU0SnfP_vHrPpran0vn8tqJt0D4e_ZiilkqKdLkWddeV9OK2QcavcoGYlOlikQF64Q6mwphuGSGvsNFUTqQvwpzgrQxN2bQRbGSGPoqkhOxEpHpNNwGL6GZ3yJmDtCAgBI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-8 w-full">
+<div class="max-w-3xl">
+<span class="font-label text-primary font-bold tracking-[0.2em] uppercase text-sm mb-6 block">The Curated Archive — 2024</span>
+<h1 class="text-7xl md:text-8xl leading-[1.1] text-surface-container-lowest font-bold tracking-tighter mb-8">
+                        The Pinnacle of <br/><span class="italic font-normal text-primary-fixed-dim">Entrepreneurship.</span>
+</h1>
+<p class="text-xl text-surface-container-lowest/80 font-body max-w-xl mb-12 leading-relaxed">
+                        Join an exclusive circle of visionary founders in the heart of Mallorca. High-impact networking meets Mediterranean sophistication.
+                    </p>
+<div class="flex items-center space-x-8">
+<button class="bg-primary text-on-primary px-10 py-5 rounded-lg text-lg font-bold shadow-2xl hover:scale-105 transition-transform">
+                            Reserve Your Seat
+                        </button>
+<button class="text-surface-container-lowest font-headline italic text-xl border-b-2 border-primary/40 hover:border-primary transition-all pb-1">
+                            Explore the Program
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- The "Content Pull-Quote" -->
+<section class="py-32 bg-surface">
+<div class="max-w-4xl mx-auto px-8 text-center">
+<h2 class="text-primary text-4xl md:text-5xl italic font-headline leading-snug">
+                    "Success is not just about the numbers you achieve, but the caliber of people you share the journey with."
+                </h2>
+<div class="mt-8 w-16 h-0.5 bg-primary/30 mx-auto"></div>
+</div>
+</section>
+<!-- Host Section (Matthias Aumann) -->
+<section class="py-24 bg-surface-container-low overflow-hidden">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+<div class="md:col-span-5 relative">
+<div class="absolute -top-8 -left-8 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+<img class="rounded-xl shadow-2xl relative z-10 w-full grayscale-[20%] hover:grayscale-0 transition-all duration-700" data-alt="sophisticated male business leader in a tailored dark suit standing confidently in a luxury modern office space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp7ZRUZP5XWEGQsPygQbaCCL4Y6rdZhPJk-igrJsq5LPZzYUEj8PyDMgzKB1ZE7UDSZI0eObaCYiGHeG_rCZlpKIfeIj-0uCXdnxmHn11gggRUz706d6MaW8jVoC9IEDqwvukf2wbySe1Afo2dTwVxV_8WTmz3kseDtALz7S3fN3ywFs5fRDvoDiiTOHqBqKzuooym4cWQOrikm3T2Ki-AqcTK_mJHzCAHkg6S4iDaxbuIyGFj4Xu0q9MrJa-skEaORROnJO--6zDB"/>
+<div class="absolute -bottom-6 -right-6 p-8 bg-surface-container-lowest shadow-xl z-20 rounded-lg">
+<p class="font-headline italic text-2xl text-primary">Matthias Aumann</p>
+<p class="font-label uppercase tracking-widest text-xs text-outline mt-1">Founder &amp; Visionary</p>
+</div>
+</div>
+<div class="md:col-span-7 pl-0 md:pl-12">
+<h3 class="text-5xl font-bold tracking-tight mb-8">Meet Your <span class="text-primary">Curator.</span></h3>
+<div class="space-y-6 text-on-surface-variant text-lg leading-relaxed">
+<p>As a multi-award-winning entrepreneur and investor, Matthias Aumann has built one of Germany's fastest-growing companies. His mission for the Mallorca days is simple: To provide the environment where true breakthroughs happen.</p>
+<p>This isn't a convention. It's a curated sanctuary for high-level exchange, away from the noise of day-to-day operations.</p>
+</div>
+<div class="mt-12 grid grid-cols-2 gap-8">
+<div class="border-l-2 border-primary/20 pl-6">
+<p class="text-4xl font-headline font-bold text-primary">500+</p>
+<p class="text-sm font-label uppercase tracking-tighter text-outline">Scaleups Guided</p>
+</div>
+<div class="border-l-2 border-primary/20 pl-6">
+<p class="text-4xl font-headline font-bold text-primary">15Y</p>
+<p class="text-sm font-label uppercase tracking-tighter text-outline">Industry Leadership</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Speakers -->
+<section class="py-32 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+<div>
+<span class="text-primary font-label uppercase tracking-widest text-sm mb-4 block">The Lineup</span>
+<h2 class="text-6xl font-bold tracking-tighter">Exceptional <br/><span class="italic font-normal">Minds.</span></h2>
+</div>
+<p class="max-w-md text-on-surface-variant text-lg">
+                        We don't do keynotes. We do deep-dive sessions with individuals who have actually built what they're talking about.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Bento Item 1 -->
+<div class="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-xl aspect-square md:aspect-auto">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="portrait of a professional executive woman in business attire with soft natural lighting and elegant background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1yv0zXehTTYoCCQDxGp1FUCjlRSOv8rrQAQqsLELm0ireZCw2oiCpEbrm_kYfoS_wlvsBMhOuOx1vjM5Wbym9XyC8SakjSq_-1yuMzy5tnxveqisk_Pi-56CBACq5bQyZzPICAzm00X3WgoOxXcy8kxJN4hw0rnBGc3AnrqRegBaPEtMPbZAo7Y3sf45fWnL5ykcZ0nIWhgT1wiOig2bI8zomu-astT_DTc6j8VdkQggzpYbiuOKodUpGfbVghOiq3abUrlAoY2Uj"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/90 via-on-background/20 to-transparent flex flex-col justify-end p-8">
+<p class="text-primary-fixed-dim font-headline italic text-2xl">Strategy &amp; Exit</p>
+<h4 class="text-on-primary text-3xl font-bold">Helena von Brandt</h4>
+</div>
+</div>
+<!-- Bento Item 2 -->
+<div class="group relative overflow-hidden rounded-xl aspect-square">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="modern businessman looking thoughtfully to the side with cinematic warm lighting and blurred office background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2i_I5LpHlpnoB-hW_CKrcw_ZQfO8pnpRrCjyEpEc5hstHTv5WuwgpXm8XkqvqRPw6wxie_vC90Ty9GV0kpZcJUtF4L3bxWTlghj72mr6qnElm93p1YmRuToQAiaw2VD9O3THS0lSCeArLcIqHqiNADHGI2zF5z9uEVvf9F5-Ynq6MCddc2X_tokeyM4XkotFSBp1zOaaZsLBrblGaCi4ERK7-iywk-Bahp-2e5bCA8bHdIuaR0dLNCQh9j7nVISdf5Z_DtGiSCY_j"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/90 via-on-background/20 to-transparent flex flex-col justify-end p-6">
+<h4 class="text-on-primary text-xl font-bold">Marcus Thorne</h4>
+<p class="text-primary-fixed-dim text-sm italic">AI Implementation</p>
+</div>
+</div>
+<!-- Bento Item 3 -->
+<div class="group relative overflow-hidden rounded-xl aspect-square">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="woman speaker on stage with soft backlighting creating a professional atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX44zhBP5N4gt_36dpZKeWfQjUcDhsOR1iF5JvTmtzAPA0ErLtbY7F6wi4ZjMyEO6_t4jgp2Y7R5R8Z6Qt6T1ZYuNDeXOeuWJDrmxStQgnrv0T-QsEsYiYJhWMFmccUXD1dG1qL6kEQcaew0b-jTB4yANnK4N1PYP1yFAvaZHxQoHk8DSi1cCCaaO7tDrC-7XMGQ_9X6SOr99_qwL_bSgfUAcJrgd4PuR3cJJhu3xbh9NDW92bGq7f8tKDcNMFv1JgW0Xnr0kJIB3_"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/90 via-on-background/20 to-transparent flex flex-col justify-end p-6">
+<h4 class="text-on-primary text-xl font-bold">Dr. Lena Meyer</h4>
+<p class="text-primary-fixed-dim text-sm italic">High Performance</p>
+</div>
+</div>
+<!-- Bento Item 4 -->
+<div class="md:col-span-2 group relative overflow-hidden rounded-xl aspect-video md:aspect-auto h-64">
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors duration-500"></div>
+<div class="relative h-full flex flex-col justify-center p-8 border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" data-icon="groups">groups</span>
+<h4 class="text-2xl font-bold mb-2">Mastermind Circles</h4>
+<p class="text-on-surface-variant">Intimate sessions restricted to 8 participants for radical transparency and problem-solving.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="py-32 bg-surface-container-low border-y border-outline-variant/10">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center mb-20">
+<span class="text-primary font-label uppercase tracking-[0.3em] text-xs font-bold mb-4 block">The Alumnus Perspective</span>
+<h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-4">Voices from <span class="italic font-normal">2023.</span></h2>
+<p class="text-on-surface-variant text-lg max-w-2xl mx-auto italic">Reflections on a weekend that redefined the trajectory of scale.</p>
+</div>
+<div class="relative">
+<div class="flex justify-end gap-4 mb-8">
+<button class="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300" onclick="document.getElementById('testimonial-carousel').scrollBy({left: -400, behavior: 'smooth'})">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300" onclick="document.getElementById('testimonial-carousel').scrollBy({left: 400, behavior: 'smooth'})">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-8 pb-8 -mx-4 px-4" id="testimonial-carousel">
+<div class="flex-none w-[85vw] md:w-[450px] snap-start">
+<div class="flex flex-col space-y-8 p-1">
+<div class="relative">
+<div class="aspect-[4/5] overflow-hidden rounded-lg grayscale hover:grayscale-0 transition-all duration-700">
+<img class="w-full h-full object-cover" data-alt="confident female CEO in a blazer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKwaUge3PJ8ce1u2YB1wAeLmHwGi_aRGNa1mHXqorlwwN9t4FOXxM-0mE96dtWvm1kZuC-IXb7D1aPvfqP_PQ2_0L7pGwrD1s3aPgzgWE69mMqzDwOvNrMWWrHqYyEB5PnLAg0dI35K9_5VxNIwpdci4X_ZNgcZ4NdHBtWQZTjz6HXgAUs8DlW219b_iHrqV0TTZ2ie7JsZaaw_asyv8pBQffx0qkaTXaQFfIEMklxOlgh168b5tCnU84kpkeyOIoi2T0WOtbhlRUR"/>
+</div>
+<div class="absolute -bottom-4 left-6 bg-surface-container-lowest p-4 shadow-lg rounded">
+<span class="material-symbols-outlined text-[#A68942] text-4xl leading-none">format_quote</span>
+</div>
+</div>
+<div class="space-y-4 pt-4">
+<p class="text-2xl font-headline italic leading-relaxed text-on-surface">"The level of transparency during the mastermind sessions was unlike anything I've experienced in Silicon Valley. It shifted our entire 2024 roadmap."</p>
+<div class="border-t border-[#A68942]/20 pt-4">
+<h4 class="font-bold text-lg">Sophia Arndt</h4>
+<p class="text-sm font-label uppercase tracking-widest text-[#A68942]">Founder, NexaHealth AI</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-none w-[85vw] md:w-[450px] snap-start md:mt-16">
+<div class="flex flex-col space-y-8 p-1">
+<div class="relative">
+<div class="aspect-[4/5] overflow-hidden rounded-lg grayscale hover:grayscale-0 transition-all duration-700">
+<img class="w-full h-full object-cover" data-alt="modern male entrepreneur with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvdJAZtPJ2Gx6ySFMQGfLzbPCP3OgdhoV-O7o53xtAmJGOBWcUzGiUsR7mnVOkqoLqNkwl7kEHQUXXz7WqULyVSKPHx8MgEOPNKfVbbTpw9tqGemeoW8ONRxitkpzfC3hR4NCmytRustumvqcrbhyQZA7LMff5EOeb8u7P2wjCzpAnXz1-20gPZqp8lXcXA7KjY_Z23bgZBmNEbagwypxg70gHlE5TfW481fh6uYnkVGgfxUIgsLYfhpfLd5Dz6sffUNPL-N4cIkR3"/>
+</div>
+<div class="absolute -bottom-4 left-6 bg-surface-container-lowest p-4 shadow-lg rounded">
+<span class="material-symbols-outlined text-[#A68942] text-4xl leading-none">format_quote</span>
+</div>
+</div>
+<div class="space-y-4 pt-4">
+<p class="text-2xl font-headline italic leading-relaxed text-on-surface">"Mallorca provided the silence I needed to hear the noise in my own business. Matthias curated a group that challenged me at exactly the right points."</p>
+<div class="border-t border-[#A68942]/20 pt-4">
+<h4 class="font-bold text-lg">Christian Wolf</h4>
+<p class="text-sm font-label uppercase tracking-widest text-[#A68942]">CEO, BlueStream Logistics</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-none w-[85vw] md:w-[450px] snap-start">
+<div class="flex flex-col space-y-8 p-1">
+<div class="relative">
+<div class="aspect-[4/5] overflow-hidden rounded-lg grayscale hover:grayscale-0 transition-all duration-700">
+<img class="w-full h-full object-cover" data-alt="professional woman in late 40s" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzTuzy9Z8_gGpRj-vW6DfZZmDqLGmMczBy_jaAtzrsPwYo98VdhvTXq0JdYfuylgBgW6YHXW3aV3mWxp8TUTr5_oskBvnGdf1K7Nf6kpyd6fiGGFIxFOMi_Wnw5yox5FGylH8IPWbhSOa1sXPl9CAkADIefYnoYiNmE6dYXdVaOb426gOVhyc2hdLKN3vY30S2Ka2LQlgkERIxI93QWjO-pKagIyz49H_FmWdoKdK0vxuJ6sv48SZIW2mZYGsESV37UEb4LbTs7uYQ"/>
+</div>
+<div class="absolute -bottom-4 left-6 bg-surface-container-lowest p-4 shadow-lg rounded">
+<span class="material-symbols-outlined text-[#A68942] text-4xl leading-none">format_quote</span>
+</div>
+</div>
+<div class="space-y-4 pt-4">
+<p class="text-2xl font-headline italic leading-relaxed text-on-surface">"This wasn't just networking; it was an expansion of my circle of competence. The ROI on the relationships built here is immeasurable."</p>
+<div class="border-t border-[#A68942]/20 pt-4">
+<h4 class="font-bold text-lg">Dr. Elena Krause</h4>
+<p class="text-sm font-label uppercase tracking-widest text-[#A68942]">Director, Horizon Capital</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center gap-3 mt-12">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary/20"></div>
+<div class="w-2 h-2 rounded-full bg-primary/20"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Our Areas of Expertise Section -->
+<section class="py-32 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<div class="mb-20 text-center md:text-left">
+<span class="text-[#A68942] font-label uppercase tracking-[0.3em] text-xs font-bold mb-4 block">Complete Solutions for Entrepreneurs</span>
+<h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-8">Our Areas of <span class="italic font-normal">Expertise.</span></h2>
+<p class="text-on-surface-variant text-xl max-w-2xl font-body leading-relaxed">
+                        At TAW 10, we propel your ambitions with tailored solutions and recognized expertise in the heart of Marrakech.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-low p-10 border border-outline-variant/10 hover:border-[#A68942]/30 transition-all group">
+<h4 class="text-2xl font-headline font-bold mb-4">Premium Domiciliation</h4>
+<p class="text-on-surface-variant mb-8 leading-relaxed">Give your company the elegance of an address in one of the most coveted neighborhoods of Marrakech.</p>
+<a class="text-[#A68942] font-semibold text-sm uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                            Learn more <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="bg-surface-container-low p-10 border border-outline-variant/10 hover:border-[#A68942]/30 transition-all group">
+<h4 class="text-2xl font-headline font-bold mb-4">Business Creation</h4>
+<p class="text-on-surface-variant mb-8 leading-relaxed">Launch your project in one click. We take care of all formalities for you.</p>
+<a class="text-[#A68942] font-semibold text-sm uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                            Learn more <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="bg-surface-container-low p-10 border border-outline-variant/10 hover:border-[#A68942]/30 transition-all group">
+<h4 class="text-2xl font-headline font-bold mb-4">Virtual Secretariat</h4>
+<p class="text-on-surface-variant mb-8 leading-relaxed">Daily management and digitization of your mail, faxes, and parcels. Your daily reality.</p>
+<a class="text-[#A68942] font-semibold text-sm uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                            Learn more <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="bg-surface-container-low p-10 border border-outline-variant/10 hover:border-[#A68942]/30 transition-all group">
+<h4 class="text-2xl font-headline font-bold mb-4">Legal Support</h4>
+<p class="text-on-surface-variant mb-8 leading-relaxed">Statute modifications, head office transfers, share transfers – every step is managed by our experts.</p>
+<a class="text-[#A68942] font-semibold text-sm uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                            Learn more <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="bg-surface-container-low p-10 border border-outline-variant/10 hover:border-[#A68942]/30 transition-all group">
+<h4 class="text-2xl font-headline font-bold mb-4">Administrative Support</h4>
+<p class="text-on-surface-variant mb-8 leading-relaxed">Free yourself from time-consuming administrative tasks with our personalized support service.</p>
+<a class="text-[#A68942] font-semibold text-sm uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                            Learn more <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="bg-surface-container-low p-10 border border-outline-variant/10 hover:border-[#A68942]/30 transition-all group">
+<h4 class="text-2xl font-headline font-bold mb-4">Strategic Consulting</h4>
+<p class="text-on-surface-variant mb-8 leading-relaxed">We accompany you in your company's growth thanks to our development consulting.</p>
+<a class="text-[#A68942] font-semibold text-sm uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all" href="#">
+                            Learn more <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- How it works section -->
+<section class="py-32 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto px-8 text-center">
+<span class="text-[#A68942] font-label uppercase tracking-[0.3em] text-xs font-bold mb-4 block">How it works?</span>
+<h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-8">How it works in <span class="italic font-normal">3 steps?</span></h2>
+<p class="text-on-surface-variant text-lg max-w-2xl mx-auto mb-20">
+                    Complete our simple and fast form in a few clicks. All procedures are done online.
+                </p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+<div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-px bg-[#A68942]/20 z-0"></div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="relative mb-8">
+<div class="w-24 h-24 bg-surface-container-low rounded-2xl flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[#A68942] text-4xl" data-icon="near_me">near_me</span>
+</div>
+<div class="absolute -top-3 -right-3 w-8 h-8 bg-[#1c1c1b] text-white rounded-full flex items-center justify-center text-sm font-bold border-2 border-surface-container-lowest">1</div>
+</div>
+<h4 class="text-xl font-headline font-bold mb-4">Select your address</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed max-w-xs">
+                            Choose one of our prestigious addresses from Tangier to Lagouira that best matches your company.
+                        </p>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="relative mb-8">
+<div class="w-24 h-24 bg-surface-container-low rounded-2xl flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[#A68942] text-4xl" data-icon="description">description</span>
+</div>
+<div class="absolute -top-3 -right-3 w-8 h-8 bg-[#1c1c1b] text-white rounded-full flex items-center justify-center text-sm font-bold border-2 border-surface-container-lowest">2</div>
+</div>
+<h4 class="text-xl font-headline font-bold mb-4">Complete the online form</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed max-w-xs">
+                            Fill out our simple and intuitive form in minutes. All steps are 100% online, with support at every step if needed.
+                        </p>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="relative mb-8">
+<div class="w-24 h-24 bg-surface-container-low rounded-2xl flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[#A68942] text-4xl" data-icon="check_circle">check_circle</span>
+</div>
+<div class="absolute -top-3 -right-3 w-8 h-8 bg-[#1c1c1b] text-white rounded-full flex items-center justify-center text-sm font-bold border-2 border-surface-container-lowest">3</div>
+</div>
+<h4 class="text-xl font-headline font-bold mb-4">Receive your instant confirmation</h4>
+<p class="text-on-surface-variant text-sm leading-relaxed max-w-xs">
+                            In less than 10 minutes, get your domiciliation contract and start using your new address to propel your business.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Our Pricing Section -->
+<section class="py-32 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center mb-20">
+<span class="text-gold font-label uppercase tracking-[0.3em] text-xs font-bold mb-4 block">Our Pricing</span>
+<h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-6">Transparency and Simplicity for <span class="italic font-normal">All Your Needs</span></h2>
+<p class="text-on-surface-variant text-lg max-w-2xl mx-auto">
+                        Packages adapted to every stage of your growth. No hidden fees.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+<!-- Pricing Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-8 flex flex-col h-full shadow-sm hover:shadow-xl transition-shadow duration-300">
+<div class="text-center mb-8">
+<h4 class="text-sm font-label uppercase tracking-widest text-outline mb-2">INTILAQA</h4>
+<div class="flex flex-col items-center">
+<span class="text-4xl font-bold">3499</span>
+<span class="text-[10px] font-label uppercase tracking-tighter text-outline mt-1">DHS EXCL. TAX</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-grow text-sm">
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> Negative Certificate</li>
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> Registration of Statutes</li>
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> Professional Tax Registration</li>
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> Commercial Register</li>
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> Fiscal Identifier</li>
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> CNSS Affiliation</li>
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> Legal Announcement</li>
+</ul>
+<button class="w-full py-4 bg-gold text-white font-bold rounded-xl hover:opacity-90 transition-opacity">START</button>
+</div>
+<!-- Pricing Card 2 (POPULAR) -->
+<div class="bg-[#121a28] border-2 border-gold rounded-3xl p-8 flex flex-col h-[105%] shadow-2xl relative z-10 scale-105">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gold text-white text-[10px] font-bold px-6 py-1.5 rounded-full tracking-widest uppercase shadow-lg">POPULAR</div>
+<div class="text-center mb-8 pt-4">
+<h4 class="text-sm font-label uppercase tracking-widest text-gold/80 mb-2">INTILAQA PRO</h4>
+<div class="flex flex-col items-center">
+<span class="text-4xl font-bold text-white">4699</span>
+<span class="text-[10px] font-label uppercase tracking-tighter text-white/50 mt-1">DHS EXCL. TAX</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-grow text-sm">
+<li class="flex items-center gap-3 text-white/90"><span class="material-symbols-outlined text-gold text-lg">check_circle</span> Everything in INTILAQA</li>
+<li class="flex items-center gap-3 text-white/90"><span class="material-symbols-outlined text-gold text-lg">check_circle</span> Domiciliation (12 months)</li>
+<li class="flex items-center gap-3 text-white/90"><span class="material-symbols-outlined text-gold text-lg">check_circle</span> Model J</li>
+</ul>
+<button class="w-full py-4 bg-gold text-white font-bold rounded-xl hover:opacity-90 transition-opacity">START</button>
+</div>
+<!-- Pricing Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-8 flex flex-col h-full shadow-sm hover:shadow-xl transition-shadow duration-300">
+<div class="text-center mb-8">
+<h4 class="text-sm font-label uppercase tracking-widest text-outline mb-2">INTILAQA PLUS</h4>
+<div class="flex flex-col items-center">
+<span class="text-4xl font-bold">5999</span>
+<span class="text-[10px] font-label uppercase tracking-tighter text-outline mt-1">DHS EXCL. TAX</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-grow text-sm">
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> Domiciliation (24 months)</li>
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> DGI E-filing Access</li>
+</ul>
+<button class="w-full py-4 bg-gold text-white font-bold rounded-xl hover:opacity-90 transition-opacity">START</button>
+</div>
+<!-- Pricing Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-3xl p-8 flex flex-col h-full shadow-sm hover:shadow-xl transition-shadow duration-300">
+<div class="text-center mb-8">
+<h4 class="text-sm font-label uppercase tracking-widest text-outline mb-2">INTILAQA PREMIUM</h4>
+<div class="flex flex-col items-center">
+<span class="text-4xl font-bold">8999</span>
+<span class="text-[10px] font-label uppercase tracking-tighter text-outline mt-1">DHS EXCL. TAX</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-grow text-sm">
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> Bank Account Support</li>
+<li class="flex items-center gap-3 font-bold text-primary"><span class="material-symbols-outlined text-gold text-lg">check_circle</span> Professional Website</li>
+<li class="flex items-center gap-3 text-on-surface-variant"><span class="material-symbols-outlined text-green-600 text-lg">check_circle</span> Social Media Launch</li>
+</ul>
+<button class="w-full py-4 bg-gold text-white font-bold rounded-xl hover:opacity-90 transition-opacity">START</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Meet Our Experts Section -->
+<section class="py-32 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center mb-20">
+<span class="text-gold font-label uppercase tracking-[0.3em] text-xs font-bold mb-4 block">Meet Our Experts</span>
+<h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-6">Discover our team of experts dedicated to <span class="italic font-normal">your success.</span></h2>
+<p class="text-on-surface-variant text-lg max-w-2xl mx-auto italic font-body">
+                        Passionate professionals who put their expertise at your service to turn your ideas into success.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24">
+<!-- Expert 1 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-2xl aspect-[3/4] mb-8 shadow-xl">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="portrait of Hicham MHAMEDI" src="https://lh3.googleusercontent.com/aida/ADBb0ugb6i1Hsmesu4ft6nZz9aSADiZOaARMp4cYniaO_OyJnbKNMeLh-uShxNKRoI1ZvUm9jqVs8tgpLdsx7uwsIU26-XybKPwBZVDsx2pW99rZh-ExlMfvaxJbSNVpB_6gNAS1oJwSkrrHIKifSkmknPODNdaskdhtMlgW9X5qUWUDiMs2Xa4p28jy4bqpCtGakATFP3VW7jsg39qc1sMXT3QnKXeG1PC-CIxt6LKIx5E4lkW50xMxkioGdLELUCPrWMoVnBdvn_RxNSA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent"></div>
+<div class="absolute bottom-6 left-6">
+<h4 class="text-white text-2xl font-headline font-bold">Hicham MHAMEDI</h4>
+<p class="text-gold font-label uppercase tracking-widest text-xs">CEO</p>
+</div>
+</div>
+<p class="text-on-surface-variant leading-relaxed font-body">CEO of TAW 10, expert in business creation and domiciliation in Morocco.</p>
+</div>
+<!-- Expert 2 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-2xl aspect-[3/4] mb-8 shadow-xl">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="portrait of Salma AAOUAD" src="https://lh3.googleusercontent.com/aida/ADBb0uhh9wHgOyChSEPd0ivV6CI9kph0U49TTpqE0dOixq1tL94YoswWfQWyyRBY_k4-LnPhZEJZ-v7Mw7UVGiRCTg-0nNggpFZWzGU8qpBg1APQEJBld-b8hL3L0H2uxxzpduPEGlvhe3wyj4IW7tPY8zC-hkh6OnZlMPNdITxWXCtjsgtjDi3RakchWTBm1Ux_bW7hTxc85LKM6EleZNz00isdPhbQxkCkzvpFEY-EF20U9fcgXMRxB6-zK2P2_B-bQEaF3JXw6RywPbM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent"></div>
+<div class="absolute bottom-6 left-6">
+<h4 class="text-white text-2xl font-headline font-bold">Salma AAOUAD</h4>
+<p class="text-gold font-label uppercase tracking-widest text-xs">Sales Department</p>
+</div>
+</div>
+<p class="text-on-surface-variant leading-relaxed font-body">Sales and customer relations specialist, dedicated to your satisfaction.</p>
+</div>
+<!-- Expert 3 -->
+<div class="group">
+<div class="relative overflow-hidden rounded-2xl aspect-[3/4] mb-8 shadow-xl">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="portrait of AFAFE KHLIFAL" src="https://lh3.googleusercontent.com/aida/ADBb0ugpTAAb2m2jJuJPbUjllBu6niMnWM6i0_IIr0UgNMh6iPiPPOgLGeAeiz32G3lXZcTvrwSAN9KIlMoPtIj2jUuu5xD4IL_SqelEMAIwoEf5g465G2QN8HjkK70VZUr_hA2AGgzwsw77LxrnbC4vZ0n6JG9uw_igtxnR8hU0r0nEViKMqKHkiEJP1QHiz81hUQUyqiB1mIyo8moLl6Tj702wyk2OIN-yIRlDfxjwm7-8338o-O6-iG6FSdnI4c7VPVEmyZXmQbIr2Hs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent"></div>
+<div class="absolute bottom-6 left-6">
+<h4 class="text-white text-2xl font-headline font-bold">AFAFE KHLIFAL</h4>
+<p class="text-gold font-label uppercase tracking-widest text-xs">Office Manager</p>
+</div>
+</div>
+<p class="text-on-surface-variant leading-relaxed font-body">Experienced office manager, ensuring the smooth running of our services.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- New Contact Section -->
+<section class="pb-32 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<!-- CTA Block -->
+<div class="bg-[#121a28] p-12 md:p-16 rounded-3xl relative overflow-hidden text-center md:text-left shadow-2xl mb-32 flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="relative z-10">
+<h3 class="text-white text-4xl md:text-5xl font-bold mb-4 font-headline">Ready to discuss your project?</h3>
+<p class="text-white/80 text-xl italic font-headline">Book a free consultation now.</p>
+</div>
+<button class="relative z-10 bg-gold text-white px-12 py-5 rounded-xl font-bold text-xl shadow-lg hover:bg-[#8f7435] transition-all transform hover:scale-105 flex items-center gap-3">
+                        START NOW <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<div class="mb-16">
+<span class="text-gold font-label uppercase tracking-[0.3em] text-xs font-bold mb-4 block">CONTACT US</span>
+<h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-8 font-headline">Ready to Launch <br/><span class="italic font-normal">Your Project?</span></h2>
+<p class="text-on-surface-variant text-xl max-w-3xl font-body leading-relaxed">
+                        At <span class="text-gold font-bold">TAW 10</span>, we are committed to turning your administrative challenges into growth opportunities. Let's talk about your vision.
+                    </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+<!-- Contact Details Left Side -->
+<div class="space-y-12">
+<div class="flex items-start gap-6 group">
+<div class="w-16 h-16 bg-surface-container-low rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold transition-colors duration-300 group-hover:text-white text-gold shadow-sm">
+<span class="material-symbols-outlined text-3xl">mail</span>
+</div>
+<div>
+<p class="text-xs font-label uppercase tracking-widest text-outline mb-1">Direct Email</p>
+<a class="text-2xl font-headline italic text-on-surface hover:text-gold transition-colors" href="mailto:Contact@taw10.com">Contact@taw10.com</a>
+</div>
+</div>
+<div class="flex items-start gap-6 group">
+<div class="w-16 h-16 bg-surface-container-low rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold transition-colors duration-300 group-hover:text-white text-gold shadow-sm">
+<span class="material-symbols-outlined text-3xl">call</span>
+</div>
+<div>
+<p class="text-xs font-label uppercase tracking-widest text-outline mb-1">Phone</p>
+<p class="text-2xl font-headline italic text-on-surface leading-tight">+212 52430-8038</p>
+<p class="text-2xl font-headline italic text-on-surface leadig-tight">+212 607790956</p>
+</div>
+</div>
+<div class="flex items-start gap-6 group">
+<div class="w-16 h-16 bg-surface-container-low rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold transition-colors duration-300 group-hover:text-white text-gold shadow-sm">
+<span class="material-symbols-outlined text-3xl">location_on</span>
+</div>
+<div>
+<p class="text-xs font-label uppercase tracking-widest text-outline mb-1">Headquarters</p>
+<p class="text-2xl font-headline italic text-on-surface">Lot iguider N48 AV Allal El Fassi, Marrakesh, Morocco</p>
+</div>
+</div>
+</div>
+<!-- Contact Form Right Side -->
+<div class="bg-surface-container-lowest p-8 md:p-12 rounded-3xl shadow-2xl border border-outline-variant/10">
+<form class="space-y-6">
+<div class="space-y-1">
+<label class="text-[10px] font-label uppercase tracking-widest text-outline font-bold ml-1">FULL NAME</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl p-4 focus:ring-2 focus:ring-gold/50 transition-all placeholder:text-outline-variant text-on-surface" placeholder="Full Name" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-1">
+<label class="text-[10px] font-label uppercase tracking-widest text-outline font-bold ml-1">EMAIL ADDRESS</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl p-4 focus:ring-2 focus:ring-gold/50 transition-all placeholder:text-outline-variant text-on-surface" placeholder="email@example.com" type="email"/>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-label uppercase tracking-widest text-outline font-bold ml-1">PHONE</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl p-4 focus:ring-2 focus:ring-gold/50 transition-all placeholder:text-outline-variant text-on-surface" placeholder="06 00 00 00 00" type="tel"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-label uppercase tracking-widest text-outline font-bold ml-1">SELECT A SERVICE OR PACK</label>
+<select class="w-full bg-surface-container-low border-none rounded-xl p-4 focus:ring-2 focus:ring-gold/50 transition-all text-on-surface appearance-none">
+<option>Select a service or pack</option>
+<option>Pack INTILAQA</option>
+<option>Pack INTILAQA PRO</option>
+</select></div></form></div></div></div></section></main><footer class="pt-20 pb-10 bg-white text-[#1c1c1b]">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+<!-- Branding & Tagline -->
+<div class="space-y-6">
+<a class="font-['Newsreader'] text-2xl font-bold tracking-tighter text-[#1c1c1b]" href="#">
+                    Unternehmertage Mallorca
+                </a>
+<p class="text-[#1c1c1b]/70 text-sm leading-relaxed max-w-xs">
+                    Your trusted partner for business creation and domiciliation in Morocco.
+                </p>
+</div>
+<!-- Quick Links -->
+<div>
+<h4 class="font-headline text-lg font-bold text-gold mb-6">Quick Links</h4>
+<ul class="space-y-4 text-sm text-[#1c1c1b]/80">
+<li><a class="hover:text-gold transition-colors" href="#">Home</a></li>
+<li><a class="hover:text-gold transition-colors" href="#">Our Services</a></li>
+<li><a class="hover:text-gold transition-colors" href="#">Our Pricing</a></li>
+<li><a class="hover:text-gold transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<!-- Contact Info -->
+<div>
+<h4 class="font-headline text-lg font-bold text-gold mb-6">Contact Info</h4>
+<ul class="space-y-4 text-sm text-[#1c1c1b]/80">
+<li class="flex flex-col">
+<span class="text-[10px] uppercase tracking-widest text-[#1c1c1b]/50">Email</span>
+<a class="text-[#1c1c1b]/80 hover:text-gold" href="mailto:Contact@taw10.com">Contact@taw10.com</a>
+</li>
+<li class="flex flex-col">
+<span class="text-[10px] uppercase tracking-widest text-[#1c1c1b]/50">Phone</span>
+<span class="text-[#1c1c1b]/80">+212 52430-</span></li></ul></div></div></div></footer></body></html>
