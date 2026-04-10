@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
+  output: "standalone",
   experimental: {
     optimizePackageImports: ['framer-motion', 'react-icons', 'lucide-react'],
     scrollRestoration: true,

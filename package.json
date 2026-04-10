@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@next/font": "^14.2.15",
     "framer-motion": "^12.38.0",
