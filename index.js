@@ -11,9 +11,15 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
     const server = express();
+    const fs = require('fs');
+
+    const staticPath = path.join(__dirname, '.next', 'static');
+    console.log('--- VERIFYING STATIC PATH ---');
+    console.log('Path:', staticPath);
+    console.log('Exists:', fs.existsSync(staticPath) ? 'YES' : 'NO');
 
     // Force serving static files from .next/static
-    server.use('/_next/static', express.static(path.join(__dirname, '.next/static')));
+    server.use('/_next/static', express.static(staticPath));
     
     // Force serving files from public folder
     server.use(express.static(path.join(__dirname, 'public')));
