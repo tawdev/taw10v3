@@ -12,19 +12,37 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
     const server = express();
     const fs = require('fs');
+    const path = require('path');
     let rootDir = process.cwd();
     
-    // Si on est dans le dossier nodejs, on remonte d'un cran pour trouver le vrai .next du build
-    if (rootDir.endsWith('nodejs')) {
-        rootDir = path.join(rootDir, '..');
+    // On cherche le dossier .next le plus proche
+    const possiblePaths = [
+        path.join(rootDir, '.next'),
+        path.join(rootDir, '..', '.next'),
+        path.join(rootDir, 'public_html', '.next'),
+        path.join(rootDir, 'repository', '.next')
+    ];
+
+    let staticPath = '';
+    let publicPath = path.join(rootDir, 'public');
+
+    for (const p of possiblePaths) {
+        if (fs.existsSync(path.join(p, 'static'))) {
+            staticPath = path.join(p, 'static');
+            console.log('--- FOUND .NEXT AT: ' + p + ' ---');
+            break;
+        }
     }
 
-    const staticPath = path.join(rootDir, '.next', 'static');
-    const publicPath = path.join(rootDir, 'public');
-    
+    if (!staticPath) {
+        console.log('--- CRITICAL: .NEXT/STATIC NOT FOUND ANYWHERE ---');
+        // Fallback par défaut
+        staticPath = path.join(rootDir, '.next', 'static');
+    }
+
     console.log('--- DIAGNOSTIC HOSTINGER ---');
     console.log('Root Directory:', rootDir);
-    console.log('Static Path:', staticPath);
+    console.log('Final Static Path:', staticPath);
     console.log('Static Exists:', fs.existsSync(staticPath) ? 'YES' : 'NO');
     console.log('Public Path:', publicPath);
     console.log('Public Exists:', fs.existsSync(publicPath) ? 'YES' : 'NO');
