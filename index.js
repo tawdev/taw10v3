@@ -12,7 +12,12 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
     const server = express();
     const fs = require('fs');
-    const rootDir = process.cwd();
+    let rootDir = process.cwd();
+    
+    // Si on est dans le dossier nodejs, on remonte d'un cran pour trouver le vrai .next du build
+    if (rootDir.endsWith('nodejs')) {
+        rootDir = path.join(rootDir, '..');
+    }
 
     const staticPath = path.join(rootDir, '.next', 'static');
     const publicPath = path.join(rootDir, 'public');
