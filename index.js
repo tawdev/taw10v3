@@ -15,12 +15,11 @@ app.prepare().then(() => {
     const path = require('path');
     let rootDir = process.cwd();
     
-    // On cherche le dossier .next le plus proche
+    // Priorité absolue à la racine du domaine pour éviter les vieux builds
     const possiblePaths = [
-        path.join(rootDir, '.next'),
-        path.join(rootDir, '..', '.next'),
-        path.join(rootDir, 'public_html', '.next'),
-        path.join(rootDir, 'repository', '.next')
+        path.join(rootDir, '..', '.next'), // On regarde d'abord au dessus (racine)
+        path.join(rootDir, '.next'),       // Puis ici
+        path.join(rootDir, 'public_html', '.next')
     ];
 
     let staticPath = '';
