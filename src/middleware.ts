@@ -1,4 +1,5 @@
-import { NextResponse, type NextRequest } from 'next/server'
+
+import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
   const cookieLang = request.cookies.get('language')?.value
@@ -14,12 +15,21 @@ export function middleware(request: NextRequest) {
       defaultLang = 'EN'
     }
     
-    const response = NextResponse.next()
-    response.cookies.set('language', defaultLang, { path: '/' })
+    // polyfill for NextResponse.next() using standard Web API
+    const response = new Response(null, {
+      headers: {
+        'x-middleware-next': '1'
+      }
+    })
+    response.headers.append('Set-Cookie', `language=${defaultLang}; Path=/`)
     return response
   }
   
-  return NextResponse.next()
+  return new Response(null, {
+    headers: {
+      'x-middleware-next': '1'
+    }
+  })
 }
 
 export const config = {
