@@ -19,11 +19,9 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   reactStrictMode: true,
-  compress: false, // On désactive la compression pour éviter les bugs de proxy Hostinger
   productionBrowserSourceMaps: false,
   experimental: {
     optimizePackageImports: ['framer-motion', 'react-icons'],
-    scrollRestoration: true,
   },
   headers: async () => [
     {
