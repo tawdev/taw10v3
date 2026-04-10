@@ -38,7 +38,20 @@ app.prepare().then(() => {
 
     server.use((req, res, next) => {
         if (req.url.startsWith('/_next/static')) {
-            console.log(`[ASSET REQUEST] ${req.url} - Found: ${fs.existsSync(path.join(staticPath, req.url.replace('/_next/static', '')))}`);
+            const relativePath = req.url.substring('/_next/static'.length);
+            const fullPath = path.join(staticPath, relativePath);
+            const exists = fs.existsSync(fullPath);
+            console.log(`[ASSET REQUEST] ${req.url} -> Found: ${exists}`);
+            if (!exists && req.url.includes('chunks')) {
+                // Diagnostic : on regarde ce qu'il y a dans le dossier chunks si on ne trouve pas
+                try {
+                    const chunksDir = path.join(staticPath, 'chunks');
+                    if (fs.existsSync(chunksDir)) {
+                        const files = fs.readdirSync(chunksDir).slice(0, 5);
+                        console.log(`[DEBUG] Files in chunks dir: ${files.join(', ')}`);
+                    }
+                } catch (e) {}
+            }
         }
         next();
     }, express.static(publicPath));
