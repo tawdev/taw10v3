@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
+import { CONFIG } from "@/data/config";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -51,6 +52,7 @@ export default function Header() {
     { key: 'nav.why_us', href: '/#how-it-works' },
     { key: 'nav.services', href: '/#expertise' },
     { key: 'nav.pricing', href: '/#pricing' },
+    { key: 'nav.team', href: '/#lineup' },
     { key: 'nav.contact', href: '/#contact' }
   ];
 
@@ -88,7 +90,7 @@ export default function Header() {
               whileHover={{ scale: 1.05 }}
             >
               <span className="material-symbols-outlined text-[14px] text-[#dab055]">mail</span>
-              Contact@taw10.com
+              {CONFIG.contact.email}
             </motion.div>
           </motion.div>
           <motion.div 
@@ -102,7 +104,7 @@ export default function Header() {
               whileHover={{ scale: 1.05 }}
             >
               <span className="material-symbols-outlined text-[14px] text-[#dab055]">call</span>
-              +212 52430-8038
+              {CONFIG.contact.phone}
             </motion.div>
             <div className="flex items-center gap-3" role="group" aria-label="Language selection">
               {["FR", "AR", "EN"].map((lang, idx) => (
@@ -131,21 +133,21 @@ export default function Header() {
       <motion.header 
         className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-in-out ${
           isScrolled 
-            ? 'top-4 w-[98%] max-w-6xl bg-white/95 backdrop-blur-xl rounded-full shadow-2xl border border-[#dab055]/20 px-10' 
-            : 'top-10 w-full bg-[#0f172a]/0 px-6'
+            ? 'top-6 w-[95%] max-w-[90rem] bg-white/95 backdrop-blur-xl rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-[#dab055]/30 px-12' 
+            : 'top-10 w-full bg-[#0f172a]/0 px-8'
         }`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className={`max-w-7xl mx-auto flex justify-between items-center transition-all duration-500 ${isScrolled ? 'py-4' : 'py-6'}`}>
+        <div className={`max-w-[100rem] mx-auto flex justify-between items-center transition-all duration-500 ${isScrolled ? 'py-5' : 'py-8'}`}>
           <Link 
             className="flex items-center gap-3 group" 
             href="/" 
             onClick={(e) => scrollToSection(e, "#")}
           >
             <motion.span 
-              className={`font-headline text-2xl font-bold tracking-tighter transition-colors duration-500 ${isScrolled ? 'text-[#1c1c1b]' : 'text-white'}`}
+              className={`font-headline text-3xl font-bold tracking-tighter transition-colors duration-500 ${isScrolled ? 'text-[#1c1c1b]' : 'text-white'}`}
               whileHover={{ scale: 1.05 }}
             >
               TAW <motion.span 
@@ -156,7 +158,7 @@ export default function Header() {
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-12">
+          <nav className="hidden lg:flex items-center space-x-16">
             {navItems.map((link, idx) => (
               <motion.div
                 key={link.key}
@@ -242,7 +244,7 @@ export default function Header() {
                 href="/#contact"
                 onClick={(e) => scrollToSection(e, "#contact")}
                 className={`bg-[#dab055] text-white rounded-full text-[11px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center justify-center ${
-                isScrolled ? 'px-8 py-3' : 'px-10 py-4'
+                isScrolled ? 'px-10 py-4' : 'px-12 py-5'
               }`}
               >
                 <motion.span

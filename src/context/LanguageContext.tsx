@@ -1,16 +1,22 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import fr from "../translations/fr.json";
-import en from "../translations/en.json";
-import ar from "../translations/ar.json";
+import frCommon from "../translations/fr/common.json";
+import frSections from "../translations/fr/sections.json";
+import frServices from "../translations/fr/services.json";
+import arCommon from "../translations/ar/common.json";
+import arSections from "../translations/ar/sections.json";
+import arServices from "../translations/ar/services.json";
+import enCommon from "../translations/en/common.json";
+import enSections from "../translations/en/sections.json";
+import enServices from "../translations/en/services.json";
 
 type Language = "FR" | "AR" | "EN";
 
 const translations: Record<Language, Record<string, string>> = {
-  FR: fr,
-  EN: en,
-  AR: ar,
+  FR: { ...frCommon, ...frSections, ...frServices },
+  AR: { ...arCommon, ...arSections, ...arServices },
+  EN: { ...enCommon, ...enSections, ...enServices },
 };
 
 interface LanguageContextType {
@@ -21,10 +27,14 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>("FR");
+export const LanguageProvider: React.FC<{ children: React.ReactNode, initialLanguage?: string }> = ({ children, initialLanguage = "FR" }) => {
+  const normalizedInitial = (initialLanguage?.toUpperCase() || "FR") as Language;
+  const validInitial = ["FR", "AR", "EN"].includes(normalizedInitial) ? normalizedInitial : "FR";
+  
+  const [language, setLanguageState] = useState<Language>(validInitial);
 
   useEffect(() => {
+    // Sync with localStorage on mount if exists, otherwise use initialLanguage
     const savedLang = localStorage.getItem("language") as Language;
     if (savedLang && ["FR", "AR", "EN"].includes(savedLang)) {
       setLanguageState(savedLang);
@@ -34,6 +44,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("language", lang);
+    document.cookie = `language=${lang}; path=/; max-age=31536000`; // Sync with cookie for SSR
   };
 
   useEffect(() => {
@@ -47,7 +58,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [language]);
 
   const t = (key: string) => {
-    return translations[language][key] || key;
+    const langKey = (language || "FR") as Language;
+    const langDict = translations[langKey] || translations["FR"];
+    return langDict[key] || key;
   };
 
   return (

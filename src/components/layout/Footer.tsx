@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, useInView, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
+import { CONFIG } from "@/data/config";
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -78,9 +79,8 @@ export default function Footer() {
             </motion.p>
             <motion.div className="flex items-center gap-4" variants={scaleIn}>
               {[
-                { icon: 'fa-brands fa-facebook-f', href: 'https://facebook.com/taw10', label: 'Facebook' },
-                { icon: 'fa-brands fa-instagram', href: 'https://instagram.com/taw10', label: 'Instagram' },
-                { icon: 'fa-brands fa-linkedin-in', href: 'https://linkedin.com/company/taw10', label: 'LinkedIn' }
+                { icon: 'fa-brands fa-facebook-f', href: CONFIG.socials.facebook, label: 'Facebook' },
+                { icon: 'fa-brands fa-instagram', href: CONFIG.socials.instagram, label: 'Instagram' }
               ].map((social, idx) => (
                 <motion.a
                   key={social.icon}
@@ -133,7 +133,7 @@ export default function Footer() {
                 { name: t('nav.home'), href: '/' },
                 { name: t('nav.services'), href: '/#expertise' },
                 { name: t('nav.pricing'), href: '/#pricing' },
-                { name: t('footer.experts'), href: '/#lineup' },
+                { name: t('nav.team'), href: '/#lineup' },
                 { name: t('nav.contact'), href: '/#contact' }
               ].map((link, idx) => (
                 <motion.li 
@@ -179,12 +179,12 @@ export default function Footer() {
             </motion.h4>
             <ul className="space-y-5 text-sm text-white/40 font-body">
               {[
-                { key: 'expertise.domiciliation', href: '/#expertise' },
-                { key: 'expertise.creation', href: '/#expertise' },
-                { key: 'expertise.mail', href: '/#expertise' },
-                { key: 'expertise.legal', href: '/#expertise' },
-                { key: 'expertise.admin', href: '/#expertise' },
-                { key: 'expertise.strategic', href: '/#expertise' }
+                { key: 'service_card.premium_title', href: '/services/domiciliation' },
+                { key: 'service_card.creation_title', href: '/services/creation-entreprise' },
+                { key: 'service_card.secretary_title', href: '/services/secretariat' },
+                { key: 'service_card.legal_title', href: '/services/accompagnement-juridique' },
+                { key: 'service_card.support_title', href: '/services/support-administratif' },
+                { key: 'service_card.strategic_title', href: '/services/conseil-strategique' }
               ].map((service, idx) => (
                 <motion.li 
                   key={service.key}

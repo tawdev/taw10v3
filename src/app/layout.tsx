@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
+import { cookies } from "next/headers";
 import { Playfair_Display, Plus_Jakarta_Sans, Montserrat } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
@@ -31,63 +32,55 @@ const montserrat = Montserrat({
   preload: true,
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://taw10.com"),
-  title: {
-    default: "TAW 10 — Domiciliation Premium à Marrakech",
-    template: "%s | TAW 10"
-  },
-  description: "L'excellence de la domiciliation, création d'entreprise et accompagnement stratégique au cœur de Marrakech. Plus de 500 entrepreneurs nous font confiance.",
-  keywords: ["domiciliation Marrakech", "création entreprise Maroc", "secrétariat virtuel", "accompagnement juridique", "TAW 10"],
-  authors: [{ name: "TAW 10" }],
-  creator: "TAW 10",
-  openGraph: {
-    type: "website",
-    locale: "fr_MA",
-    alternateLocale: ["ar_MA", "en_US"],
-    url: "https://taw10.com",
-    siteName: "TAW 10",
-    title: "TAW 10 — Domiciliation Premium à Marrakech",
-    description: "L'excellence de la domiciliation et création d'entreprise au cœur de Marrakech.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "TAW 10 - Domiciliation Premium"
-      }
-    ]
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "TAW 10 — Domiciliation Premium à Marrakech",
-    description: "L'excellence de la domiciliation et création d'entreprise au cœur de Marrakech.",
-    images: ["/og-image.jpg"]
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1
-    }
-  },
-  verification: {
-    google: "your-google-verification-code"
-  }
-};
+export async function generateMetadata(
+  { params }: { params: any },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const rawLang = cookieStore.get("language")?.value?.toUpperCase() || "FR";
+  const language = ["FR", "AR", "EN"].includes(rawLang) ? rawLang : "FR";
 
-export default function RootLayout({
+  const titles: Record<string, string> = {
+    FR: "TAW 10 — Domiciliation Premium à Marrakech",
+    AR: "TAW 10 — توطين الشركات في مراكش",
+    EN: "TAW 10 — Premium Domiciliation in Marrakech",
+  };
+
+  const descriptions: Record<string, string> = {
+    FR: "L'excellence de la domiciliation, création d'entreprise et accompagnement stratégique au cœur de Marrakech.",
+    AR: "التميز في التوطين، إنشاء الشركات والمواكبة الاستراتيجية في قلب مراكش.",
+    EN: "Excellence in domiciliation, company formation and strategic support in the heart of Marrakech.",
+  };
+
+  return {
+    metadataBase: new URL("https://taw10.com"),
+    title: {
+      default: titles[language] || titles.FR,
+      template: `%s | TAW 10`
+    },
+    description: descriptions[language] || descriptions.FR,
+    keywords: ["domiciliation Marrakech", "création entreprise Maroc", "secrétariat virtuel", "accompagnement juridique", "TAW 10"],
+    openGraph: {
+      title: titles[language],
+      description: descriptions[language],
+      locale: language === "AR" ? "ar_MA" : language === "EN" ? "en_US" : "fr_MA",
+    }
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const rawLang = cookieStore.get("language")?.value?.toUpperCase() || "FR";
+  const initialLanguage = ["FR", "AR", "EN"].includes(rawLang) ? rawLang : "FR";
+  const direction = initialLanguage === "AR" ? "rtl" : "ltr";
+
   return (
-    <LanguageProvider>
-      <html lang="fr" className="light">
+    <html lang={initialLanguage.toLowerCase()} dir={direction} className="light">
+      <LanguageProvider initialLanguage={initialLanguage}>
         <head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -111,7 +104,7 @@ export default function RootLayout({
           <WhatsappContact />
           <CookieConsent />
         </body>
-      </html>
-    </LanguageProvider>
+      </LanguageProvider>
+    </html>
   );
 }

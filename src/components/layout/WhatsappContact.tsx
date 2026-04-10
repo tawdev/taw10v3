@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { FaWhatsapp, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import { CONFIG } from "@/data/config";
 
 export default function WhatsappContact() {
     const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +63,7 @@ export default function WhatsappContact() {
                         <div className="p-7 space-y-5">
                             <p className="text-slate-500 text-sm leading-relaxed font-light">{t("whatsapp.description")}</p>
                             <a
-                                href="https://wa.me/+212607790956"
+                                href={`https://wa.me/${CONFIG.contact.whatsapp}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center justify-between bg-gray-50/50 hover:bg-white p-5 rounded-2xl border border-gray-100 transition-all duration-500 group shadow-sm hover:shadow-md"
