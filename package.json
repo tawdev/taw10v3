@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build --no-turbo && mkdir -p public_html/_next && cp -rf .next/static public_html/_next/",
+    "build": "next build && mkdir -p public_html/_next && cp -rf .next/static public_html/_next/",
     "start": "node index.js",
     "lint": "eslint"
   },
