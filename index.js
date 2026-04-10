@@ -15,11 +15,12 @@ app.prepare().then(() => {
     const path = require('path');
     let rootDir = process.cwd();
     
-    // Priorité absolue à la racine du domaine pour éviter les vieux builds
+    // On identifie la RACINE réelle du domaine (au dessus de nodejs)
+    const domainRoot = rootDir.endsWith('nodejs') ? path.join(rootDir, '..') : rootDir;
+    
     const possiblePaths = [
-        path.join(rootDir, '..', '.next'), // On regarde d'abord au dessus (racine)
-        path.join(rootDir, '.next'),       // Puis ici
-        path.join(rootDir, 'public_html', '.next')
+        path.join(domainRoot, '.next'),
+        path.join(domainRoot, 'public_html', '.next')
     ];
 
     let staticPath = '';
