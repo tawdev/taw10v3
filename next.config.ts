@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   output: "standalone",
   experimental: {
-    optimizePackageImports: ['framer-motion', 'react-icons', 'lucide-react'],
+    optimizePackageImports: ['framer-motion', 'react-icons'],
     scrollRestoration: true,
   },
   headers: async () => [
@@ -37,10 +37,6 @@ const nextConfig: NextConfig = {
       ],
     },
   ],
-  onDemandEntries: {
-    maxInactiveAge: 60 * 60 * 1000,
-    pagesBufferLength: 2,
-  },
 };
 
 export default nextConfig;

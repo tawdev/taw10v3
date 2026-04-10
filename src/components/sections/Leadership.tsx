@@ -35,7 +35,7 @@ export default function Leadership() {
               <Image
                 className="object-cover"
                 alt="Leadership TAW 10"
-                src="/WhatsApp%20Image%202026-04-07%20at%2010.50.33.jpeg"
+                src="/leadership-photo.jpeg"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 loading="lazy"
