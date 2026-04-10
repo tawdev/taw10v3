@@ -23,7 +23,6 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   experimental: {
     optimizePackageImports: ['framer-motion', 'react-icons', 'lucide-react'],
-    optimizeCss: true,
     scrollRestoration: true,
   },
   headers: async () => [
