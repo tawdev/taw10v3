@@ -1,3 +1,7 @@
+console.log('#############################################');
+console.log('!!! HOSTINGER IS EXECUTING INDEX.JS NOW !!!');
+console.log('#############################################');
+
 const path = require('path');
 
 // Configuration de l'environnement pour Hostinger

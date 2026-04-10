@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/",
+    "build": "next build && cp -rf public .next/standalone/ && cp -rf .next/static .next/standalone/.next/",
     "start": "node index.js",
     "lint": "eslint"
   },
