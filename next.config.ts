@@ -17,7 +17,6 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
     minimumCacheTTL: 31536000,
   },
-  compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
   compress: false, // On désactive la compression pour éviter les bugs de proxy Hostinger
