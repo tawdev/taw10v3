@@ -24,9 +24,19 @@ app.prepare().then(() => {
     console.log('Public Path:', publicPath);
     console.log('Public Exists:', fs.existsSync(publicPath) ? 'YES' : 'NO');
 
-    // Serve static files with explicit paths
-    server.use('/_next/static', express.static(staticPath));
-    server.use(express.static(publicPath));
+    // Explicitly serve static files with proxy buffering disabled
+    server.use('/_next/static', (req, res, next) => {
+        res.setHeader('X-Accel-Buffering', 'no'); // Désactive le tampon Hostinger
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        next();
+    }, express.static(staticPath));
+
+    server.use((req, res, next) => {
+        if (req.url.startsWith('/_next/static')) {
+            console.log(`[ASSET REQUEST] ${req.url} - Found: ${fs.existsSync(path.join(staticPath, req.url.replace('/_next/static', '')))}`);
+        }
+        next();
+    }, express.static(publicPath));
 
     // Handle all other routes with Next.js
     server.all('*', (req, res) => {
