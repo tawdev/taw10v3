@@ -134,6 +134,8 @@ export default function Footer() {
                 { name: t('nav.services'), href: '/#expertise' },
                 { name: t('nav.pricing'), href: '/#pricing' },
                 { name: t('nav.team'), href: '/#lineup' },
+                { name: t('nav.blog'), href: '/#blog' },
+                { name: t('faq.title'), href: '/#faq' },
                 { name: t('nav.contact'), href: '/#contact' }
               ].map((link, idx) => (
                 <motion.li 

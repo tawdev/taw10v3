@@ -60,13 +60,16 @@ export default function Header() {
     }
   };
 
+  const langPrefix = `/${language.toLowerCase()}`;
+
   const navItems = [
-    { key: 'nav.home', href: '/#hero' },
-    { key: 'nav.why_us', href: '/#how-it-works' },
-    { key: 'nav.services', href: '/#expertise' },
-    { key: 'nav.pricing', href: '/#pricing' },
-    { key: 'nav.team', href: '/#lineup' },
-    { key: 'nav.contact', href: '/#contact' }
+    { key: 'nav.home', href: `${langPrefix}#hero` },
+    { key: 'nav.why_us', href: `${langPrefix}#how-it-works` },
+    { key: 'nav.services', href: `${langPrefix}#expertise` },
+    { key: 'nav.pricing', href: `${langPrefix}#pricing` },
+    { key: 'nav.team', href: `${langPrefix}#lineup` },
+    { key: 'nav.blog', href: `${langPrefix}#blog` },
+    { key: 'nav.contact', href: `${langPrefix}#contact` }
   ];
 
   return (
@@ -156,7 +159,7 @@ export default function Header() {
         <div className={`max-w-[100rem] mx-auto flex justify-between items-center transition-all duration-500 ${isScrolled ? 'py-4' : 'py-5 lg:py-6 xl:py-8'}`}>
           <Link 
             className="flex items-center gap-3 group" 
-            href="/" 
+            href={`${langPrefix}`} 
             onClick={(e) => scrollToSection(e, "#")}
             aria-label="Go to homepage"
           >
@@ -234,7 +237,7 @@ export default function Header() {
               whileTap={{ scale: 0.95 }}
             >
               <Link 
-                href="/#contact"
+                href={`${langPrefix}#contact`}
                 onClick={(e) => {
                   scrollToSection(e, "#contact");
                   if (typeof window !== 'undefined' && (window as any).dataLayer) {
@@ -324,7 +327,7 @@ export default function Header() {
                   className="pt-6"
                 >
                   <Link 
-                    href="/#contact"
+                    href={`${langPrefix}#contact`}
                     onClick={(e) => {
                       scrollToSection(e, "#contact");
                       if (typeof window !== 'undefined' && (window as any).dataLayer) {

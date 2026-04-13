@@ -7,7 +7,10 @@ export function middleware(request: NextRequest) {
   const locales = ['fr', 'ar', 'en'];
 
   if (locales.includes(locale)) {
-    const response = NextResponse.rewrite(new URL('/', request.url));
+    // Strip the locale prefix (e.g., "/fr/blog" -> "/blog", "/fr" -> "/")
+    const newPath = pathname.substring(3) || '/';
+    
+    const response = NextResponse.rewrite(new URL(newPath, request.url));
     response.cookies.set('language', locale.toUpperCase(), { path: '/' });
     return response;
   }
