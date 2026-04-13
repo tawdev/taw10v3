@@ -7,6 +7,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsappContact from "@/components/layout/WhatsappContact";
 import CookieConsent from "@/components/layout/CookieConsent";
+import SchemaMarkup from "@/components/common/SchemaMarkup";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -41,15 +42,15 @@ export async function generateMetadata(
   const language = ["FR", "AR", "EN"].includes(rawLang) ? rawLang : "FR";
 
   const titles: Record<string, string> = {
-    FR: "TAW 10 — Domiciliation Premium à Marrakech",
-    AR: "TAW 10 — توطين الشركات في مراكش",
-    EN: "TAW 10 — Premium Domiciliation in Marrakech",
+    FR: "Domiciliation Maroc & Création Entreprise Marrakech | TAW 10",
+    AR: "توطين الشركات وإنشاء المقاولات في المغرب | TAW 10",
+    EN: "Business Domiciliation & Company Creation Morocco | TAW 10",
   };
 
   const descriptions: Record<string, string> = {
-    FR: "L'excellence de la domiciliation, création d'entreprise et accompagnement stratégique au cœur de Marrakech.",
-    AR: "التميز في التوطين، إنشاء الشركات والمواكبة الاستراتيجية في قلب مراكش.",
-    EN: "Excellence in domiciliation, company formation and strategic support in the heart of Marrakech.",
+    FR: "TAW 10 offre les meilleures solutions de domiciliation au Maroc, création d'entreprise à Marrakech et accompagnement juridique premium pour entrepreneurs.",
+    AR: "تقدم TAW 10 أفضل حلول توطين الشركات في المغرب، وإنشاء المقاولات في مراكش، والمواكبة القانونية المتميزة للمقاولين.",
+    EN: "TAW 10 provides premium business domiciliation in Morocco, company formation in Marrakech, and strategic legal support for entrepreneurs.",
   };
 
   return {
@@ -59,12 +60,56 @@ export async function generateMetadata(
       template: `%s | TAW 10`
     },
     description: descriptions[language] || descriptions.FR,
-    keywords: ["domiciliation Marrakech", "création entreprise Maroc", "secrétariat virtuel", "accompagnement juridique", "TAW 10"],
+    keywords: [
+      "domiciliation maroc", 
+      "création entreprise maroc", 
+      "domiciliation marrakech", 
+      "création entreprise marrakech",
+      "bureau virtuel maroc",
+      "accompagnement juridique maroc", 
+      "TAW 10"
+    ],
+    alternates: {
+      canonical: "/",
+      languages: {
+        "fr-FR": "/fr",
+        "ar-MA": "/ar",
+        "en-US": "/en",
+      },
+    },
     openGraph: {
       title: titles[language],
       description: descriptions[language],
+      url: "https://taw10.com",
+      siteName: "TAW 10",
+      images: [
+        {
+          url: "/og-image.png", // Ensure this exists
+          width: 1200,
+          height: 630,
+          alt: "TAW 10 — Premium Business Domiciliation Morocco",
+        },
+      ],
       locale: language === "AR" ? "ar_MA" : language === "EN" ? "en_US" : "fr_MA",
-    }
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: titles[language],
+      description: descriptions[language],
+      images: ["/og-image.png"],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   };
 }
 
@@ -100,6 +145,7 @@ export default async function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          <SchemaMarkup />
           <div id="language-direction-sync" />
           <WhatsappContact />
           <CookieConsent />

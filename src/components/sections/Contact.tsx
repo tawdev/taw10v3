@@ -14,6 +14,7 @@ export default function Contact() {
     nom: "",
     prenom: "",
     email: "",
+    service: "",
     message: ""
   });
   const [errors, setErrors] = useState({
@@ -65,6 +66,7 @@ Nouveau message depuis le formulaire de contact :
 *Nom :* ${nom}
 *Prénom :* ${prenom}
 *Email :* ${email}
+*Service :* ${formData.service || 'Non spécifié'}
 *Message :* ${message}`;
 
     const encodedText = encodeURIComponent(text);
@@ -75,7 +77,7 @@ Nouveau message depuis le formulaire de contact :
     
     setTimeout(() => {
       window.open(whatsappUrl, "_blank");
-      setFormData({ nom: "", prenom: "", email: "", message: "" });
+      setFormData({ nom: "", prenom: "", email: "", service: "", message: "" });
       setSubmitted(false);
     }, 2000);
   };
@@ -222,6 +224,27 @@ Nouveau message depuis le formulaire de contact :
                     className="space-y-2"
                     initial={{ opacity: 0, y: 20 }}
                     animate={contactInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ delay: 0.55 }}
+                  >
+                    <label className="text-[11px] font-bold text-[#1c1c1b] uppercase tracking-widest ml-1 opacity-60">{t("contact.service")}</label>
+                    <select 
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange as any}
+                      required
+                      className="w-full bg-[#fcf9f6] border border-gray-100 rounded-2xl p-5 outline-none text-[#1c1c1b] font-body appearance-none cursor-pointer focus:border-[#dab055] focus:shadow-[0_0_0_3px_rgba(218, 176, 85, 0.2)] transition-all"
+                    >
+                      <option value="" disabled>{t("contact.service_placeholder")}</option>
+                      <option value={t("contact.service_domiciliation")}>{t("contact.service_domiciliation")}</option>
+                      <option value={t("contact.service_creation")}>{t("contact.service_creation")}</option>
+                      <option value={t("contact.service_legal")}>{t("contact.service_legal")}</option>
+                      <option value={t("contact.service_other")}>{t("contact.service_other")}</option>
+                    </select>
+                  </motion.div>
+                  <motion.div 
+                    className="space-y-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={contactInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.6 }}
                   >
                     <label className="text-[11px] font-bold text-[#1c1c1b] uppercase tracking-widest ml-1 opacity-60">{t("contact.message")}</label>
@@ -255,6 +278,24 @@ Nouveau message depuis le formulaire de contact :
                       t("contact.send")
                     )}
                   </motion.button>
+                  <p className="text-[9px] text-center text-[#1c1c1b]/40 font-body px-4 italic">
+                    {t("contact.privacy")}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-4 md:gap-8 pt-6 border-t border-gray-100 mt-6 justify-center opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+                    <div className="flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[#dab055] text-lg">verified_user</span>
+                      <span className="text-[8px] font-black uppercase tracking-widest whitespace-nowrap">Agréé par l'État</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[#dab055] text-lg">lock</span>
+                      <span className="text-[8px] font-black uppercase tracking-widest whitespace-nowrap">100% Confidentiel</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[#dab055] text-lg">speed</span>
+                      <span className="text-[8px] font-black uppercase tracking-widest whitespace-nowrap">Réponse sous 24h</span>
+                    </div>
+                  </div>
                 </motion.form>
               ) : (
                 <div

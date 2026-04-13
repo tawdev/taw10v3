@@ -84,5 +84,12 @@
   "contact.message": "Votre Message",
   "contact.message_placeholder": "Comment pouvons-nous vous aider ? Écrivez votre message ici...",
   "contact.send": "Envoyer le message",
-  "contact.your_email": "Votre adresse email"
+  "contact.your_email": "Votre adresse email",
+  "contact.service": "Service souhaité",
+  "contact.service_placeholder": "Sélectionner un service",
+  "contact.privacy": "Vos données sont traitées en toute confidentialité conformément aux lois en vigueur.",
+  "contact.service_domiciliation": "Domiciliation de société",
+  "contact.service_creation": "Création d'entreprise",
+  "contact.service_legal": "Conseil Juridique / Administratif",
+  "contact.service_other": "Autre demande"
 }
