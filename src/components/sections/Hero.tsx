@@ -81,7 +81,7 @@ export default function Hero() {
             {t("hero.subtitle")}
           </motion.span>
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-7xl leading-[1.1] md:leading-[1.15] text-white font-bold tracking-tighter mb-8 md:mb-10 font-headline drop-shadow-2xl text-balance italic"
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl leading-[1.1] md:leading-[1.15] text-white font-bold tracking-tighter mb-6 md:mb-10 font-headline drop-shadow-2xl text-balance italic"
             style={{ fontFamily: '"Playfair Display", serif' }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}

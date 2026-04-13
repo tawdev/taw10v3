@@ -151,7 +151,7 @@ export default function Header() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className={`max-w-[100rem] mx-auto flex justify-between items-center transition-all duration-500 ${isScrolled ? 'py-5' : 'py-8'}`}>
+        <div className={`max-w-[100rem] mx-auto flex justify-between items-center transition-all duration-500 ${isScrolled ? 'py-4' : 'py-5 lg:py-6 xl:py-8'}`}>
           <Link 
             className="flex items-center gap-3 group" 
             href="/" 
@@ -169,7 +169,7 @@ export default function Header() {
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-12">
+          <nav className="hidden lg:flex items-center space-x-4 xl:space-x-12">
             {navItems.map((link, idx) => (
               <motion.div
                 key={link.key}
@@ -232,8 +232,8 @@ export default function Header() {
               <Link 
                 href="/#contact"
                 onClick={(e) => scrollToSection(e, "#contact")}
-                className={`bg-[#dab055] text-white rounded-full text-[10px] xl:text-[11px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center justify-center transition-all duration-300 ${
-                isScrolled ? 'px-8 py-3.5' : 'px-10 py-4.5'
+                className={`bg-[#dab055] text-white rounded-full text-[9px] xl:text-[11px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center justify-center transition-all duration-300 ${
+                isScrolled ? 'px-6 py-3' : 'px-8 py-3.5 xl:px-10 xl:py-4.5'
               }`}
               >
                 <motion.span

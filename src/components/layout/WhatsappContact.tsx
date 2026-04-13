@@ -87,21 +87,21 @@ export default function WhatsappContact() {
             <div className="fixed bottom-8 right-8 z-50">
                 <motion.button
                     onClick={toggleChat}
-                    className="relative w-16 h-16 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center justify-center text-white overflow-hidden cursor-pointer active:scale-90 transition-transform"
+                    className="relative w-14 h-14 md:w-16 md:h-16 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center justify-center text-white overflow-hidden cursor-pointer active:scale-90 transition-transform"
                     style={{ background: isOpen ? '#ef4444' : `linear-gradient(135deg, ${primaryColor} 0%, #0f172a 100%)` }}
                     whileHover={{ scale: 1.05, y: -5 }}
                     whileTap={{ scale: 0.95 }}
                     animate={{ rotate: isOpen ? 0 : [0, -5, 5, -5, 0] }}
                     transition={{ rotate: { duration: 2, repeat: isOpen ? 0 : Infinity, repeatDelay: 3 } }}
                 >
-                    {isOpen ? <FaTimes size={28} /> : <FaWhatsapp size={32} style={{ color: !isOpen ? secondaryColor : 'white' }} />}
+                    {isOpen ? <FaTimes size={24} /> : <FaWhatsapp size={28} style={{ color: !isOpen ? secondaryColor : 'white' }} />}
                 </motion.button>
             </div>
 
             <AnimatePresence>
                 {!isOpen && (
                     <motion.div
-                        className="fixed bottom-11 right-28 z-40 bg-white/95 backdrop-blur-xl py-3 px-6 rounded-2xl shadow-2xl border border-gray-100 hidden lg:block font-outfit"
+                        className="fixed bottom-11 right-28 z-40 bg-white/95 backdrop-blur-xl py-3 px-6 rounded-2xl shadow-2xl border border-gray-100 hidden xl:block font-outfit"
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 20 }}
