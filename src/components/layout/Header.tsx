@@ -22,11 +22,22 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
+
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    setIsMobileMenuOpen(false);
     if (!isHome || !href.startsWith("#")) return;
     
     e.preventDefault();
-    setIsMobileMenuOpen(false);
     if (href === "#") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -48,7 +59,7 @@ export default function Header() {
   };
 
   const navItems = [
-    { key: 'nav.home', href: '/' },
+    { key: 'nav.home', href: '/#hero' },
     { key: 'nav.why_us', href: '/#how-it-works' },
     { key: 'nav.services', href: '/#expertise' },
     { key: 'nav.pricing', href: '/#pricing' },
@@ -64,7 +75,7 @@ export default function Header() {
       </div>
       
       <motion.div 
-        className={`fixed top-0 w-full z-[60] bg-[#0c0c0c] text-white border-b border-white/5 ${
+        className={`fixed top-0 w-full z-[60] bg-[#0c0c0c] text-white border-b border-white/5 hidden lg:block ${
           isScrolled ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
         }`}
         transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -133,8 +144,8 @@ export default function Header() {
       <motion.header 
         className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-in-out ${
           isScrolled 
-            ? 'top-6 w-[95%] max-w-[90rem] bg-white/95 backdrop-blur-xl rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-[#dab055]/30 px-12' 
-            : 'top-10 w-full bg-[#0f172a]/0 px-8'
+            ? 'top-4 lg:top-6 w-[95%] max-w-[90rem] bg-white/95 backdrop-blur-xl rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-[#dab055]/30 px-6 lg:px-12' 
+            : 'top-0 lg:top-10 w-full bg-[#0f172a]/0 px-4 lg:px-8'
         }`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -237,6 +248,7 @@ export default function Header() {
             </AnimatePresence>
             
             <motion.div
+              className="hidden sm:block"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -296,7 +308,7 @@ export default function Header() {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className="lg:hidden absolute top-full left-0 right-0 mt-4 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#dab055]/20 overflow-hidden"
+              className="lg:hidden absolute top-full left-0 right-0 mt-4 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#dab055]/20 overflow-y-auto max-h-[80vh] scrollbar-hide"
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -319,6 +331,20 @@ export default function Header() {
                     </Link>
                   </motion.div>
                 ))}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: navItems.length * 0.1 }}
+                  className="pt-6"
+                >
+                  <Link 
+                    href="/#contact"
+                    onClick={(e) => scrollToSection(e, "#contact")}
+                    className="w-full bg-[#dab055] text-white py-5 rounded-2xl flex items-center justify-center font-bold uppercase tracking-widest text-xs shadow-lg"
+                  >
+                    {t("nav.consultation")}
+                  </Link>
+                </motion.div>
                 <motion.div 
                   className="mt-6 flex justify-center gap-4"
                   initial={{ opacity: 0 }}

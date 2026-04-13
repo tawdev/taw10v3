@@ -130,7 +130,7 @@ export default function Footer() {
             </motion.h4>
             <ul className="space-y-5 text-sm text-white/40 font-body">
               {[
-                { name: t('nav.home'), href: '/' },
+                { name: t('nav.home'), href: '/#hero' },
                 { name: t('nav.services'), href: '/#expertise' },
                 { name: t('nav.pricing'), href: '/#pricing' },
                 { name: t('nav.team'), href: '/#lineup' },

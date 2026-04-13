@@ -40,8 +40,9 @@ export default function Hero() {
 
   return (
     <section 
+      id="hero"
       ref={heroRef} 
-      className="relative min-h-[95vh] flex items-center pt-32 overflow-hidden bg-[#0f172a]"
+      className="relative min-h-screen flex items-center pt-32 overflow-hidden bg-[#0f172a]"
       aria-label="Hero section"
     >
       <motion.div 
@@ -80,21 +81,21 @@ export default function Hero() {
             {t("hero.subtitle")}
           </motion.span>
           <motion.h1 
-            className="text-3xl md:text-5xl lg:text-7xl leading-[1.15] text-white font-bold tracking-tighter mb-10 font-headline drop-shadow-2xl text-balance italic"
+            className="text-4xl md:text-5xl lg:text-7xl leading-[1.1] md:leading-[1.15] text-white font-bold tracking-tighter mb-8 md:mb-10 font-headline drop-shadow-2xl text-balance italic"
             style={{ fontFamily: '"Playfair Display", serif' }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            {t("hero.title_prefix")} <span className="text-[#dab055]"><span style={{ fontFamily: '"Dancing Script", cursive', fontSize: '1.2em', verticalAlign: 'middle' }}>T</span>AW <span style={{ fontFamily: '"Playfair Display", serif', fontSize: '1.3em', fontWeight: 'bold' }}>10</span></span> {t("hero.title_suffix")}
+            {t("hero.title_prefix")} <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase italic px-1 md:px-2 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap">TAW 10</span> {t("hero.title_suffix")}
           </motion.h1>
           <motion.p 
-            className="text-xl text-white/90 font-body max-w-3xl mb-14 leading-relaxed drop-shadow-md text-balance"
+            className="text-lg md:text-xl text-white/90 font-body max-w-3xl mb-10 md:mb-14 leading-relaxed drop-shadow-md text-balance"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <span className="text-[#dab055] font-bold uppercase" style={{ fontFamily: '"Playfair Display", serif' }}>T</span><span className="text-[#dab055] font-bold uppercase">AW </span><span className="text-[#dab055] font-bold uppercase" style={{ fontFamily: '"Playfair Display", serif', fontSize: '1.4em', verticalAlign: 'baseline' }}>10</span> {t("hero.tagline")}
+            <span className="text-[#dab055] font-label font-black tracking-widest uppercase italic px-1">TAW 10</span> {t("hero.tagline")}
           </motion.p>
           <motion.div 
             className="flex flex-col sm:flex-row items-center gap-6"
