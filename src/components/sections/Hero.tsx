@@ -56,8 +56,10 @@ export default function Hero() {
           src="/luxury_marrakech_office_hero_1775496536100.png"
           fill
           priority
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
           sizes="100vw"
-          quality={75}
+          quality={85}
           style={{ objectFit: 'cover' }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" aria-hidden="true"></div>

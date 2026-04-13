@@ -48,6 +48,9 @@
   --color-outline-variant: #d0c5b4;
   --color-on-primary-fixed: #251a00;
   --color-surface-variant: #e5e2e0;
+  --color-brand-gold: #dab055;
+  --color-brand-charcoal: #1c1c1b;
+  --color-brand-accent: #A68942;
   --color-gold: #A68942;
 
   --font-headline: var(--font-playfair), serif;

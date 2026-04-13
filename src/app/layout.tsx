@@ -10,6 +10,7 @@ import CookieConsent from "@/components/layout/CookieConsent";
 import SchemaMarkup from "@/components/common/SchemaMarkup";
 import { CONFIG } from "@/data/config";
 import ConsentWrapper from "@/components/common/ConsentWrapper";
+import ErrorLogger from "@/components/common/ErrorLogger";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -145,6 +146,7 @@ export default async function RootLayout({
         </head>
         <body className={`${plusJakarta.variable} ${playfair.variable} ${montserrat.variable} bg-background text-on-background antialiased font-body theme-premium`}>
           <ConsentWrapper>
+            <ErrorLogger />
             <Header />
             <main>{children}</main>
             <Footer />
