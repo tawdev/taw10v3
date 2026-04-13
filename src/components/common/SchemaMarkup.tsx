@@ -23,35 +23,48 @@ const SchemaMarkup = () => {
       "latitude": 31.6346,
       "longitude": -8.0150
     },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
-      "opens": "09:00",
-      "closes": "18:00"
-    },
+
+    "priceRange": "$$",
+    "description": "TAW 10 est la référence premium pour la domiciliation d'entreprise et la création de société à Marrakech, Guéliz.",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday"],
+        "opens": "09:00",
+        "closes": "13:00"
+      }
+    ],
     "sameAs": [
       CONFIG.socials.facebook,
       CONFIG.socials.instagram
     ],
-    "services": [
-      {
-        "@type": "Service",
-        "name": "Domiciliation d'entreprise",
-        "description": "Adresse prestigieuse pour votre siège social à Marrakech."
-      },
-      {
-        "@type": "Service",
-        "name": "Création d'entreprise",
-        "description": "Accompagnement complet pour la création de votre société au Maroc."
-      }
-    ]
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Services TAW 10",
+      "itemListElement": [
+        {
+          "@type": "Service",
+          "name": "Domiciliation d'entreprise à Marrakech",
+          "description": "Siège social premium dans le quartier de Guéliz pour votre entreprise au Maroc."
+        },
+        {
+          "@type": "Service",
+          "name": "Création de société au Maroc",
+          "description": "Accompagnement juridique et administratif complet pour entrepreneurs."
+        },
+        {
+          "@type": "Service",
+          "name": "Transfert de siège social",
+          "description": "Gestion administrative du changement d'adresse de votre entreprise."
+        }
+      ]
+    }
   };
 
   return (

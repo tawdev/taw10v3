@@ -233,7 +233,12 @@ export default function Header() {
             >
               <Link 
                 href="/#contact"
-                onClick={(e) => scrollToSection(e, "#contact")}
+                onClick={(e) => {
+                  scrollToSection(e, "#contact");
+                  if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                    (window as any).dataLayer.push({ event: 'button_click', button_name: 'consultation', location: 'desktop_header' });
+                  }
+                }}
                 className={`bg-[#dab055] text-white rounded-full text-[9px] xl:text-[11px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center justify-center transition-all duration-300 ${
                 isScrolled ? 'px-6 py-3' : 'px-8 py-3.5 xl:px-10 xl:py-4.5'
               }`}
@@ -318,7 +323,12 @@ export default function Header() {
                 >
                   <Link 
                     href="/#contact"
-                    onClick={(e) => scrollToSection(e, "#contact")}
+                    onClick={(e) => {
+                      scrollToSection(e, "#contact");
+                      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                        (window as any).dataLayer.push({ event: 'button_click', button_name: 'consultation', location: 'mobile_header' });
+                      }
+                    }}
                     className="w-full bg-[#dab055] text-white py-5 rounded-2xl flex items-center justify-center font-bold uppercase tracking-widest text-xs shadow-lg"
                   >
                     {t("nav.consultation")}

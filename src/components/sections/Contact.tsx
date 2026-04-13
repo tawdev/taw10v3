@@ -81,6 +81,15 @@ Nouveau message depuis le formulaire de contact :
     
     setSubmitted(true);
     setIsSubmitting(false);
+
+    // Track GTM Conversion
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'form_submission_success',
+        form_name: 'contact_form',
+        service_selected: formData.service || 'general'
+      });
+    }
     
     setTimeout(() => {
       window.open(whatsappUrl, "_blank");

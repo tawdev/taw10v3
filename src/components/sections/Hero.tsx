@@ -56,6 +56,7 @@ export default function Hero() {
           src="/luxury_marrakech_office_hero_1775496536100.png"
           fill
           priority
+          fetchPriority="high"
           placeholder="blur"
           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
           sizes="100vw"

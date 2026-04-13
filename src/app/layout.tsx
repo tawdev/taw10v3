@@ -73,11 +73,12 @@ export async function generateMetadata(
       "TAW 10"
     ],
     alternates: {
-      canonical: "/",
+      canonical: "https://taw10.ma",
       languages: {
-        "fr-FR": "/fr",
-        "ar-MA": "/ar",
-        "en-US": "/en",
+        "fr-MA": "https://taw10.ma",
+        "ar-MA": "https://taw10.ma",
+        "en-MA": "https://taw10.ma",
+        "x-default": "https://taw10.ma",
       },
     },
     openGraph: {
