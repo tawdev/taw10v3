@@ -156,6 +156,7 @@ export default function Header() {
             className="flex items-center gap-3 group" 
             href="/" 
             onClick={(e) => scrollToSection(e, "#")}
+            aria-label="Go to homepage"
           >
             <motion.span 
               className={`font-headline text-2xl xl:text-3xl font-bold tracking-tighter transition-colors duration-500 ${isScrolled ? 'text-[#1c1c1b]' : 'text-white'}`}
@@ -206,23 +207,24 @@ export default function Header() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.3 }}
+                  role="group"
+                  aria-label="Language selection"
                 >
                   {["FR", "AR", "EN"].map((lang) => (
-                    <motion.span
+                    <motion.button
                       key={lang}
                       className={`${language === lang ? "text-[#dab055]" : "text-[#1c1c1b]/60 cursor-pointer hover:text-[#1c1c1b]"}`}
                       onClick={() => setLanguage(lang as "FR" | "AR" | "EN")}
                       whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.9 }}
+                      aria-label={`Switch to ${lang === "FR" ? "French" : lang === "AR" ? "Arabic" : "English"}`}
                     >
                       {lang}
-                    </motion.span>
+                    </motion.button>
                   ))}
                 </motion.div>
               )}
             </AnimatePresence>
-            
-            {/* Top Bar Language Switcher removed from here as it is redundant on desktop */}
             
             <motion.div
               className="hidden lg:block xl:block"

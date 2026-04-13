@@ -186,7 +186,7 @@ Nouveau message depuis le formulaire de contact :
                       animate={contactInView ? { opacity: 1, y: 0 } : {}}
                       transition={{ delay: 0.4 }}
                     >
-                      <label className="text-[11px] font-bold text-[#1c1c1b] uppercase tracking-widest ml-1 opacity-60">{t("contact.firstname")}</label>
+                      <label className="text-[10px] font-bold text-[#1c1c1b] uppercase tracking-widest ml-1 opacity-60">{t("contact.firstname")}</label>
                       <motion.input 
                         type="text" 
                         name="prenom"

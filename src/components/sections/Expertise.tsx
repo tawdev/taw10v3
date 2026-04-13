@@ -136,8 +136,9 @@ export default function Expertise() {
                   <Link
                     className="text-[#dab055] font-bold text-xs uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all"
                     href={`/services/${item.slug}`}
+                    aria-label={`${t("common.learn_more")} - ${item.title}`}
                   >
-                    {t("common.learn_more")} <span className="material-symbols-outlined text-sm animate-pulse-scale">arrow_forward</span>
+                    {t("common.learn_more")} <span className="material-symbols-outlined text-sm animate-pulse-scale" aria-hidden="true">arrow_forward</span>
                   </Link>
                 </div>
               </motion.div>
