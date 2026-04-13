@@ -158,7 +158,7 @@ export default function Header() {
             onClick={(e) => scrollToSection(e, "#")}
           >
             <motion.span 
-              className={`font-headline text-3xl font-bold tracking-tighter transition-colors duration-500 ${isScrolled ? 'text-[#1c1c1b]' : 'text-white'}`}
+              className={`font-headline text-2xl xl:text-3xl font-bold tracking-tighter transition-colors duration-500 ${isScrolled ? 'text-[#1c1c1b]' : 'text-white'}`}
               whileHover={{ scale: 1.05 }}
             >
               TAW <motion.span 
@@ -169,7 +169,7 @@ export default function Header() {
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-16">
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-12">
             {navItems.map((link, idx) => (
               <motion.div
                 key={link.key}
@@ -222,41 +222,18 @@ export default function Header() {
               )}
             </AnimatePresence>
             
-            {/* Top Bar Language Switcher (visible when not scrolled) */}
-            <AnimatePresence>
-              {!isScrolled && (
-                <motion.div 
-                  className="hidden lg:flex items-center gap-3 text-[10px] font-bold tracking-widest"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  {["FR", "AR", "EN"].map((lang, idx) => (
-                    <motion.span
-                      key={lang}
-                      className={`${language === lang ? "text-[#dab055]" : "text-white/60 hover:text-white cursor-pointer"}`}
-                      onClick={() => setLanguage(lang as "FR" | "AR" | "EN")}
-                      whileHover={{ scale: 1.2, y: -2 }}
-                      whileTap={{ scale: 0.9 }}
-                      transition={{ type: "spring", stiffness: 400 }}
-                    >
-                      {lang}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Top Bar Language Switcher removed from here as it is redundant on desktop */}
             
             <motion.div
-              className="hidden sm:block"
+              className="hidden lg:block xl:block"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <Link 
                 href="/#contact"
                 onClick={(e) => scrollToSection(e, "#contact")}
-                className={`bg-[#dab055] text-white rounded-full text-[11px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center justify-center ${
-                isScrolled ? 'px-10 py-4' : 'px-12 py-5'
+                className={`bg-[#dab055] text-white rounded-full text-[10px] xl:text-[11px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center justify-center transition-all duration-300 ${
+                isScrolled ? 'px-8 py-3.5' : 'px-10 py-4.5'
               }`}
               >
                 <motion.span
