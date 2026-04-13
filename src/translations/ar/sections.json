@@ -87,5 +87,14 @@
   "contact.message": "رسالتك",
   "contact.message_placeholder": "كيف يمكننا مساعدتك؟ اكتب رسالتك هنا...",
   "contact.send": "إرسال الرسالة",
-  "contact.your_email": "بريدك الإلكتروني"
+  "contact.your_email": "بريدك الإلكتروني",
+  "contact.service": "الخدمة المطلوبة",
+  "contact.service_placeholder": "اختر الخدمة",
+  "contact.privacy": "نحن نحترم خصوصيتك. بياناتك في أمان تام وفقاً للقوانين المعمول بها.",
+  "contact.service_domiciliation": "توطين الشركة",
+  "contact.service_creation": "إنشاء الشركة",
+  "contact.service_legal": "استشارة قانونية / إدارية",
+  "contact.service_other": "طلب آخر",
+  "contact.success_title": "تم الإرسال بنجاح!",
+  "contact.success_desc": "جاري التحويل إلى واتساب..."
 }

@@ -94,5 +94,7 @@
   "contact.service_domiciliation": "Domiciliation de société",
   "contact.service_creation": "Création d'entreprise",
   "contact.service_legal": "Conseil Juridique / Administratif",
-  "contact.service_other": "Autre demande"
+  "contact.service_other": "Autre demande",
+  "contact.success_title": "Message envoyé !",
+  "contact.success_desc": "Redirection vers WhatsApp..."
 }

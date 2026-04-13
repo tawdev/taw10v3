@@ -87,5 +87,14 @@
   "contact.message": "Your Message",
   "contact.message_placeholder": "How can we help you? Type your message here...",
   "contact.send": "Send Message",
-  "contact.your_email": "Your email address"
+  "contact.your_email": "Your email address",
+  "contact.service": "Desired Service",
+  "contact.service_placeholder": "Select a service",
+  "contact.privacy": "Your data is treated with full confidentiality in accordance with current laws.",
+  "contact.service_domiciliation": "Business Domiciliation",
+  "contact.service_creation": "Business Creation",
+  "contact.service_legal": "Legal / Administrative Advice",
+  "contact.service_other": "Other request",
+  "contact.success_title": "Message sent!",
+  "contact.success_desc": "Redirecting to WhatsApp..."
 }

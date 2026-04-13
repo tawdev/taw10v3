@@ -11,8 +11,10 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === "/fr" || pathname === "/ar" || pathname === "/en";
   const { language, setLanguage, t } = useLanguage();
+
+  const useDarkText = isScrolled || !isHome;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -159,7 +161,7 @@ export default function Header() {
             aria-label="Go to homepage"
           >
             <motion.span 
-              className={`font-headline text-2xl xl:text-3xl font-bold tracking-tighter transition-colors duration-500 ${isScrolled ? 'text-[#1c1c1b]' : 'text-white'}`}
+              className={`font-headline text-2xl xl:text-3xl font-bold tracking-tighter transition-colors duration-500 ${useDarkText ? 'text-[#1c1c1b]' : 'text-white'}`}
               whileHover={{ scale: 1.05 }}
             >
               TAW <motion.span 
@@ -180,7 +182,7 @@ export default function Header() {
               >
                 <Link
                   className={`text-[11px] font-bold tracking-[0.25em] transition-all duration-300 relative group cursor-pointer ${
-                    isScrolled ? 'text-[#1c1c1b]/80 hover:text-[#dab055]' : 'text-white/70 hover:text-[#dab055]'
+                    useDarkText ? 'text-[#1c1c1b]/80 hover:text-[#dab055]' : 'text-white/70 hover:text-[#dab055]'
                   }`}
                   href={link.href}
                   onClick={(e) => scrollToSection(e, link.href.startsWith("/#") ? link.href.substring(1) : link.href)}
@@ -259,7 +261,7 @@ export default function Header() {
             >
               <div className="flex flex-col gap-1.5">
                 <motion.span 
-                  className={`w-6 h-0.5 ${isScrolled ? 'bg-[#1c1c1b]' : 'bg-white'} block`}
+                  className={`w-6 h-0.5 ${useDarkText ? 'bg-[#1c1c1b]' : 'bg-white'} block`}
                   animate={{
                     rotate: isMobileMenuOpen ? 45 : 0,
                     y: isMobileMenuOpen ? 9 : 0,
@@ -268,7 +270,7 @@ export default function Header() {
                   transition={{ duration: 0.3 }}
                 />
                 <motion.span 
-                  className={`w-6 h-0.5 ${isScrolled ? 'bg-[#1c1c1b]' : 'bg-white'} block`}
+                  className={`w-6 h-0.5 ${useDarkText ? 'bg-[#1c1c1b]' : 'bg-white'} block`}
                   animate={{
                     opacity: isMobileMenuOpen ? 0 : 1,
                     x: isMobileMenuOpen ? 10 : 0
@@ -276,7 +278,7 @@ export default function Header() {
                   transition={{ duration: 0.3 }}
                 />
                 <motion.span 
-                  className={`w-6 h-0.5 ${isScrolled ? 'bg-[#1c1c1b]' : 'bg-white'} block`}
+                  className={`w-6 h-0.5 ${useDarkText ? 'bg-[#1c1c1b]' : 'bg-white'} block`}
                   animate={{
                     rotate: isMobileMenuOpen ? -45 : 0,
                     y: isMobileMenuOpen ? -9 : 0

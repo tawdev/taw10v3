@@ -93,7 +93,14 @@ Nouveau message depuis le formulaire de contact :
     
     setTimeout(() => {
       window.open(whatsappUrl, "_blank");
-      setFormData({ nom: "", prenom: "", email: "", service: "", message: "" });
+      setFormData({ 
+        nom: "", 
+        prenom: "", 
+        email: "", 
+        service: "", 
+        message: "",
+        website: "" 
+      });
       setSubmitted(false);
     }, 2000);
   };
@@ -336,12 +343,12 @@ Nouveau message depuis le formulaire de contact :
                   <h3 
                     className="text-2xl font-headline font-bold text-[#1c1c1b] mb-2"
                   >
-                    Message envoyé!
+                    {t("contact.success_title")}
                   </h3>
                   <p 
                     className="text-[#1c1c1b]/60 text-center"
                   >
-                    Redirection vers WhatsApp...
+                    {t("contact.success_desc")}
                   </p>
                 </div>
               )}
