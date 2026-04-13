@@ -73,7 +73,7 @@ export default function Hero() {
           style={{ opacity }}
         >
           <motion.span 
-            className="font-label text-[#dab055] font-bold tracking-[0.4em] uppercase text-xs mb-8 block drop-shadow-md"
+            className="font-label text-[#dab055] font-bold tracking-[0.4em] uppercase text-[10px] xl:text-xs mb-4 xl:mb-8 block drop-shadow-md"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -81,7 +81,7 @@ export default function Hero() {
             {t("hero.subtitle")}
           </motion.span>
           <motion.h1 
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl leading-[1.1] md:leading-[1.15] text-white font-bold tracking-tighter mb-6 md:mb-10 font-headline drop-shadow-2xl text-balance italic"
+            className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-7xl leading-[1.1] md:leading-[1.15] text-white font-bold tracking-tighter mb-6 md:mb-10 font-headline drop-shadow-2xl text-balance italic"
             style={{ fontFamily: '"Playfair Display", serif' }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export default function Hero() {
             {t("hero.title_prefix")} <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase italic px-1 md:px-2 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap">TAW 10</span> {t("hero.title_suffix")}
           </motion.h1>
           <motion.p 
-            className="text-lg md:text-xl text-white/90 font-body max-w-3xl mb-10 md:mb-14 leading-relaxed drop-shadow-md text-balance"
+            className="text-base md:text-lg xl:text-xl text-white/90 font-body max-w-3xl mb-8 md:mb-14 leading-relaxed drop-shadow-md text-balance"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
