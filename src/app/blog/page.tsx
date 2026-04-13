@@ -1,21 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-// This is a placeholder for actual blog data
-const BLOG_POSTS = [
-  {
-    title: "Comment créer sa société au Maroc en 2025",
-    slug: "comment-creer-societe-maroc-2025",
-    excerpt: "Guide complet sur les étapes administratives et juridiques pour lancer votre entreprise.",
-    date: "2024-04-13"
-  },
-  {
-    title: "Les avantages de la domiciliation à Marrakech",
-    slug: "avantages-domiciliation-marrakech",
-    excerpt: "Pourquoi choisir Marrakech comme siège social pour votre croissance internationale.",
-    date: "2024-04-10"
-  }
-];
+import { BLOG_POSTS } from '@/data/blog';
 
 export default function BlogPage() {
   return (

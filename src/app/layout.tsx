@@ -8,8 +8,8 @@ import Footer from "@/components/layout/Footer";
 import WhatsappContact from "@/components/layout/WhatsappContact";
 import CookieConsent from "@/components/layout/CookieConsent";
 import SchemaMarkup from "@/components/common/SchemaMarkup";
-import { GTMHead, GTMBody } from "@/components/common/GoogleTagManager";
 import { CONFIG } from "@/data/config";
+import ConsentWrapper from "@/components/common/ConsentWrapper";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -36,7 +36,7 @@ const montserrat = Montserrat({
 });
 
 export async function generateMetadata(
-  { params }: { params: any },
+  { params }: { params: { lang?: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const cookieStore = await cookies();
@@ -129,7 +129,6 @@ export default async function RootLayout({
     <html lang={initialLanguage.toLowerCase()} dir={direction} className="light">
       <LanguageProvider initialLanguage={initialLanguage}>
         <head>
-          <GTMHead gtmId={CONFIG.gtmId} />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
@@ -145,14 +144,15 @@ export default async function RootLayout({
           <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         </head>
         <body className={`${plusJakarta.variable} ${playfair.variable} ${montserrat.variable} bg-background text-on-background antialiased font-body theme-premium`}>
-          <GTMBody gtmId={CONFIG.gtmId} />
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <SchemaMarkup />
-          <div id="language-direction-sync" />
-          <WhatsappContact />
-          <CookieConsent />
+          <ConsentWrapper>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <SchemaMarkup />
+            <div id="language-direction-sync" />
+            <WhatsappContact />
+            <CookieConsent />
+          </ConsentWrapper>
         </body>
       </LanguageProvider>
     </html>

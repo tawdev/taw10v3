@@ -10,5 +10,8 @@ export const CONFIG = {
     facebook: "https://www.facebook.com/taw10.ma/",
     instagram: "https://www.instagram.com/tawteen_10/",
   },
-  gtmId: "GTM-PTB5JFRG",
+  analytics: {
+    gtm: process.env.NEXT_PUBLIC_GTM_ID || 'GTM-PTB5JFRG',
+    ga: process.env.NEXT_PUBLIC_GA_ID || '', // Fallback or empty
+  },
 };

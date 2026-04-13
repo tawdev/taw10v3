@@ -31,7 +31,7 @@ export default function Contact() {
       );
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
@@ -230,7 +230,7 @@ Nouveau message depuis le formulaire de contact :
                     <select 
                       name="service"
                       value={formData.service}
-                      onChange={handleChange as any}
+                      onChange={(e) => handleChange(e as React.ChangeEvent<HTMLSelectElement>)}
                       required
                       className="w-full bg-[#fcf9f6] border border-gray-100 rounded-2xl p-5 outline-none text-[#1c1c1b] font-body appearance-none cursor-pointer focus:border-[#dab055] focus:shadow-[0_0_0_3px_rgba(218, 176, 85, 0.2)] transition-all"
                     >
