@@ -297,9 +297,9 @@ export default function Footer() {
             transition={{ delay: 1.2 }}
           >
             {[
-              { label: t("footer.legal"), href: "#" },
-              { label: "Confidentialité", href: "#" },
-              { label: "Conditions Générales", href: "#" }
+              { label: t("footer.legal"), href: "/legal" },
+              { label: "Confidentialité", href: "/legal" },
+              { label: "Conditions Générales", href: "/legal" }
             ].map((link) => (
               <motion.a 
                 key={link.label}
