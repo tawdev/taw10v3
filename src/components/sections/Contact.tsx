@@ -9,13 +9,13 @@ export default function Contact() {
   const { t } = useLanguage();
   const contactRef = useRef<HTMLElement>(null);
   const contactInView = useInView(contactRef, { once: true, margin: "-100px" });
-
   const [formData, setFormData] = useState({
     nom: "",
     prenom: "",
     email: "",
     service: "",
-    message: ""
+    message: "",
+    website: "" // Honeypot field
   });
   const [errors, setErrors] = useState({
     email: ""
@@ -47,6 +47,13 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (formData.website) {
+      // If honeypot is filled, assume bot and exit silently
+      console.warn("Spam attempt detected.");
+      setSubmitted(true);
+      return;
+    }
+
     if (!validateEmail(formData.email)) {
       setErrors(prev => ({ ...prev, email: "Please enter a valid email" }));
       return;
@@ -160,6 +167,16 @@ Nouveau message depuis le formulaire de contact :
                   initial={{ opacity: 1 }}
                   exit={{ opacity: 0, x: -100 }}
                 >
+                  {/* Honeypot field for bot protection */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    style={{ position: 'absolute', opacity: 0, height: 0, width: 0, zIndex: -1 }}
+                  />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <motion.div 
                       className="space-y-2"
