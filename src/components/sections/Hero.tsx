@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { MagneticButton } from "../common/UIComponents";
+import { fadeInUp, staggerContainer } from "../common/Animations";
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -81,13 +82,21 @@ export default function Hero() {
             {t("hero.subtitle")}
           </motion.span>
           <motion.h1 
-            className="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-7xl leading-[1.1] md:leading-[1.15] text-white font-bold tracking-tighter mb-6 md:mb-10 font-headline drop-shadow-2xl text-balance italic"
+            className="flex flex-col text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.15] md:leading-[1.2] text-white font-bold tracking-tighter mb-10 md:mb-14 font-headline drop-shadow-2xl italic"
             style={{ fontFamily: '"Playfair Display", serif' }}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
           >
-            {t("hero.title_prefix")} <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase italic px-1 md:px-2 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap">TAW 10</span> {t("hero.title_suffix")}
+            <motion.span variants={fadeInUp} className="pl-0 block">{t("hero.line1")}</motion.span>
+            <motion.span variants={fadeInUp} className="pl-12 md:pl-24 block text-[#dab055]">{t("hero.line2")}</motion.span>
+            <motion.span variants={fadeInUp} className="pl-0 flex items-center gap-3 flex-wrap">
+              <span className="whitespace-nowrap">{t("hero.line3")}</span>
+              <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase px-2 md:px-3 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap not-italic">
+                {t("hero.title_brand")}
+              </span>
+            </motion.span>
+            <motion.span variants={fadeInUp} className="pl-12 md:pl-24 block">{t("hero.line4")}</motion.span>
           </motion.h1>
           <motion.p 
             className="text-base md:text-lg xl:text-xl text-white/90 font-body max-w-3xl mb-8 md:mb-14 leading-relaxed drop-shadow-md text-balance"

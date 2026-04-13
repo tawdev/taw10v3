@@ -1,7 +1,10 @@
 {
-  "hero.title_prefix": "من بين أفضل شركات التوطين والإنشاء على الإنترنت أو في جميع مراكز",
+  "hero.line1": "من بين أفضل شركات التوطين",
+  "hero.line2": "والإنشاء على الإنترنت",
+  "hero.line3": "أو في جميع مراكز",
+  "hero.line4": "في المغرب",
   "hero.title_brand": "TAW 10",
-  "hero.title_suffix": "في المغرب",
+  "hero.title_suffix": "",
   "hero.subtitle": "توطين ممتاز — المغرب",
   "hero.cta": "ابدأ الآن",
   "hero.offers": "اكتشف عروضنا",
