@@ -10,4 +10,5 @@ export const CONFIG = {
     facebook: "https://www.facebook.com/taw10.ma/",
     instagram: "https://www.instagram.com/tawteen_10/",
   },
+  gtmId: "GTM-PTB5JFRG",
 };

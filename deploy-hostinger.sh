@@ -16,20 +16,11 @@ npm ci --omit=dev
 echo "📦 Installing dev dependencies for build..."
 npm ci
 
-# 3. Build the app
+# 3. Build the app (Handles copying internally now)
 echo "🔨 Building Next.js app..."
 npm run build
 
-# 4. Copy public assets into standalone output
-echo "📁 Copying public folder to standalone..."
-cp -r public .next/standalone/public
-
-# 5. Copy static assets into standalone output
-echo "📁 Copying static assets to standalone..."
-mkdir -p .next/standalone/.next
-cp -r .next/static .next/standalone/.next/static
-
-# 6. Create logs directory
+# 4. Create logs directory
 mkdir -p logs
 
 # 7. Start with PM2 (or restart if already running)

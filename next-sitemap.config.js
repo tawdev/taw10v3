@@ -5,6 +5,7 @@ module.exports = {
   outDir: 'public',
   additionalPaths: async (config) => [
     { loc: '/', changefreq: 'daily', priority: 1.0 },
+    { loc: '/blog', changefreq: 'weekly', priority: 0.9 },
     { loc: '/services/domiciliation', changefreq: 'monthly', priority: 0.8 },
     { loc: '/services/creation-entreprise', changefreq: 'monthly', priority: 0.8 },
     { loc: '/services/secretariat', changefreq: 'monthly', priority: 0.8 },
