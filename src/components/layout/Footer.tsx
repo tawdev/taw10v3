@@ -77,7 +77,7 @@ export default function Footer() {
             >
               &quot;{t("footer.quote")}&quot;
             </motion.p>
-            <motion.div className="flex items-center gap-4" variants={scaleIn}>
+            <motion.div className="flex items-center gap-4 py-2" variants={scaleIn}>
               {[
                 { icon: 'fa-brands fa-facebook-f', href: CONFIG.socials.facebook, label: 'Facebook' },
                 { icon: 'fa-brands fa-instagram', href: CONFIG.socials.instagram, label: 'Instagram' }
@@ -96,19 +96,32 @@ export default function Footer() {
                     boxShadow: "0 10px 30px rgba(218, 176, 85, 0.3)"
                   }}
                   whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: idx * 0.1 + 0.5 }}
                 >
                   <span className="sr-only">{social.label}</span>
                   <i className={`${social.icon} text-lg`} aria-hidden="true"></i>
-                  <motion.span 
-                    className="absolute inset-0 bg-[#dab055] opacity-0"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 0.2 }}
-                  />
                 </motion.a>
               ))}
+            </motion.div>
+
+            {/* Added Phone & Address to Footer */}
+            <motion.div className="space-y-4 pt-4 border-t border-white/5" variants={fadeInUp}>
+              <a 
+                href={CONFIG.contact.mapLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 text-white/40 group hover:text-[#dab055] transition-colors"
+                title="View on Google Maps"
+              >
+                <span className="material-symbols-outlined text-[#dab055] text-xl">location_on</span>
+                <span className="text-xs font-body">{CONFIG.contact.address}</span>
+              </a>
+              <div className="flex items-center gap-4 text-white/40 group">
+                <span className="material-symbols-outlined text-[#dab055] text-xl">call</span>
+                <div className="flex flex-col">
+                  <a href={`tel:${CONFIG.contact.phone.replace(/\s/g, '')}`} className="text-xs font-body hover:text-white transition-colors" dir="ltr">{CONFIG.contact.phone}</a>
+                  <a href={`tel:${CONFIG.contact.mobile.replace(/\s/g, '')}`} className="text-xs font-body hover:text-white transition-colors" dir="ltr">{CONFIG.contact.mobile}</a>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
 

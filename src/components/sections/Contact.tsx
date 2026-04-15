@@ -160,7 +160,7 @@ Nouveau message depuis le formulaire de contact :
                     <span dir="ltr">{CONFIG.contact.phone}</span>
                   </p>
                   <p className="text-xl font-headline font-bold text-[#1c1c1b]/80">
-                    <span dir="ltr">+212 60779-0956</span>
+                    <span dir="ltr">{CONFIG.contact.mobile}</span>
                   </p>
                 </div>
               </motion.div>

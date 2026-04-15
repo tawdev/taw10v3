@@ -13,7 +13,7 @@ const SchemaMarkup = () => {
     "email": CONFIG.contact.email,
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Centre commercial Carré Eden, Guéliz",
+      "streetAddress": "48 Lot IGUIDER, Allal El Fassi",
       "addressLocality": "Marrakech",
       "postalCode": "40000",
       "addressCountry": "MA"
