@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { BLOG_POSTS } from '@/data/blog';
@@ -44,10 +45,11 @@ const BlogSection = () => {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#dab055]/5 rounded-full blur-[40px] -translate-y-1/2 translate-x-1/2 group-hover:bg-[#dab055]/10 transition-colors z-0"></div>
                 
                 <div className="h-64 overflow-hidden relative z-10 w-full mb-6">
-                  <img 
+                  <Image 
                     src={post.image} 
                     alt={post.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#fcf9f6] via-transparent to-transparent"></div>
                 </div>
