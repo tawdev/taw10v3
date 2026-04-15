@@ -1,0 +1,25 @@
+{
+  "name": "TAW 10 — Domiciliation & Création Entreprise",
+  "short_name": "TAW 10",
+  "description": "Premium Business Domiciliation & Company Creation in Morocco",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fcf9f6",
+  "theme_color": "#dab055",
+  "icons": [
+    {
+      "src": "/logo.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "orientation": "portrait-primary",
+  "categories": ["business", "legal"]
+}

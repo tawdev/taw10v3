@@ -38,6 +38,15 @@ const montserrat = Montserrat({
   preload: true,
 });
 
+export const viewport = {
+  themeColor: "#dab055",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: "cover",
+};
+
 export async function generateMetadata(
   { params }: { params: { lang?: string } },
   parent: ResolvingMetadata
@@ -74,6 +83,15 @@ export async function generateMetadata(
       "accompagnement juridique maroc", 
       "TAW 10"
     ],
+    manifest: "/manifest.json",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "default",
+      title: "TAW 10",
+    },
+    formatDetection: {
+      telephone: true,
+    },
     alternates: {
       canonical: "https://taw10.ma",
       languages: {
@@ -90,7 +108,7 @@ export async function generateMetadata(
       siteName: "TAW 10",
       images: [
         {
-          url: "/og-image.png", // Ensure this exists
+          url: "/logo.jpeg",
           width: 1200,
           height: 630,
           alt: "TAW 10 — Premium Business Domiciliation Morocco",
@@ -103,7 +121,7 @@ export async function generateMetadata(
       card: "summary_large_image",
       title: titles[language],
       description: descriptions[language],
-      images: ["/og-image.png"],
+      images: ["/logo.jpeg"],
     },
     robots: {
       index: true,
@@ -131,23 +149,19 @@ export default async function RootLayout({
 
   return (
     <html lang={initialLanguage.toLowerCase()} dir={direction} className="light">
-      <LanguageProvider initialLanguage={initialLanguage}>
-        <head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
-          <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-            rel="stylesheet"
-          />
-          <link 
-            rel="stylesheet" 
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
-          />
-          <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-        </head>
-        <body className={`${plusJakarta.variable} ${playfair.variable} ${montserrat.variable} bg-background text-on-background antialiased font-body theme-premium`}>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
+        <link 
+          rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+        />
+        <link rel="apple-touch-icon" href="/logo.jpeg" />
+      </head>
+      <body className={`${plusJakarta.variable} ${playfair.variable} ${montserrat.variable} bg-background text-on-background antialiased font-body theme-premium`}>
+        <LanguageProvider initialLanguage={initialLanguage}>
           <ConsentWrapper>
             <CustomCursor />
             <ErrorLogger />
@@ -159,8 +173,8 @@ export default async function RootLayout({
             <WhatsappContact />
             <CookieConsent />
           </ConsentWrapper>
-        </body>
-      </LanguageProvider>
+        </LanguageProvider>
+      </body>
     </html>
   );
 }
