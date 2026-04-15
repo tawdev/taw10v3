@@ -11,10 +11,11 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/" || pathname === "/fr" || pathname === "/ar" || pathname === "/en";
   const { language, setLanguage, t } = useLanguage();
-
-  const useDarkText = isScrolled || !isHome;
+  const isHome = pathname === "/" || pathname === "/fr" || pathname === "/ar" || pathname === "/en";
+  const isServicePage = pathname.includes("/services/");
+  const isBlogPage = pathname.includes("/blog/");
+  const useDarkText = isScrolled || (!isHome && !isServicePage && !isBlogPage);
 
   useEffect(() => {
     const handleScroll = () => {

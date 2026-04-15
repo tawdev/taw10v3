@@ -42,6 +42,7 @@ export default function ServiceDetailPage() {
                  id === "secretariat" ? "https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=2000&auto=format&fit=crop" :
                  id === "accompagnement-juridique" ? "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2000&auto=format&fit=crop" :
                  id === "support-administratif" ? "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2000&auto=format&fit=crop" :
+                 id === "conseil-strategique" ? "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2000&auto=format&fit=crop" :
                  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2000&auto=format&fit=crop"} 
             alt={service.title} 
             fill
