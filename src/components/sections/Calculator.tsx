@@ -14,17 +14,20 @@ const Calculator = () => {
   const [extraLegal, setExtraLegal] = useState(false);
 
   const priceMapping = {
-    sarl: 1500,
+    sarl: 3499,
     auto: 500,
     none: 0,
     "12m": 1200,
-    "24m": 2000,
+    "24m": 2500,
     mail: 400,
     legal: 900,
   };
 
   const total = useMemo(() => {
-    let sum = priceMapping[formType] + priceMapping[duration];
+    let sum = priceMapping[formType];
+    if (formType === "sarl") {
+      sum += priceMapping[duration];
+    }
     if (extraMail) sum += priceMapping.mail;
     if (extraLegal) sum += priceMapping.legal;
     return sum;
@@ -79,28 +82,30 @@ const Calculator = () => {
               </div>
             </div>
 
-            {/* Domiciliation */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-[#1c1c1b] mb-4 flex items-center gap-3">
-                <span className="w-8 h-[1px] bg-[#dab055] inline-block"></span>
-                {t("calc.duration")}
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {(["none", "12m", "24m"] as const).map((dur) => (
-                  <button
-                    key={dur}
-                    onClick={() => setDuration(dur)}
-                    className={`p-4 rounded-2xl border transition-all duration-300 font-bold text-sm ${
-                      duration === dur
-                        ? "border-[#dab055] bg-[#dab055]/5 text-[#dab055] shadow-[0_10px_30px_rgba(218,176,85,0.1)]"
-                        : "border-gray-100 bg-[#fcf9f6] text-[#1c1c1b]/60 hover:border-gray-200"
-                    }`}
-                  >
-                    {t(`calc.${dur}`)}
-                  </button>
-                ))}
+            {/* Domiciliation - Hidder for Auto-Entrepreneur per user request */}
+            {formType === "sarl" && (
+              <div className="space-y-4">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-[#1c1c1b] mb-4 flex items-center gap-3">
+                  <span className="w-8 h-[1px] bg-[#dab055] inline-block"></span>
+                  {t("calc.duration")}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {(["none", "12m", "24m"] as const).map((dur) => (
+                    <button
+                      key={dur}
+                      onClick={() => setDuration(dur)}
+                      className={`p-4 rounded-2xl border transition-all duration-300 font-bold text-sm ${
+                        duration === dur
+                          ? "border-[#dab055] bg-[#dab055]/5 text-[#dab055] shadow-[0_10px_30px_rgba(218,176,85,0.1)]"
+                          : "border-gray-100 bg-[#fcf9f6] text-[#1c1c1b]/60 hover:border-gray-200"
+                      }`}
+                    >
+                      {t(`calc.${dur}`)}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Services Additionnels */}
             <div className="space-y-4">
@@ -168,7 +173,7 @@ const Calculator = () => {
                   <span>{t(`calc.${formType}`)}</span>
                   <span className="text-white">✓</span>
                 </div>
-                {duration !== "none" && (
+                {formType === "sarl" && duration !== "none" && (
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span>{t(`calc.${duration}`)}</span>
                     <span className="text-white">✓</span>
