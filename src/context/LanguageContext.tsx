@@ -49,9 +49,20 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode, initialLang
     localStorage.setItem("language", lang);
     document.cookie = `language=${lang}; path=/; max-age=31536000`; // Sync with cookie for SSR
     
-    // Smoothly transition the URL to the selected language
-    const langPath = `/${lang.toLowerCase()}`;
-    router.push(langPath);
+    // Replace the locale in the current path
+    const pathParts = pathname.split('/');
+    const locales = ['fr', 'ar', 'en'];
+    
+    // Check if the first part is a locale
+    if (pathParts[1] && locales.includes(pathParts[1].toLowerCase())) {
+      pathParts[1] = lang.toLowerCase();
+    } else {
+      // If no locale prefix, prepend it (though middleware should handle this)
+      pathParts.splice(1, 0, lang.toLowerCase());
+    }
+    
+    const newPath = pathParts.join('/') || '/';
+    router.push(newPath);
   };
 
   useEffect(() => {

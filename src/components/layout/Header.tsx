@@ -13,9 +13,7 @@ export default function Header() {
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
   const isHome = pathname === "/" || pathname === "/fr" || pathname === "/ar" || pathname === "/en";
-  const isServicePage = pathname.includes("/services/");
-  const isBlogPage = pathname.includes("/blog/");
-  const useDarkText = isScrolled || (!isHome && !isServicePage && !isBlogPage);
+  const useDarkText = isScrolled || !isHome;
 
   useEffect(() => {
     const handleScroll = () => {
