@@ -47,7 +47,7 @@ const BlogSection = () => {
                 <div className="h-64 overflow-hidden relative z-10 w-full mb-6">
                   <Image 
                     src={post.image} 
-                    alt={post.title} 
+                    alt={post.title[language.toLowerCase() as keyof typeof post.title]} 
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
                   />
@@ -56,8 +56,12 @@ const BlogSection = () => {
 
                 <div className="px-10 md:px-12 pb-10 md:pb-12 relative z-10">
                   <p className="text-[#dab055] font-bold text-xs mb-4">{post.date}</p>
-                  <h3 className="text-2xl font-bold mb-6 text-[#1c1c1b] group-hover:text-[#dab055] transition-colors">{post.title}</h3>
-                  <p className="text-[#1c1c1b]/60 leading-relaxed mb-8 font-body line-clamp-3">{post.excerpt}</p>
+                  <h3 className="text-2xl font-bold mb-6 text-[#1c1c1b] group-hover:text-[#dab055] transition-colors">
+                    {post.title[language.toLowerCase() as keyof typeof post.title]}
+                  </h3>
+                  <p className="text-[#1c1c1b]/60 leading-relaxed mb-8 font-body line-clamp-3">
+                    {post.excerpt[language.toLowerCase() as keyof typeof post.excerpt]}
+                  </p>
                   
                   <div className="flex items-center gap-2 text-[#dab055] font-black text-xs uppercase tracking-widest">
                     {t("common.learn_more")}
