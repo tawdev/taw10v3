@@ -20,7 +20,7 @@ const Calculator = () => {
     "12m": 1200,
     "24m": 2500,
     mail: 400,
-    legal: 900,
+    legal: 500,
   };
 
   const total = useMemo(() => {
@@ -69,7 +69,10 @@ const Calculator = () => {
                 {(["sarl", "auto"] as const).map((type) => (
                   <button
                     key={type}
-                    onClick={() => setFormType(type)}
+                    onClick={() => {
+                    setFormType(type);
+                    if (type === "auto") setExtraMail(false);
+                  }}
                     className={`p-4 rounded-2xl border transition-all duration-300 font-bold text-sm ${
                       formType === type
                         ? "border-[#dab055] bg-[#dab055]/5 text-[#dab055] shadow-[0_10px_30px_rgba(218,176,85,0.1)]"
@@ -114,19 +117,21 @@ const Calculator = () => {
                 {t("calc.services")}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <button
-                  onClick={() => setExtraMail(!extraMail)}
-                  className={`p-4 rounded-2xl border transition-all duration-300 font-bold text-sm flex justify-between items-center ${
-                    extraMail
-                      ? "border-[#dab055] bg-[#dab055]/5 text-[#dab055]"
-                      : "border-gray-100 bg-[#fcf9f6] text-[#1c1c1b]/60"
-                  }`}
-                >
-                  {t("calc.mail")}
-                  <span className="material-symbols-outlined text-[18px]">
-                    {extraMail ? 'check_circle' : 'radio_button_unchecked'}
-                  </span>
-                </button>
+                {formType === "sarl" && (
+                  <button
+                    onClick={() => setExtraMail(!extraMail)}
+                    className={`p-4 rounded-2xl border transition-all duration-300 font-bold text-sm flex justify-between items-center ${
+                      extraMail
+                        ? "border-[#dab055] bg-[#dab055]/5 text-[#dab055]"
+                        : "border-gray-100 bg-[#fcf9f6] text-[#1c1c1b]/60"
+                    }`}
+                  >
+                    {t("calc.mail")}
+                    <span className="material-symbols-outlined text-[18px]">
+                      {extraMail ? 'check_circle' : 'radio_button_unchecked'}
+                    </span>
+                  </button>
+                )}
                 <button
                   onClick={() => setExtraLegal(!extraLegal)}
                   className={`p-4 rounded-2xl border transition-all duration-300 font-bold text-sm flex justify-between items-center ${
