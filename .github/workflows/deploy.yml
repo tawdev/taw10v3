@@ -1,0 +1,60 @@
+name: Deploy TAW10 to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build & Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Prepare standalone assets
+        run: |
+          cp -r public .next/standalone/
+          mkdir -p .next/standalone/.next
+          cp -r .next/static .next/standalone/.next/
+
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script: |
+            cd /var/www/taw10
+            git config --global --add safe.directory /var/www/taw10
+            git pull origin main
+
+            # Install deps & build on server
+            npm ci
+            npm run build
+
+            # Copy required assets for standalone mode
+            cp -r public .next/standalone/
+            mkdir -p .next/standalone/.next
+            cp -r .next/static .next/standalone/.next/
+
+            # Restart both PM2 instances
+            pm2 restart taw10 taw10-ma
+            pm2 save
+
+            echo "✅ Deployment complete!"
