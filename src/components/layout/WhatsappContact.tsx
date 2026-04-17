@@ -68,7 +68,9 @@ export default function WhatsappContact() {
                                 rel="noopener noreferrer"
                                 onClick={() => {
                                   if (typeof window !== 'undefined' && (window as any).dataLayer) {
-                                    (window as any).dataLayer.push({ event: 'whatsapp_engagement', status: 'opened' });
+                                    if (typeof window !== 'undefined' && (window as Window & { dataLayer?: any[] }).dataLayer) {
+                                      (window as Window & { dataLayer: any[] }).dataLayer.push({ event: 'whatsapp_engagement', status: 'opened' });
+                                    }
                                   }
                                 }}
                                 className="flex items-center justify-between bg-gray-50/50 hover:bg-white p-5 rounded-2xl border border-gray-100 transition-all duration-500 group shadow-sm hover:shadow-md"

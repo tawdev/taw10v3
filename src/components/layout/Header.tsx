@@ -239,8 +239,8 @@ export default function Header() {
                 href={`${langPrefix}#contact`}
                 onClick={(e) => {
                   scrollToSection(e, "#contact");
-                  if (typeof window !== 'undefined' && (window as any).dataLayer) {
-                    (window as any).dataLayer.push({ event: 'button_click', button_name: 'consultation', location: 'desktop_header' });
+                  if (typeof window !== 'undefined' && (window as Window & { dataLayer?: any[] }).dataLayer) {
+                    (window as Window & { dataLayer: any[] }).dataLayer.push({ event: 'button_click', button_name: 'consultation', location: 'desktop_header' });
                   }
                 }}
                 className={`bg-[#dab055] text-white rounded-full text-[9px] xl:text-[11px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center justify-center transition-all duration-300 ${
@@ -329,8 +329,8 @@ export default function Header() {
                     href={`${langPrefix}#contact`}
                     onClick={(e) => {
                       scrollToSection(e, "#contact");
-                      if (typeof window !== 'undefined' && (window as any).dataLayer) {
-                        (window as any).dataLayer.push({ event: 'button_click', button_name: 'consultation', location: 'mobile_header' });
+                      if (typeof window !== 'undefined' && (window as Window & { dataLayer?: any[] }).dataLayer) {
+                        (window as Window & { dataLayer: any[] }).dataLayer.push({ event: 'button_click', button_name: 'consultation', location: 'mobile_header' });
                       }
                     }}
                     className="w-full bg-[#dab055] text-white py-5 rounded-2xl flex items-center justify-center font-bold uppercase tracking-widest text-xs shadow-lg"

@@ -83,8 +83,8 @@ Nouveau message depuis le formulaire de contact :
     setIsSubmitting(false);
 
     // Track GTM Conversion
-    if (typeof window !== 'undefined' && (window as any).dataLayer) {
-      (window as any).dataLayer.push({
+    if (typeof window !== 'undefined' && (window as Window & { dataLayer?: any[] }).dataLayer) {
+      (window as Window & { dataLayer: any[] }).dataLayer.push({
         event: 'form_submission_success',
         form_name: 'contact_form',
         service_selected: formData.service || 'general'
