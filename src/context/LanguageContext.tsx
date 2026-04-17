@@ -40,6 +40,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode, initialLang
     // Sync with localStorage on mount if exists, otherwise use initialLanguage
     const savedLang = localStorage.getItem("language") as Language;
     if (savedLang && ["FR", "AR", "EN"].includes(savedLang)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLanguageState(savedLang);
     }
   }, []);

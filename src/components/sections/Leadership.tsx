@@ -53,7 +53,7 @@ export default function Leadership() {
             </motion.div>
           </motion.div>
           <motion.div 
-            className="lg:col-span-7 pl-0 lg:pl-12"
+            className="lg:col-span-7 ps-0 lg:ps-12"
             initial={{ opacity: 0, x: 100 }}
             animate={leadershipInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1, delay: 0.2 }}

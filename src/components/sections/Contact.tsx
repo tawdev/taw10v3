@@ -318,7 +318,7 @@ Nouveau message depuis le formulaire de contact :
                   <div className="flex flex-wrap gap-4 md:gap-8 pt-6 border-t border-gray-100 mt-6 justify-center opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
                     <div className="flex items-center gap-2">
                       <span className="material-symbols-outlined text-[#dab055] text-lg">verified_user</span>
-                      <span className="text-[8px] font-black uppercase tracking-widest whitespace-nowrap">Agréé par l'État</span>
+                      <span className="text-[8px] font-black uppercase tracking-widest whitespace-nowrap">Agréé par l&apos;État</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="material-symbols-outlined text-[#dab055] text-lg">lock</span>

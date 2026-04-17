@@ -1,4 +1,18 @@
-export const servicesData: Record<string, any> = {
+export interface ServiceFeature {
+  id: string;
+  name: string;
+  desc: string;
+}
+
+export interface Service {
+  title: string;
+  subtitle: string;
+  description: string;
+  benefits: string[];
+  features: ServiceFeature[];
+}
+
+export const servicesData: Record<string, Record<string, Service>> = {
   "FR": {
     "domiciliation": {
       title: "Domiciliation Premium",

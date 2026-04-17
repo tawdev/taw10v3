@@ -92,14 +92,14 @@ export default function Hero() {
             variants={staggerContainer}
           >
             <motion.span variants={fadeInUp} className="pl-0 block">{t("hero.line1")}</motion.span>
-            <motion.span variants={fadeInUp} className="pl-12 md:pl-24 block text-[#dab055]">{t("hero.line2")}</motion.span>
+            <motion.span variants={fadeInUp} className="ps-12 md:ps-24 block text-[#dab055]">{t("hero.line2")}</motion.span>
             <motion.span variants={fadeInUp} className="pl-0 flex items-center gap-3 flex-wrap">
               <span className="whitespace-nowrap">{t("hero.line3")}</span>
               <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase px-2 md:px-3 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap not-italic">
                 {t("hero.title_brand")}
               </span>
             </motion.span>
-            <motion.span variants={fadeInUp} className="pl-12 md:pl-24 block">{t("hero.line4")}</motion.span>
+            <motion.span variants={fadeInUp} className="ps-12 md:ps-24 block">{t("hero.line4")}</motion.span>
           </motion.h1>
           <motion.p 
             className="text-base md:text-lg xl:text-xl text-white/90 font-body max-w-3xl mb-8 md:mb-14 leading-relaxed drop-shadow-md text-balance"
@@ -123,7 +123,7 @@ export default function Hero() {
             </MagneticButton>
             <Link 
               href="#expertise" 
-              onClick={(e) => scrollToSection(e as any, "#expertise")}
+              onClick={(e) => scrollToSection(e as unknown as React.MouseEvent<HTMLAnchorElement>, "#expertise")}
               className="font-label text-white/60 hover:text-[#dab055] uppercase tracking-[0.3em] text-[10px] font-bold flex items-center gap-4 transition-colors group"
             >
               <span className="w-12 h-px bg-[#dab055]/30 group-hover:w-16 transition-all duration-500"></span>

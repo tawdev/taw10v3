@@ -44,7 +44,7 @@ export default function Expertise() {
             whileInView={{ opacity: 0.2, rotate: 0 }}
             transition={{ duration: 1 }}
           >
-            "
+            &quot;
           </motion.div>
           <motion.h2 
             className="text-[#1c1c1b] text-4xl md:text-5xl italic font-headline leading-snug relative z-10"
