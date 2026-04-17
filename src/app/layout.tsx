@@ -84,6 +84,10 @@ export async function generateMetadata(
       "TAW 10"
     ],
     manifest: "/manifest.json",
+    icons: {
+      icon: "/icon-192.png",
+      apple: "/apple-touch-icon.png",
+    },
     appleWebApp: {
       capable: true,
       statusBarStyle: "default",
@@ -108,7 +112,7 @@ export async function generateMetadata(
       siteName: "TAW 10",
       images: [
         {
-          url: "/logo.jpeg",
+          url: "/icon-512.png",
           width: 1200,
           height: 630,
           alt: "TAW 10 — Premium Business Domiciliation Morocco",
@@ -121,7 +125,7 @@ export async function generateMetadata(
       card: "summary_large_image",
       title: titles[language],
       description: descriptions[language],
-      images: ["/logo.jpeg"],
+      images: ["/icon-512.png"],
     },
     robots: {
       index: true,
@@ -158,7 +162,7 @@ export default async function RootLayout({
           rel="stylesheet" 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
         />
-        <link rel="apple-touch-icon" href="/logo.jpeg" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className={`${plusJakarta.variable} ${playfair.variable} ${montserrat.variable} bg-background text-on-background antialiased font-body theme-premium`}>
         <LanguageProvider initialLanguage={initialLanguage}>
