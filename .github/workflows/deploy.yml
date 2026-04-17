@@ -32,6 +32,13 @@ jobs:
           mkdir -p .next/standalone/.next
           cp -r .next/static .next/standalone/.next/
 
+      - name: Network Diagnostic
+        run: |
+          echo "🔍 Testing connectivity to ${{ secrets.VPS_HOST }}..."
+          ping -c 3 ${{ secrets.VPS_HOST }} || echo "⚠️ Ping failed"
+          echo "🔍 Testing SSH port 22..."
+          nc -zv -w 5 ${{ secrets.VPS_HOST }} 22 || echo "⚠️ Port 22 unreachable"
+
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -39,6 +46,10 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
+          timeout: 60s
+          command_timeout: 15m
+          debug: true
+          script_stop: true
           script: |
             cd /var/www/taw10
             git config --global --add safe.directory /var/www/taw10
