@@ -68,8 +68,8 @@ export default function WhatsappContact() {
                                 rel="noopener noreferrer"
                                 onClick={() => {
                                   if (typeof window !== 'undefined' && (window as any).dataLayer) {
-                                    if (typeof window !== 'undefined' && (window as Window & { dataLayer?: any[] }).dataLayer) {
-                                      (window as Window & { dataLayer: any[] }).dataLayer.push({ event: 'whatsapp_engagement', status: 'opened' });
+                                    if (typeof window !== 'undefined' && (window as unknown as Window & { dataLayer?: any[] }).dataLayer) {
+                                      (window as unknown as Window & { dataLayer: any[] }).dataLayer.push({ event: 'whatsapp_engagement', status: 'opened' });
                                     }
                                   }
                                 }}
