@@ -48,7 +48,7 @@ const Calculator = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <span className="text-[#dab055] font-bold text-[10px] uppercase tracking-[0.3em] mb-4 block">SIMULATEUR VIP</span>
+          <span className="text-[#dab055] font-bold text-[10px] uppercase tracking-[0.3em] mb-4 block">{t("calc.label")}</span>
           <h2 className="text-4xl md:text-5xl font-headline font-bold text-[#1c1c1b] mb-6">
             {t("calc.title")}
           </h2>
