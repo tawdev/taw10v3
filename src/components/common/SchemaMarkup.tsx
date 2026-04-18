@@ -1,14 +1,19 @@
+"use client";
+
 import React from 'react';
 import { CONFIG } from '@/data/config';
+import { useLanguage } from '@/context/LanguageContext';
 
 const SchemaMarkup = () => {
-  const schema = {
+  const { language, t } = useLanguage();
+
+  const businessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": CONFIG.brandName,
-    "image": "https://taw10.com/logo.png", // Replace with actual logo URL
-    "@id": "https://taw10.com",
-    "url": "https://taw10.com",
+    "image": "https://taw10.ma/icon-512.png",
+    "@id": "https://taw10.ma",
+    "url": "https://taw10.ma",
     "telephone": CONFIG.contact.phone,
     "email": CONFIG.contact.email,
     "address": {
@@ -23,9 +28,12 @@ const SchemaMarkup = () => {
       "latitude": 31.6346,
       "longitude": -8.0150
     },
-
     "priceRange": "$$",
-    "description": "TAW 10 est la référence premium pour la domiciliation d'entreprise et la création de société à Marrakech, Guéliz.",
+    "description": language === "AR" 
+      ? "تقدم TAW 10 أفضل حلول توطين الشركات في المغرب، وإنشاء المقاولات في مراكش، والمواكبة القانونية المتميزة للمقاولين."
+      : language === "EN"
+      ? "TAW 10 provides premium business domiciliation in Morocco, company formation in Marrakech, and strategic legal support."
+      : "TAW 10 est la référence premium pour la domiciliation d'entreprise et la création de société à Marrakech.",
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
@@ -43,35 +51,82 @@ const SchemaMarkup = () => {
     "sameAs": [
       CONFIG.socials.facebook,
       CONFIG.socials.instagram
-    ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Services TAW 10",
-      "itemListElement": [
-        {
-          "@type": "Service",
-          "name": "Domiciliation d'entreprise à Marrakech",
-          "description": "Siège social premium dans le quartier de Guéliz pour votre entreprise au Maroc."
-        },
-        {
-          "@type": "Service",
-          "name": "Création de société au Maroc",
-          "description": "Accompagnement juridique et administratif complet pour entrepreneurs."
-        },
-        {
-          "@type": "Service",
-          "name": "Transfert de siège social",
-          "description": "Gestion administrative du changement d'adresse de votre entreprise."
+    ]
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": t("faq.q1"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t("faq.a1")
         }
-      ]
-    }
+      },
+      {
+        "@type": "Question",
+        "name": t("faq.q2"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t("faq.a2")
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t("faq.q3"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t("faq.a3")
+        }
+      },
+      {
+        "@type": "Question",
+        "name": t("faq.q4"),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": t("faq.a4")
+        }
+      }
+    ]
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": t("nav.home"),
+        "item": "https://taw10.ma"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": t("nav.services"),
+        "item": "https://taw10.ma#expertise"
+      }
+    ]
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+    </>
   );
 };
 

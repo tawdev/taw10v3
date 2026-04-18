@@ -68,7 +68,7 @@ export async function generateMetadata(
   };
 
   return {
-    metadataBase: new URL("https://taw10.com"),
+    metadataBase: new URL("https://taw10.ma"),
     title: {
       default: titles[language] || titles.FR,
       template: `%s | TAW 10`
@@ -106,9 +106,9 @@ export async function generateMetadata(
       },
     },
     openGraph: {
-      title: titles[language],
-      description: descriptions[language],
-      url: "https://taw10.com",
+      title: titles[language] || titles.FR,
+      description: descriptions[language] || descriptions.FR,
+      url: "https://taw10.ma",
       siteName: "TAW 10",
       images: [
         {
