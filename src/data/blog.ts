@@ -1,12 +1,12 @@
 export const BLOG_POSTS = [
   {
-    slug: "comment-creer-societe-maroc-2025",
+    slug: "comment-creer-societe-maroc-2026",
     date: "2024-04-13",
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
     title: {
-      fr: "Comment créer sa société au Maroc en 2025",
-      en: "How to set up your company in Morocco in 2025",
-      ar: "كيفية إنشاء شركتك في المغرب في عام 2025"
+      fr: "Comment créer sa société au Maroc en 2026",
+      en: "How to set up your company in Morocco in 2026",
+      ar: "كيفية إنشاء شركتك في المغرب في عام 2026"
     },
     excerpt: {
       fr: "Guide complet sur les étapes administratives et juridiques pour lancer votre entreprise.",
@@ -14,9 +14,9 @@ export const BLOG_POSTS = [
       ar: "دليل كامل حول الخطوات الإدارية والقانونية لإطلاق عملك."
     },
     content: {
-      fr: "La création d'une société au Maroc est une étape cruciale pour tout entrepreneur souhaitant s'implanter en Afrique du Nord. En 2025, les démarches ont été simplifiées pour encourager l'investissement.\n\n### 1. Le Certificat Négatif\nLa première étape consiste à demander un certificat négatif pour réserver le nom de votre entreprise.\n\n### 2. La Domiciliation\nIl est obligatoire d'avoir un siège social. TAW 10 vous propose des adresses prestigieuses à Marrakech pour valoriser votre image de marque.\n\n### 3. Les Statuts\nLa rédaction des statuts (souvent pour une SARL) doit être précise. Nos conseillers juridiques s'occupent de cette étape pour garantir la conformité de votre structure.",
-      en: "Setting up a company in Morocco is a crucial step for any entrepreneur wishing to establish themselves in North Africa. In 2025, the procedures have been simplified to encourage investment.\n\n### 1. The Negative Certificate\nThe first step is to apply for a negative certificate to reserve your business name.\n\n### 2. Domiciliation\nIt is mandatory to have a head office. TAW 10 offers you prestigious addresses in Marrakech to enhance your brand image.\n\n### 3. The Articles of Association\nThe drafting of the articles of association (often for a SARL) must be precise. Our legal advisors take care of this step to guarantee the compliance of your structure.",
-      ar: "يعد إنشاء شركة في المغرب خطوة حاسمة لأي رائد أعمال يرغب في الاستقرار في شمال إفريقيا. في عام 2025، تم تبسيط الإجراءات لتشجيع الاستثمار.\n\n### 1. الشهادة السلبية\nتتمثل الخطوة الأولى في طلب شهادة سلبية لحجز اسم شركتك.\n\n### 2. التوطين\nمن الضروري أن يكون لديك مقر اجتماعي. تقدم لك TAW 10 عناوين مرموقة في مراكش لتعزيز صورة علامتك التجارية.\n\n### 3. النظام الأساسي\nيجب أن تكون صياغة النظام الأساسي (غالبًا لشركة SARL) دقيقة. يتولى مستشارونا القانونيون هذه الخطوة لضمان امتثال هيكلك."
+      fr: "La création d'une société au Maroc est une étape cruciale pour tout entrepreneur souhaitant s'implanter en Afrique du Nord. En 2026, les démarches ont été simplifiées pour encourager l'investissement.\n\n### 1. Le Certificat Négatif\nLa première étape consiste à demander un certificat négatif pour réserver le nom de votre entreprise.\n\n### 2. La Domiciliation\nIl est obligatoire d'avoir un siège social. TAW 10 vous propose des adresses prestigieuses à Marrakech pour valoriser votre image de marque.\n\n### 3. Les Statuts\nLa rédaction des statuts (souvent pour une SARL) doit être précise. Nos conseillers juridiques s'occupent de cette étape pour garantir la conformité de votre structure.",
+      en: "Setting up a company in Morocco is a crucial step for any entrepreneur wishing to establish themselves in North Africa. In 2026, the procedures have been simplified to encourage investment.\n\n### 1. The Negative Certificate\nThe first step is to apply for a negative certificate to reserve your business name.\n\n### 2. Domiciliation\nIt is mandatory to have a head office. TAW 10 offers you prestigious addresses in Marrakech to enhance your brand image.\n\n### 3. Les Articles of Association\nThe drafting of the articles of association (often for a SARL) must be precise. Our legal advisors take care of this step to guarantee the compliance of your structure.",
+      ar: "يعد إنشاء شركة في المغرب خطوة حاسمة لأي رائد أعمال يرغب في الاستقرار في شمال إفريقيا. في عام 2026، تم تبسيط الإجراءات لتشجيع الاستثمار.\n\n### 1. الشهادة السلبية\nتتمثل الخطوة الأولى في طلب شهادة سلبية لحجز اسم شركتك.\n\n### 2. التوطين\nمن الضروري أن يكون لديك مقر اجتماعي. تقدم لك TAW 10 عناوين مرموقة في مراكش لتعزيز صورة علامتك التجارية.\n\n### 3. النظام الأساسي\nيجب أن تكون صياغة النظام الأساسي (غالبًا لشركة SARL) دقيقة. يتولى مستشارونا القانونيون هذه الخطوة لضمان امتثال هيكلك."
     }
   },
   {
