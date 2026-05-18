@@ -53,6 +53,11 @@ jobs:
           script: |
             cd /var/www/taw10
             git config --global --add safe.directory /var/www/taw10
+            
+            # Discard any local changes on the server to prevent merge conflicts
+            git reset --hard HEAD
+            git clean -fd
+            
             git pull origin main
 
             # Install deps & build on server
