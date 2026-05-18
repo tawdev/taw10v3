@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build && npx shx cp -r .next/static .next/standalone/.next/ && npx shx cp -r public .next/standalone/",
     "start": "node index.js",
-    "lint": "eslint",
-    "postbuild": "next-sitemap"
+    "lint": "eslint"
   },
   "engines": {
     "node": ">=20"

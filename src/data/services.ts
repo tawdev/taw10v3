@@ -15,9 +15,9 @@ export interface Service {
 export const servicesData: Record<string, Record<string, Service>> = {
   "FR": {
     "domiciliation": {
-      title: "Domiciliation Premium",
-      subtitle: "L'adresse prestigieuse pour votre rayonnement.",
-      description: "Une adresse au cœur de Marrakech est bien plus qu'une obligation légale ; c'est un marqueur de crédibilité et de prestige pour votre entreprise. TAW 10 vous offre un emplacement stratégique allié à un service de gestion de courrier exemplaire.",
+      title: "Domiciliation Entreprise Marrakech",
+      subtitle: "Votre adresse de siège social à Marrakech au meilleur tarif.",
+      description: "Une <strong>domiciliation entreprise Marrakech</strong> est bien plus qu'une obligation légale ; c'est un marqueur de crédibilité. TAW 10 vous offre une <strong>adresse siège social marrakech</strong> prestigieuse combinée à une formule de <strong>domiciliation commerciale maroc</strong> clé en main. Profitez d'une <strong>domiciliation société pas cher marrakech</strong> pour propulser votre rayonnement à moindre coût.",
       benefits: [
         "Adresse prestigieuse à Marrakech",
         "Gestion quotidienne du courrier",
@@ -32,9 +32,9 @@ export const servicesData: Record<string, Record<string, Service>> = {
       ]
     },
     "creation-entreprise": {
-      title: "Création d'Entreprise",
-      subtitle: "Lancez votre vision en toute sérénité.",
-      description: "De l'idée à la concrétisation, nous vous accompagnons dans toutes les étapes juridiques et administratives de la création de votre société au Maroc. Rapidité, expertise et transparence sont nos maîtres-mots.",
+      title: "Création Entreprise Marrakech",
+      subtitle: "Votre accompagnement pour la création de société au Maroc en 2025.",
+      description: "Réalisez votre <strong>création entreprise marrakech</strong> en toute sérénité. Que vous souhaitiez <strong>créer une SARL à marrakech</strong> ou <strong>ouvrir une entreprise au maroc</strong> en tant qu'indépendant, nos experts vous offrent un <strong>accompagnement création entreprise marrakech</strong> sur mesure. Nous optimisons chaque étape pour réduire le <strong>délai création SARL maroc</strong> au strict minimum et réussir votre <strong>création société maroc 2025</strong>.",
       benefits: [
         "Certificat négatif en 24h",
         "Rédaction des statuts sur mesure",
@@ -83,9 +83,9 @@ export const servicesData: Record<string, Record<string, Service>> = {
       ]
     },
     "support-administratif": {
-      title: "Support Administratif",
-      subtitle: "Concentrez-vous sur l'essentiel.",
-      description: "La paperasse ne doit pas freiner votre ambition. Notre service de support administratif prend le relais sur vos tâches chronophages, de la facturation au classement, pour vous libérer du temps de décision.",
+      title: "Cabinet Comptable Marrakech",
+      subtitle: "Votre gestion comptabilité et fiscalité d'entreprise au Maroc.",
+      description: "Trouver un <strong>cabinet comptable marrakech</strong> rigoureux est la clé de voûte de votre réussite financière. Chez TAW 10, nous mettons à votre service un <strong>expert comptable marrakech</strong> qualifié pour prendre en charge votre <strong>gestion comptabilité entreprise marrakech</strong>. De la saisie de vos pièces comptables à la <strong>déclaration TVA maroc PME</strong>, nous vous assurons une conformité fiscale absolue au Maroc.",
       benefits: [
         "Aide à la facturation",
         "Gestion des fournisseurs",
@@ -100,9 +100,9 @@ export const servicesData: Record<string, Record<string, Service>> = {
       ]
     },
     "conseil-strategique": {
-      title: "Conseil Stratégique",
-      subtitle: "Anticipez demain, dès aujourd'hui.",
-      description: "Le marché marocain regorge d'opportunités pour ceux qui savent les saisir. Nos consultants vous accompagnent dans l'élaboration de votre business plan, votre stratégie de croissance et l'optimisation de vos performances.",
+      title: "Créer Entreprise Maroc Investisseur Étranger",
+      subtitle: "L'accompagnement stratégique pour ouvrir votre société au Maroc en tant que non-résident.",
+      description: "Vous souhaitez <strong>créer entreprise maroc investisseur étranger</strong> ? TAW 10 est votre partenaire privilégié pour <strong>investir à marrakech 2025</strong>. Notre cabinet vous aide à <strong>ouvrir société maroc non résident</strong> et décode pour vous la <strong>réglementation entreprise étrangère maroc</strong>. Nous vous garantissons un déploiement sécurisé, conforme et rapide de votre capital au Maroc.",
       benefits: [
         "Études de marché",
         "Business Planning",
@@ -187,9 +187,9 @@ export const servicesData: Record<string, Record<string, Service>> = {
       ]
     },
     "support-administratif": {
-      title: "Administrative Support",
-      subtitle: "Focus on the essentials.",
-      description: "Paperwork should not hold back your ambition. Our administrative support service takes over your time-consuming tasks, from invoicing to filing, to free up decision-making time.",
+      title: "Accounting Cabinet Marrakech",
+      subtitle: "Your accounting management and corporate tax support in Morocco.",
+      description: "Finding a trusted <strong>accounting cabinet in Marrakech</strong> is crucial for your financial success. TAW 10 provides you with a professional <strong>chartered accountant in Marrakech</strong> to manage your <strong>corporate accounting in Morocco</strong>, from basic bookkeeping to <strong>VAT declaration for SMEs</strong>.",
       benefits: [
         "Invoicing assistance",
         "Supplier management",
@@ -204,9 +204,9 @@ export const servicesData: Record<string, Record<string, Service>> = {
       ]
     },
     "conseil-strategique": {
-      title: "Strategic Consulting",
-      subtitle: "Anticipate tomorrow, today.",
-      description: "The Moroccan market is full of opportunities for those who know how to seize them. Our consultants assist you in the development of your business plan, your growth strategy, and the optimization of your performance.",
+      title: "Morocco Company Creation Foreign Investor",
+      subtitle: "Strategic guidance to open a company in Morocco as a non-resident.",
+      description: "Looking to <strong>start a business in Morocco as a foreign investor</strong>? TAW 10 is your primary consultant to <strong>invest in Marrakech in 2025</strong>. We guide you to <strong>open a company in Morocco as a non-resident</strong> while securing full compliance with <strong>foreign business regulations in Morocco</strong>.",
       benefits: [
         "Market research",
         "Business Planning",
@@ -291,9 +291,9 @@ export const servicesData: Record<string, Record<string, Service>> = {
       ]
     },
     "support-administratif": {
-      title: "الدعم الإداري",
-      subtitle: "ركز على الأساسيات.",
-      description: "يجب ألا تفرمل الأوراق طموحك. تتولى خدمة الدعم الإداري لدينا مهامك التي تستهلك الوقت، من الفوترة إلى الأرشفة، لتفرغ وقتك لاتخاذ القرار.",
+      title: "مكتب محاسبة مراكش",
+      subtitle: "إدارة المحاسبة والضرائب لشركتك في المغرب.",
+      description: "إن العثور على <strong>مكتب محاسبة في مراكش</strong> يتميز بالدقة هو حجر الأساس لنجاحك المالي. في TAW 10، نضع رهن إشارتك <strong>محاسبًا معتمدًا في مراكش</strong> لتولي <strong>إدارة محاسبة شركتك في مراكش</strong>، من تسجيل الفواتير إلى <strong>إقرار ضريبة القيمة المضافة للشركات الصغرى والمتوسطة</strong>.",
       benefits: [
         "المساعدة في الفوترة",
         "إدارة الموردين",
@@ -308,9 +308,9 @@ export const servicesData: Record<string, Record<string, Service>> = {
       ]
     },
     "conseil-strategique": {
-      title: "الاستشارة الاستراتيجية",
-      subtitle: "توقع الغد، منذ اليوم.",
-      description: "السوق المغربي مليء بالفرص لمن يعرف كيف يقتنصها. يرافقك مستشارونا في إعداد خطة عملك، واستراتيجية نموك وتحسين أدائك.",
+      title: "إنشاء شركة في المغرب للمستثمرين الأجانب",
+      subtitle: "المواكبة الاستراتيجية لفتح شركتك في المغرب كغير مقيم.",
+      description: "هل ترغب في <strong>إنشاء شركة في المغرب كمستثمر أجنبي</strong>؟ TAW 10 هو شريكك المفضل من أجل <strong>الاستثمار في مراكش 2025</strong>. يساعدك مكتبنا في <strong>فتح شركة في المغرب لغير المقيمين</strong> وفك رموز <strong>قوانين الشركات الأجنبية بالمغرب</strong>.",
       benefits: [
         "دراسات السوق",
         "تخطيط الأعمال",

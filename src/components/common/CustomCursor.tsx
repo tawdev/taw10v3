@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function CustomCursor() {
+  const [mounted, setMounted] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     // Only enable on desktop devices mapping fine-pointer
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
@@ -46,6 +48,8 @@ export default function CustomCursor() {
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, []);
+
+  if (!mounted) return null;
 
   // Use state to detect mobile hiding early
   if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {

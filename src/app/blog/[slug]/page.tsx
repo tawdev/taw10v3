@@ -1,35 +1,60 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { cookies } from 'next/headers';
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import { BLOG_POSTS } from '@/data/blog';
+import { getLocalizedMetadata } from '@/lib/metadata';
 
 type Language = 'fr' | 'en' | 'ar';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const cookieStore = await cookies();
-  const language = (cookieStore.get('language')?.value?.toLowerCase() || 'fr') as Language;
+  const headersList = await headers();
+  const rawLang = headersList.get("x-locale")?.toUpperCase() || "FR";
+  const language = ["FR", "AR", "EN"].includes(rawLang) ? rawLang.toLowerCase() as Language : "fr";
   
   const post = BLOG_POSTS.find((p) => p.slug === resolvedParams.slug);
   if (!post) return { title: 'Article introuvable | TAW 10' };
   
-  return {
-    title: `${post.title[language]} | TAW 10`,
-    description: post.excerpt[language],
-  };
+  return getLocalizedMetadata(`${post.title[language]} | TAW 10`, post.excerpt[language]);
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const cookieStore = await cookies();
-  const language = (cookieStore.get('language')?.value?.toLowerCase() || 'fr') as Language;
+  const headersList = await headers();
+  const rawLang = headersList.get('x-locale')?.toLowerCase() || 'fr';
+  const language = ['fr', 'ar', 'en'].includes(rawLang) ? rawLang as Language : 'fr';
   
   const post = BLOG_POSTS.find((p) => p.slug === resolvedParams.slug);
 
   if (!post) {
     notFound();
   }
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": post.title[language],
+    "image": [
+      post.image.startsWith("http") ? post.image : `https://taw10.ma${post.image}`
+    ],
+    "datePublished": new Date(post.date).toISOString(),
+    "dateModified": new Date(post.date).toISOString(),
+    "author": {
+      "@type": "Organization",
+      "name": "TAW 10 Consulting",
+      "url": "https://taw10.ma"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "TAW 10 Consulting",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://taw10.ma/icon-512.png"
+      }
+    },
+    "description": post.excerpt[language]
+  };
 
   // Language specific labels
   const labels = {
@@ -53,6 +78,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="min-h-screen bg-[#fcf9f6] pt-48 lg:pt-56 pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <article className="max-w-4xl mx-auto px-6" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <div className="mb-12">
           <Link 

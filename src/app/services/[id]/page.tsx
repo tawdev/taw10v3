@@ -1,16 +1,38 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
-import { useLanguage } from "@/context/LanguageContext";
+import { headers } from "next/headers";
+import { getTranslations, Language } from "@/lib/translations";
 import { servicesData } from "@/data/services";
+import { Metadata } from "next";
+import { getLocalizedMetadata } from "@/lib/metadata";
 
-export default function ServiceDetailPage() {
-  const params = useParams();
-  const id = params.id as string;
-  const { language, t } = useLanguage();
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const headersList = await headers();
+  const rawLang = headersList.get("x-locale")?.toUpperCase() || "FR";
+  const language = ["FR", "AR", "EN"].includes(rawLang) ? rawLang as Language : "FR";
+  
+  const langServices = servicesData[language] || servicesData["FR"];
+  const service = langServices[id];
+  
+  if (!service) {
+    return {
+      title: "Service non trouvé | TAW 10",
+    };
+  }
+  
+  return getLocalizedMetadata(`${service.title} | TAW 10`, service.subtitle);
+}
+
+export default async function ServiceDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  
+  const headersList = await headers();
+  const rawLang = headersList.get("x-locale")?.toUpperCase() || "FR";
+  const language = ["FR", "AR", "EN"].includes(rawLang) ? rawLang as Language : "FR";
+  
+  const t = getTranslations(language);
   
   // Get services for current language, fallback to FR
   const langServices = servicesData[language] || servicesData["FR"];

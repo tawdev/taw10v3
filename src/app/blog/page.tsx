@@ -1,13 +1,36 @@
 import React from 'react';
 import Link from 'next/link';
-import { cookies } from 'next/headers';
+import { headers } from 'next/headers';
 import { BLOG_POSTS } from '@/data/blog';
+import { getLocalizedMetadata } from '@/lib/metadata';
+import { Metadata } from 'next';
 
 type Language = 'fr' | 'en' | 'ar';
 
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const rawLang = headersList.get("x-locale")?.toUpperCase() || "FR";
+  const language = ["FR", "AR", "EN"].includes(rawLang) ? rawLang : "FR";
+
+  const titles: Record<string, string> = {
+    FR: "Le Journal TAW 10 | Domiciliation & Création d'Entreprise Marrakech",
+    AR: "مدونة TAW 10 | توطين وإنشاء المقاولات في مراكش",
+    EN: "The TAW 10 Journal | Business Domiciliation & Company Formation Marrakech",
+  };
+
+  const descriptions: Record<string, string> = {
+    FR: "Découvrez nos articles, conseils et guides pratiques sur la domiciliation au Maroc et la création d'entreprise à Marrakech.",
+    AR: "اكتشف مقالاتنا، نصائحنا وأدلتنا العملية حول توطين الشركات في المغرب وإنشاء المقاولات في مراكش.",
+    EN: "Discover our articles, advice, and practical guides on business domiciliation in Morocco and company creation in Marrakech.",
+  };
+
+  return getLocalizedMetadata(titles[language], descriptions[language]);
+}
+
 export default async function BlogPage() {
-  const cookieStore = await cookies();
-  const language = (cookieStore.get('language')?.value?.toLowerCase() || 'fr') as Language;
+  const headersList = await headers();
+  const rawLang = headersList.get('x-locale')?.toLowerCase() || 'fr';
+  const language = ['fr', 'ar', 'en'].includes(rawLang) ? rawLang as Language : 'fr';
 
   const content = {
     fr: {

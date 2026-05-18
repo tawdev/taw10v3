@@ -1,7 +1,8 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { Playfair_Display, Plus_Jakarta_Sans, Montserrat } from "next/font/google";
 import "./globals.css";
+import { getLocalizedMetadata } from "@/lib/metadata";
 import { LanguageProvider } from "@/context/LanguageContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -51,65 +52,45 @@ export async function generateMetadata(
   { params }: { params: { lang?: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const cookieStore = await cookies();
-  const rawLang = cookieStore.get("language")?.value?.toUpperCase() || "FR";
+  const headersList = await headers();
+  const rawLang = headersList.get("x-locale")?.toUpperCase() || "FR";
   const language = ["FR", "AR", "EN"].includes(rawLang) ? rawLang : "FR";
 
   const titles: Record<string, string> = {
-    FR: "Domiciliation Maroc & Création Entreprise Marrakech | TAW 10",
-    AR: "توطين الشركات وإنشاء المقاولات في المغرب | TAW 10",
-    EN: "Business Domiciliation & Company Creation Morocco | TAW 10",
+    FR: "TAW 10 | Domiciliation & Création d'Entreprise à Marrakech",
+    AR: "TAW 10 | توطين وإنشاء الشركات في مراكش",
+    EN: "TAW 10 | Domiciliation & Company Creation in Marrakech",
   };
 
   const descriptions: Record<string, string> = {
-    FR: "TAW 10 offre les meilleures solutions de domiciliation au Maroc, création d'entreprise à Marrakech et accompagnement juridique premium pour entrepreneurs.",
-    AR: "تقدم TAW 10 أفضل حلول توطين الشركات في المغرب، وإنشاء المقاولات في مراكش، والمواكبة القانونية المتميزة للمقاولين.",
-    EN: "TAW 10 provides premium business domiciliation in Morocco, company formation in Marrakech, and strategic legal support for entrepreneurs.",
+    FR: "TAW 10 vous accompagne dans la domiciliation et la création de votre entreprise à Marrakech. Profitez d'une adresse prestigieuse et d'un secrétariat virtuel.",
+    AR: "ترافقكم TAW 10 في توطين وإنشاء شركتكم في مراكش. استفد من عنوان مرموق وسكرتارية افتراضية.",
+    EN: "TAW 10 supports you in the domiciliation and creation of your company in Marrakech. Benefit from a prestigious address and a virtual secretariat.",
   };
+
+  const localizedMeta = await getLocalizedMetadata(titles[language], descriptions[language]);
 
   return {
     metadataBase: new URL("https://taw10.ma"),
     title: {
-      default: titles[language] || titles.FR,
-      template: `%s | TAW 10`
+      default: titles[language],
+      template: `%s | ${titles[language]}`,
     },
-    description: descriptions[language] || descriptions.FR,
-    keywords: [
-      "domiciliation maroc", 
-      "création entreprise maroc", 
-      "domiciliation marrakech", 
-      "création entreprise marrakech",
-      "bureau virtuel maroc",
-      "accompagnement juridique maroc", 
-      "TAW 10"
-    ],
-    manifest: "/manifest.json",
-    icons: {
-      icon: "/icon-192.png",
-      apple: "/apple-touch-icon.png",
-    },
-    appleWebApp: {
-      capable: true,
-      statusBarStyle: "default",
-      title: "TAW 10",
-    },
+    description: descriptions[language],
+    keywords: ["domiciliation marrakech", "creation entreprise maroc", "domiciliation maroc", "secretariat virtuel marrakech", "business center marrakech", "creation societe marrakech"],
+    authors: [{ name: "TAW 10 Consulting" }],
+    creator: "TAW 10 Consulting",
+    publisher: "TAW 10 Consulting",
     formatDetection: {
-      telephone: true,
-    },
-    alternates: {
-      canonical: "https://taw10.ma",
-      languages: {
-        "fr-MA": "https://taw10.ma",
-        "ar-MA": "https://taw10.ma",
-        "en-MA": "https://taw10.ma",
-        "x-default": "https://taw10.ma",
-      },
+      email: false,
+      address: false,
+      telephone: false,
     },
     openGraph: {
-      title: titles[language] || titles.FR,
-      description: descriptions[language] || descriptions.FR,
-      url: "https://taw10.ma",
-      siteName: "TAW 10",
+      title: titles[language],
+      description: descriptions[language],
+      url: (localizedMeta.alternates?.canonical as string) || "https://taw10.ma",
+      siteName: "TAW 10 Consulting",
       images: [
         {
           url: "/icon-512.png",
@@ -138,6 +119,7 @@ export async function generateMetadata(
         'max-snippet': -1,
       },
     },
+    ...localizedMeta,
   };
 }
 
@@ -146,8 +128,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const rawLang = cookieStore.get("language")?.value?.toUpperCase() || "FR";
+  const headersList = await headers();
+  const rawLang = headersList.get("x-locale")?.toUpperCase() || "FR";
   const initialLanguage = ["FR", "AR", "EN"].includes(rawLang) ? rawLang : "FR";
   const direction = initialLanguage === "AR" ? "rtl" : "ltr";
 
@@ -170,9 +152,9 @@ export default async function RootLayout({
             <CustomCursor />
             <ErrorLogger />
             <Header />
-            <main>{children}</main>
+            <main id="main-content">{children}</main>
             <Footer />
-            <SchemaMarkup />
+            <SchemaMarkup language={initialLanguage as "FR" | "AR" | "EN"} />
             <div id="language-direction-sync" />
             <WhatsappContact />
             <CookieConsent />

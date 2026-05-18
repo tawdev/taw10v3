@@ -3,56 +3,67 @@ import { BLOG_POSTS } from '@/data/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://taw10.ma';
-
   const languages = ['fr', 'ar', 'en'];
 
-  const staticRoutes = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/legal`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
-      priority: 0.3,
-    }
+  // 1. Static routes
+  const staticPaths = ['', '/blog', '/legal'];
+  
+  // 2. Services routes (FR keys cover all languages)
+  const serviceKeys = [
+    'domiciliation',
+    'creation-entreprise',
+    'secretariat',
+    'accompagnement-juridique',
+    'support-administratif',
+    'conseil-strategique'
   ];
+  const servicePaths = serviceKeys.map(key => `/services/${key}`);
 
-  // Map each route to include alternates
-  const localizedRoutes = staticRoutes.flatMap((route) => [
-    route,
-    ...languages.map((lang) => ({
-      ...route,
-      url: `${route.url === baseUrl ? baseUrl : route.url}/${lang}`,
-    })),
-  ]);
-
-  const blogEntries = BLOG_POSTS.flatMap((post) => {
-    const postUrl = `${baseUrl}/blog/${post.slug}`;
-    return [
+  // Helper to construct sitemap entries for a path across languages
+  const getSitemapEntries = (
+    path: string, 
+    priority: number, 
+    changeFrequency: 'weekly' | 'monthly' | 'yearly', 
+    lastModified: Date = new Date()
+  ) => {
+    const entries = [
+      // Base non-prefixed entry (defaults to FR in middleware)
       {
-        url: postUrl,
-        lastModified: new Date(post.date),
-        changeFrequency: 'monthly' as const,
-        priority: 0.8,
-      },
-      ...languages.map((lang) => ({
-        url: `${postUrl}/${lang}`,
-        lastModified: new Date(post.date),
-        changeFrequency: 'monthly' as const,
-        priority: 0.8,
-      })),
+        url: `${baseUrl}${path}`,
+        lastModified,
+        changeFrequency,
+        priority,
+      }
     ];
+
+    // Localized prefixed entries
+    languages.forEach((lang) => {
+      entries.push({
+        url: `${baseUrl}/${lang}${path}`,
+        lastModified,
+        changeFrequency,
+        priority,
+      });
+    });
+
+    return entries;
+  };
+
+  const staticEntries = staticPaths.flatMap(path => {
+    const priority = path === '' ? 1.0 : path === '/blog' ? 0.9 : 0.3;
+    const freq = path === '/legal' ? ('yearly' as const) : ('weekly' as const);
+    return getSitemapEntries(path, priority, freq);
   });
 
-  return [...localizedRoutes, ...blogEntries];
+  const serviceEntries = servicePaths.flatMap(path => {
+    return getSitemapEntries(path, 0.8, 'monthly' as const);
+  });
+
+  const blogEntries = BLOG_POSTS.flatMap(post => {
+    const path = `/blog/${post.slug}`;
+    const lastModified = new Date(post.date);
+    return getSitemapEntries(path, 0.8, 'monthly' as const, lastModified);
+  });
+
+  return [...staticEntries, ...serviceEntries, ...blogEntries];
 }

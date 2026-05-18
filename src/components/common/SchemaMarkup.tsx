@@ -1,11 +1,13 @@
-"use client";
-
 import React from 'react';
 import { CONFIG } from '@/data/config';
-import { useLanguage } from '@/context/LanguageContext';
+import { getTranslations, Language } from '@/lib/translations';
 
-const SchemaMarkup = () => {
-  const { language, t } = useLanguage();
+interface SchemaMarkupProps {
+  language: Language;
+}
+
+const SchemaMarkup = ({ language }: SchemaMarkupProps) => {
+  const t = getTranslations(language);
 
   const businessSchema = {
     "@context": "https://schema.org",

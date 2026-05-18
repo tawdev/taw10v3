@@ -260,6 +260,8 @@ export default function Header() {
               className="lg:hidden relative w-10 h-10 flex items-center justify-center"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               whileTap={{ scale: 0.9 }}
+              aria-label="Toggle mobile menu"
+              aria-expanded={isMobileMenuOpen}
             >
               <div className="flex flex-col gap-1.5">
                 <motion.span 
@@ -355,6 +357,8 @@ export default function Header() {
                       onClick={() => setLanguage(lang as "FR" | "AR" | "EN")}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
+                      aria-pressed={language === lang}
+                      aria-label={`Switch to ${lang === "FR" ? "French" : lang === "AR" ? "Arabic" : "English"}`}
                     >
                       {lang}
                     </motion.button>
