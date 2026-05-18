@@ -17,7 +17,12 @@ export async function getLocalizedMetadata(
     formattedPath = formattedPath.slice(0, -1);
   }
   
-  const siteUrl = "https://taw10.ma";
+  const host = headersList.get("host") || "taw10.ma";
+  const cleanHost = host.split(":")[0];
+  // Dynamic host resolution supporting both taw10.com and taw10.ma seamlessly
+  const siteUrl = cleanHost.includes("localhost") || cleanHost.includes("127.0.0.1")
+    ? "https://taw10.ma" 
+    : `https://${cleanHost}`;
   
   // Construct localized URLs
   // For homepage (formattedPath === "/"), the localized URL is domain/locale
