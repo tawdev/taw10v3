@@ -70,7 +70,29 @@ jobs:
             cp -r .next/static .next/standalone/.next/
 
             # Restart both PM2 instances
-            pm2 restart taw10 taw10-ma
+            echo "--- PM2 Restarting ---"
+            mkdir -p logs
+            pm2 reload ecosystem.config.js --update-env || pm2 restart ecosystem.config.js || pm2 start ecosystem.config.js
             pm2 save
 
+            echo "--- PM2 Status ---"
+            pm2 status
+
+            echo "--- Waiting for apps to start ---"
+            sleep 5
+
+            echo "--- PM2 Status after 5s ---"
+            pm2 status
+
+            echo "--- PM2 Logs (Last 50 lines) ---"
+            echo "--- TAW10 ERRORS ---"
+            tail -n 50 logs/err.log || true
+            echo "--- TAW10-MA ERRORS ---"
+            tail -n 50 logs/taw10-ma-err.log || true
+            echo "--- TAW10 OUTPUT ---"
+            tail -n 50 logs/out.log || true
+            echo "--- TAW10-MA OUTPUT ---"
+            tail -n 50 logs/taw10-ma-out.log || true
+
             echo "✅ Deployment complete!"
+
