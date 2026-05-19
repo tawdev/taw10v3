@@ -63,7 +63,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode, initialLang
     }
     
     const newPath = pathParts.join('/') || '/';
-    router.push(newPath);
+    window.location.href = newPath;
   };
 
   useEffect(() => {

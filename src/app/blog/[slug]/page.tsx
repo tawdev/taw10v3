@@ -63,18 +63,157 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     ar: { back: "العودة إلى المقالات" }
   };
 
-  // Pre-process content to handle simple markdown-like newlines and headings
+  // Custom helper to parse basic markdown structures into rich React components
   const formatContent = (content: string) => {
-    return content.split('\n').map((line, index) => {
-      if (line.startsWith('### ')) {
-        return <h3 key={index} className="text-2xl font-bold mt-12 mb-6 text-[#1c1c1b]">{line.replace('### ', '')}</h3>;
+    const lines = content.split('\n');
+    const elements: React.ReactNode[] = [];
+    
+    let listItems: string[] = [];
+    let tableRows: string[][] = [];
+
+    const parseTextToNodes = (text: string): React.ReactNode => {
+      const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+      const boldPattern = /\*\*([^*]+)\*\*/g;
+      const italicPattern = /\*([^*]+)\*/g;
+      
+      let html = text
+        .replace(linkPattern, '<a href="$2" class="text-[#dab055] font-bold hover:underline">$1</a>')
+        .replace(boldPattern, '<strong>$1</strong>')
+        .replace(italicPattern, '<em>$1</em>');
+        
+      return <span dangerouslySetInnerHTML={{ __html: html }} />;
+    };
+
+    const flushList = (key: number) => {
+      if (listItems.length > 0) {
+        elements.push(
+          <ul key={`ul-${key}`} className="list-disc pl-8 mb-6 space-y-2 text-[#1c1c1b]/80">
+            {listItems.map((item, idx) => (
+              <li key={idx} className="text-lg leading-relaxed">{parseTextToNodes(item)}</li>
+            ))}
+          </ul>
+        );
+        listItems = [];
       }
-      if (line.trim() === '') {
-        return <br key={index} />;
+    };
+
+    const flushTable = (key: number) => {
+      if (tableRows.length > 0) {
+        elements.push(
+          <div key={`table-wrapper-${key}`} className="overflow-x-auto my-8 border border-[#dab055]/10 rounded-2xl shadow-sm">
+            <table className="min-w-full divide-y divide-[#dab055]/20">
+              <thead className="bg-[#fcf9f6]">
+                <tr>
+                  {tableRows[0].map((cell, idx) => (
+                    <th key={idx} className="px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-[#1c1c1b]">
+                      {parseTextToNodes(cell)}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-[#dab055]/10">
+                {tableRows.slice(1).map((row, rowIdx) => (
+                  <tr key={rowIdx} className="hover:bg-[#fcf9f6]/30 transition-colors">
+                    {row.map((cell, cellIdx) => (
+                      <td key={cellIdx} className="px-6 py-4 text-sm text-[#1c1c1b]/80 font-medium">
+                        {parseTextToNodes(cell)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+        tableRows = [];
       }
-      return <p key={index} className="mb-4">{line}</p>;
-    });
+    };
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+
+      // Check if image: ![alt](url)
+      if (line.startsWith('![') && line.endsWith(')')) {
+        flushList(i);
+        flushTable(i);
+        const match = line.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+        if (match) {
+          const alt = match[1];
+          const src = match[2];
+          elements.push(
+            <figure key={i} className="my-12 overflow-hidden rounded-[2.5rem] shadow-xl border border-[#dab055]/10 group">
+              <img src={src} alt={alt} className="w-full max-h-[500px] object-cover group-hover:scale-105 transition-transform duration-700" />
+              {alt && <figcaption className="text-center text-sm text-[#1c1c1b]/50 mt-4 font-medium italic">{alt}</figcaption>}
+            </figure>
+          );
+          continue;
+        }
+      }
+
+      // Check if table row
+      if (line.startsWith('|') && line.endsWith('|')) {
+        flushList(i);
+        const cells = line.split('|').map(c => c.trim()).filter((_, idx, arr) => idx > 0 && idx < arr.length - 1);
+        if (cells.every(c => c.startsWith('-') || c.endsWith('-'))) {
+          continue;
+        }
+        tableRows.push(cells);
+        continue;
+      } else {
+        flushTable(i);
+      }
+
+      // Check if list item
+      if (line.startsWith('- ') || line.startsWith('* ')) {
+        listItems.push(line.substring(2));
+        continue;
+      } else {
+        flushList(i);
+      }
+
+      if (line.startsWith('# ')) {
+        elements.push(
+          <h2 key={i} className="text-3xl md:text-4xl font-bold mt-12 mb-6 text-[#1c1c1b] font-headline border-b border-[#dab055]/10 pb-4">
+            {parseTextToNodes(line.replace('# ', ''))}
+          </h2>
+        );
+      } else if (line.startsWith('## ')) {
+        elements.push(
+          <h3 key={i} className="text-2xl md:text-3xl font-bold mt-10 mb-6 text-[#1c1c1b] font-headline">
+            {parseTextToNodes(line.replace('## ', ''))}
+          </h3>
+        );
+      } else if (line.startsWith('### ')) {
+        elements.push(
+          <h4 key={i} className="text-xl md:text-2xl font-bold mt-8 mb-4 text-[#1c1c1b] font-headline">
+            {parseTextToNodes(line.replace('### ', ''))}
+          </h4>
+        );
+      } else if (line.startsWith('> ')) {
+        elements.push(
+          <blockquote key={i} className="border-l-4 border-[#dab055] bg-[#fcf9f6] p-6 rounded-r-2xl italic text-lg my-8 text-[#1c1c1b]/80 shadow-sm">
+            {parseTextToNodes(line.replace('> ', ''))}
+          </blockquote>
+        );
+      } else if (line === '---') {
+        elements.push(<hr key={i} className="my-12 border-[#dab055]/20" />);
+      } else if (line === '') {
+        continue;
+      } else {
+        elements.push(
+          <p key={i} className="mb-6 text-lg text-[#1c1c1b]/80 leading-relaxed font-body">
+            {parseTextToNodes(line)}
+          </p>
+        );
+      }
+    }
+
+    flushList(lines.length);
+    flushTable(lines.length);
+
+    return elements;
   };
+
 
   return (
     <div className="min-h-screen bg-[#fcf9f6] pt-48 lg:pt-56 pb-24">
