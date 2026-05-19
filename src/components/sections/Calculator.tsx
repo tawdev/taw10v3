@@ -14,7 +14,7 @@ const Calculator = () => {
   const [extraLegal, setExtraLegal] = useState(false);
 
   const priceMapping = {
-    sarl: 3499,
+    sarl: 2499,
     auto: 500,
     none: 0,
     "12m": 1200,

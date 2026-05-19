@@ -13,7 +13,7 @@ export default function Team() {
 
   const teamMembers = [
     { name: t("team.ceo_name"), role: t("team.ceo"), desc: t("team.ceo_desc"), img: "/hicham.jpeg" },
-    { name: t("team.operational_name"), role: t("team.operational"), desc: t("team.operational_desc"), img: "/team-member-2.jpeg" },
+    { name: t("team.operational_name"), role: t("team.operational"), desc: t("team.operational_desc"), img: "/afafe-khlifal.jpeg" },
     { name: t("team.commercial_name"), role: t("team.commercial"), desc: t("team.commercial_desc"), img: "/team-member-1.jpeg" },
   ];
 
