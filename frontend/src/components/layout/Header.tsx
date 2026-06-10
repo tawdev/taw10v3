@@ -1,0 +1,689 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
+import {
+  motion,
+  AnimatePresence,
+  LazyMotion,
+  domAnimation,
+} from "framer-motion";
+import { CONFIG } from "@/data/config";
+
+const homepageSections = ["how-it-works", "expertise", "pricing", "lineup", "blog", "contact", "hero"];
+
+export default function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const pathname = usePathname();
+  const { language, setLanguage, t } = useLanguage();
+
+  const langPrefix = `/${language.toLowerCase()}`;
+  const pathParts = pathname.split("/").filter(Boolean);
+  const pathWithoutLocale = ["fr", "ar", "en"].includes(pathParts[0]) ? pathParts.slice(1) : pathParts;
+  const isServiceDetailPage = pathWithoutLocale[0] === "services" && Boolean(pathWithoutLocale[1]);
+
+  // Check if current page is the homepage or any of the homepage section paths
+  const isHome = (() => {
+    if (pathname === "/" || pathname === "/fr" || pathname === "/ar" || pathname === "/en") {
+      return true;
+    }
+    const parts = pathname.split("/").filter(Boolean); // e.g. ["en", "pricing"] or ["pricing"]
+    if (parts.length === 1 && homepageSections.includes(parts[0])) {
+      return true;
+    }
+    if (parts.length === 2 && ["fr", "ar", "en"].includes(parts[0]) && homepageSections.includes(parts[1])) {
+      return true;
+    }
+    return false;
+  })();
+
+  const useDarkText = isScrolled || (!isHome && !isServiceDetailPage);
+
+  const [activeHash, setActiveHash] = useState("hero");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+
+      if (!isHome) return;
+
+      const sections = ["hero", "how-it-works", "expertise", "pricing", "lineup", "blog", "contact"];
+      const scrollPosition = window.scrollY + 200; // Offset for header
+
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            const newSectionPath = section === "hero" ? langPrefix : `${langPrefix}/${section}`;
+            
+            // Only update history if the path actually changed to avoid redundant calls
+            if (window.location.pathname !== newSectionPath) {
+              window.history.replaceState(null, "", newSectionPath);
+            }
+            setActiveHash(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    
+    // Initial call
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isHome, langPrefix]);
+
+  // Automatically scroll to correct section on page load / pathname transition
+  useEffect(() => {
+    if (isHome && typeof window !== "undefined") {
+      const pathParts = pathname.split("/").filter(Boolean);
+      // Find which part matches a homepage section
+      const sectionName = pathParts.find(p => ["how-it-works", "expertise", "pricing", "lineup", "blog", "contact"].includes(p));
+      
+      if (sectionName) {
+        const timer = setTimeout(() => {
+          const elem = document.getElementById(sectionName);
+          if (elem) {
+            const offset = 100;
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elemRect = elem.getBoundingClientRect().top;
+            const elemPosition = elemRect - bodyRect;
+            const offsetPosition = elemPosition - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+            setActiveHash(sectionName);
+          }
+        }, 350); // Delay allows Next.js transition to complete & DOM to stabilize
+        
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [pathname, isHome]);
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
+
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    setIsMobileMenuOpen(false);
+    setIsServicesOpen(false);
+
+    // If already on homepage and clicking a home link, smooth scroll to top
+    const isHomeLink = href === langPrefix || href === `${langPrefix}/` || href === "#" || href === "";
+    if (isHome && isHomeLink) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.history.pushState(null, "", langPrefix);
+      setActiveHash("hero");
+      return;
+    }
+
+    // Find the section name in the URL (e.g. "/en/pricing" -> "pricing")
+    const pathParts = href.split("/").filter(Boolean);
+    const sectionName = pathParts.find(p => homepageSections.includes(p));
+
+    if (!sectionName) {
+      // Category B link (no homepage section, it's a real subpage like /blog or /services/domiciliation)
+      // Let standard Next.js Link navigate to the page.
+      return;
+    }
+
+    if (!isHome) {
+      // Let standard Next.js Link navigate to the URL (e.g., homepage section URL)
+      return;
+    }
+
+    e.preventDefault();
+    const elem = document.getElementById(sectionName);
+    if (elem) {
+      const offset = 100;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elemRect = elem.getBoundingClientRect().top;
+      const elemPosition = elemRect - bodyRect;
+      const offsetPosition = elemPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+      
+      // Update the browser URL without reloading
+      window.history.pushState(null, "", href);
+      setActiveHash(sectionName);
+    }
+  };
+
+  const isLinkActive = (href: string, subItems?: { href: string }[]): boolean => {
+    if (subItems) {
+      return subItems.some(sub => isLinkActive(sub.href));
+    }
+    
+    // For homepage sections, match activeHash
+    const pathParts = href.split("/").filter(Boolean);
+    const sectionName = pathParts.find(p => ["how-it-works", "expertise", "pricing", "lineup", "blog", "contact"].includes(p));
+    
+    if (sectionName) {
+      return isHome && activeHash === sectionName;
+    }
+    
+    // For homepage itself
+    if (href === langPrefix || href === `${langPrefix}/`) {
+      return isHome && (activeHash === "hero" || activeHash === "");
+    }
+    
+    return pathname === href || pathname === href.split('?')[0];
+  };
+
+  const navItems = [
+    { key: "nav.home", href: `${langPrefix}` },
+    { key: "nav.why_us", href: `${langPrefix}/how-it-works` },
+    {
+      key: "nav.services",
+      href: `${langPrefix}/expertise`,
+      subItems: [
+        { key: 'service_card.premium_title', href: `${langPrefix}/services/domiciliation` },
+        { key: 'service_card.creation_title', href: `${langPrefix}/services/creation-entreprise` },
+        { key: 'service_card.secretary_title', href: `${langPrefix}/services/secretariat` },
+        { key: 'service_card.legal_title', href: `${langPrefix}/services/accompagnement-juridique` },
+        { key: 'service_card.support_title', href: `${langPrefix}/services/support-administratif` },
+        { key: 'service_card.strategic_title', href: `${langPrefix}/services/conseil-strategique` }
+      ]
+    },
+    { key: "nav.pricing", href: `${langPrefix}/pricing` },
+    { key: "nav.team", href: `${langPrefix}/lineup` },
+    { key: "nav.blog", href: `${langPrefix}/blog` },
+    { key: "nav.contact", href: `${langPrefix}/contact` },
+  ];
+
+  return (
+    <LazyMotion features={domAnimation}>
+      <>
+        <div className="sr-only">
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
+        </div>
+
+        <motion.div
+          className={`fixed top-0 w-full z-[60] bg-[#0c0c0c] text-white border-b border-white/5 hidden lg:block ${
+            isScrolled
+              ? "-translate-y-full opacity-0 pointer-events-none"
+              : "translate-y-0 opacity-100"
+          }`}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          role="banner"
+          aria-label="Top bar"
+        >
+          <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center text-[10px] font-bold tracking-widest uppercase">
+            <motion.div
+              className="flex gap-8"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <motion.div
+                className="flex items-center gap-2"
+                whileHover={{ scale: 1.05 }}
+              >
+                <span
+                  className="material-symbols-outlined text-[14px] text-[#dab055]"
+                  aria-hidden="true"
+                >
+                  schedule
+                </span>
+                <span>{t("top.schedule")}</span>
+              </motion.div>
+              <motion.div
+                className="flex items-center gap-2"
+                whileHover={{ scale: 1.05 }}
+              >
+                <span className="material-symbols-outlined text-[14px] text-[#dab055]">
+                  mail
+                </span>
+                {CONFIG.contact.email}
+              </motion.div>
+            </motion.div>
+            <motion.div
+              className="flex items-center gap-8"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <motion.div
+                className="flex items-center gap-2"
+                whileHover={{ scale: 1.05 }}
+              >
+                <span className="material-symbols-outlined text-[14px] text-[#dab055]">
+                  call
+                </span>
+                {CONFIG.contact.phone}
+              </motion.div>
+              <div
+                className="flex items-center gap-3"
+                role="group"
+                aria-label="Language selection"
+              >
+                {["FR", "AR", "EN"].map((lang, idx) => (
+                  <motion.button
+                    key={lang}
+                    type="button"
+                    className={`${language === lang ? "text-[#dab055]" : "text-white/60 hover:text-white"}`}
+                    onClick={() => setLanguage(lang as "FR" | "AR" | "EN")}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    aria-pressed={language === lang}
+                    aria-label={`Switch to ${lang === "FR" ? "French" : lang === "AR" ? "Arabic" : "English"}`}
+                  >
+                    {lang}
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Main Navbar */}
+        <motion.header
+          className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-in-out ${
+            isScrolled
+              ? "top-4 lg:top-6 w-[95%] max-w-[90rem] bg-white/95 backdrop-blur-xl rounded-[3rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-[#dab055]/30 px-6 lg:px-12"
+              : isServiceDetailPage
+                ? "top-0 lg:top-10 w-full bg-[#0f172a]/20 backdrop-blur-[2px] px-4 lg:px-8"
+                : "top-0 lg:top-10 w-full bg-[#0f172a]/0 px-4 lg:px-8"
+          }`}
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div
+            className={`max-w-[100rem] mx-auto flex justify-between items-center transition-all duration-500 ${isScrolled ? "py-4" : "py-5 lg:py-6 xl:py-8"}`}
+          >
+            <Link
+              className="flex items-center gap-3 group"
+              href={`${langPrefix}`}
+              onClick={(e) => scrollToSection(e, "")}
+              aria-label="Go to homepage"
+            >
+              <span
+                className={`font-headline text-2xl xl:text-3xl font-bold tracking-tighter transition-colors duration-500 ${useDarkText ? "text-[#1c1c1b]" : "text-white"}`}
+              >
+                TAW <span className="text-[#dab055] border-b-2 border-[#dab055] pb-0.5 inline-block">10</span>
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-4 xl:space-x-12">
+              {navItems.map((link, idx) => {
+                const active = isLinkActive(link.href, link.subItems);
+                const hasSubItems = !!link.subItems;
+
+                if (hasSubItems) {
+                  return (
+                    <div
+                      key={link.key}
+                      className="relative group py-2"
+                      onMouseEnter={() => setIsServicesOpen(true)}
+                      onMouseLeave={() => setIsServicesOpen(false)}
+                    >
+                      <button
+                        className={`text-[11px] font-bold tracking-[0.25em] transition-all duration-300 relative flex items-center gap-1 cursor-pointer bg-transparent border-none outline-none ${
+                          active || isServicesOpen
+                            ? "text-[#dab055]"
+                            : useDarkText
+                              ? "text-[#1c1c1b]/80 hover:text-[#dab055]"
+                              : "text-white/70 hover:text-[#dab055]"
+                        }`}
+                        aria-expanded={isServicesOpen}
+                      >
+                        {t(link.key)}
+                        <span className="material-symbols-outlined text-[14px] transition-transform duration-300 group-hover:rotate-180">
+                          keyboard_arrow_down
+                        </span>
+                        <motion.span
+                          className="absolute -bottom-1 left-0 h-0.5 bg-[#dab055]"
+                          initial={{ width: active ? "100%" : "0%" }}
+                          animate={{ width: active ? "100%" : "0%" }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      </button>
+
+                      {/* Glassmorphic Dropdown Panel */}
+                      <AnimatePresence>
+                        {isServicesOpen && (
+                          <motion.div
+                            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#dab055]/20 p-2 z-[70] overflow-hidden"
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <div className="flex flex-col gap-1">
+                              {link.subItems?.map((subLink) => {
+                                const subActive = isLinkActive(subLink.href);
+                                return (
+                                  <Link
+                                    key={subLink.key}
+                                    href={subLink.href}
+                                    onClick={(e) => scrollToSection(e, subLink.href)}
+                                    className={`text-[10px] font-bold tracking-widest uppercase p-3.5 rounded-xl transition-all duration-200 block text-left ${
+                                      subActive
+                                        ? "bg-[#dab055]/10 text-[#dab055]"
+                                        : "text-[#1c1c1b]/80 hover:bg-[#dab055]/5 hover:text-[#dab055]"
+                                    }`}
+                                  >
+                                    {t(subLink.key)}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
+
+                return (
+                  <motion.div
+                    key={link.key}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1 + 0.3 }}
+                  >
+                    <Link
+                      className={`text-[11px] font-bold tracking-[0.25em] transition-all duration-300 relative group cursor-pointer ${
+                        active
+                          ? "text-[#dab055]"
+                          : useDarkText
+                            ? "text-[#1c1c1b]/80 hover:text-[#dab055]"
+                            : "text-white/70 hover:text-[#dab055]"
+                      }`}
+                      href={link.href}
+                      onClick={(e) => scrollToSection(e, link.href)}
+                    >
+                      {t(link.key)}
+                      <motion.span
+                        className="absolute -bottom-1 left-0 h-0.5 bg-[#dab055]"
+                        initial={{ width: active ? "100%" : "0%" }}
+                        animate={{ width: active ? "100%" : "0%" }}
+                        whileHover={{ width: "100%" }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </nav>
+
+            <div className="flex items-center gap-8">
+              {/* Minimal Language Switcher for Scrolled State */}
+              <AnimatePresence>
+                {isScrolled && (
+                  <motion.div
+                    className="hidden md:flex items-center gap-3 text-[10px] font-bold tracking-widest bg-[#1c1c1b]/5 px-5 py-2.5 rounded-full border border-[#1c1c1b]/10"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                    role="group"
+                    aria-label="Language selection"
+                  >
+                    {["FR", "AR", "EN"].map((lang) => (
+                      <motion.button
+                        key={lang}
+                        className={`${language === lang ? "text-[#dab055]" : "text-[#1c1c1b]/60 cursor-pointer hover:text-[#1c1c1b]"}`}
+                        onClick={() => setLanguage(lang as "FR" | "AR" | "EN")}
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        aria-label={`Switch to ${lang === "FR" ? "French" : lang === "AR" ? "Arabic" : "English"}`}
+                      >
+                        {lang}
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <motion.div
+                className="hidden lg:block xl:block"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  href={`${langPrefix}/contact`}
+                  onClick={(e) => {
+                    scrollToSection(e, `${langPrefix}/contact`);
+                    if (
+                      typeof window !== "undefined" &&
+                      (window as unknown as Window & { dataLayer?: any[] })
+                        .dataLayer
+                    ) {
+                      (
+                        window as unknown as Window & { dataLayer: any[] }
+                      ).dataLayer.push({
+                        event: "button_click",
+                        button_name: "consultation",
+                        location: "desktop_header",
+                      });
+                    }
+                  }}
+                  className={`bg-[#dab055] text-white rounded-full text-[9px] xl:text-[11px] font-black uppercase tracking-[0.2em] shadow-xl flex items-center justify-center transition-all duration-300 ${
+                    isScrolled ? "px-6 py-3" : "px-8 py-3.5 xl:px-10 xl:py-4.5"
+                  }`}
+                >
+                  <motion.span className="flex items-center justify-center animate-glow-pulse">
+                    {t("nav.consultation")}
+                  </motion.span>
+                </Link>
+              </motion.div>
+
+              {/* Mobile Menu Button */}
+              <motion.button
+                className="lg:hidden relative w-10 h-10 flex items-center justify-center"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Toggle mobile menu"
+                aria-expanded={isMobileMenuOpen}
+              >
+                <div className="flex flex-col gap-1.5">
+                  <motion.span
+                    className={`w-6 h-0.5 ${useDarkText ? "bg-[#1c1c1b]" : "bg-white"} block`}
+                    animate={{
+                      rotate: isMobileMenuOpen ? 45 : 0,
+                      y: isMobileMenuOpen ? 9 : 0,
+                      x: isMobileMenuOpen ? 0 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.span
+                    className={`w-6 h-0.5 ${useDarkText ? "bg-[#1c1c1b]" : "bg-white"} block`}
+                    animate={{
+                      opacity: isMobileMenuOpen ? 0 : 1,
+                      x: isMobileMenuOpen ? 10 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.span
+                    className={`w-6 h-0.5 ${useDarkText ? "bg-[#1c1c1b]" : "bg-white"} block`}
+                    animate={{
+                      rotate: isMobileMenuOpen ? -45 : 0,
+                      y: isMobileMenuOpen ? -9 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+              </motion.button>
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                className="lg:hidden absolute top-full left-0 right-0 mt-4 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#dab055]/20 overflow-y-auto max-h-[80vh] scrollbar-hide"
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.nav className="flex flex-col p-6">
+                  {navItems.map((link, idx) => {
+                    const active = isLinkActive(link.href, link.subItems);
+                    const hasSubItems = !!link.subItems;
+
+                    if (hasSubItems) {
+                      return (
+                        <div key={link.key} className="border-b border-[#dab055]/10 py-2">
+                          <button
+                            className={`w-full flex justify-between items-center font-bold tracking-[0.2em] py-3 transition-colors text-left bg-transparent border-none outline-none ${
+                              active || isMobileServicesOpen ? "text-[#dab055]" : "text-[#1c1c1b]"
+                            }`}
+                            onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                          >
+                            <span>{t(link.key)}</span>
+                            <span className={`material-symbols-outlined text-[16px] transition-transform duration-300 ${isMobileServicesOpen ? "rotate-180" : ""}`}>
+                              keyboard_arrow_down
+                            </span>
+                          </button>
+                          
+                          <AnimatePresence initial={false}>
+                            {isMobileServicesOpen && (
+                              <motion.div
+                                className="overflow-hidden pl-4 flex flex-col gap-1 mt-1"
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.25 }}
+                              >
+                                {link.subItems?.map((subLink) => {
+                                  const subActive = isLinkActive(subLink.href);
+                                  return (
+                                    <Link
+                                      key={subLink.key}
+                                      className={`font-semibold tracking-wider py-3 block text-sm border-l-2 pl-4 transition-colors ${
+                                        subActive
+                                          ? "border-[#dab055] text-[#dab055]"
+                                          : "border-transparent text-[#1c1c1b]/70 hover:text-[#dab055]"
+                                      }`}
+                                      href={subLink.href}
+                                      onClick={(e) => scrollToSection(e, subLink.href)}
+                                    >
+                                      {t(subLink.key)}
+                                    </Link>
+                                  );
+                                })}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <motion.div
+                        key={link.key}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                      >
+                        <Link
+                          className={`font-bold tracking-[0.2em] py-4 block border-b border-[#dab055]/10 transition-colors ${
+                            active ? "text-[#dab055]" : "text-[#1c1c1b] hover:text-[#dab055]"
+                          }`}
+                          href={link.href}
+                          onClick={(e) => scrollToSection(e, link.href)}
+                        >
+                          {t(link.key)}
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: navItems.length * 0.1 }}
+                    className="pt-6"
+                  >
+                    <Link
+                      href={`${langPrefix}/contact`}
+                      onClick={(e) => {
+                        scrollToSection(e, `${langPrefix}/contact`);
+                        if (
+                          typeof window !== "undefined" &&
+                          (window as unknown as Window & { dataLayer?: any[] })
+                            .dataLayer
+                        ) {
+                          (
+                            window as unknown as Window & { dataLayer: any[] }
+                          ).dataLayer.push({
+                            event: "button_click",
+                            button_name: "consultation",
+                            location: "mobile_header",
+                          });
+                        }
+                      }}
+                      className="w-full bg-[#dab055] text-white py-5 rounded-2xl flex items-center justify-center font-bold uppercase tracking-widest text-xs shadow-lg"
+                    >
+                      {t("nav.consultation")}
+                    </Link>
+                  </motion.div>
+                  <motion.div
+                    className="mt-6 flex justify-center gap-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    {["FR", "AR", "EN"].map((lang) => (
+                      <motion.button
+                        key={lang}
+                        className={`w-12 h-12 rounded-full font-bold text-sm ${
+                          language === lang
+                            ? "bg-[#dab055] text-white"
+                            : "bg-[#1c1c1b]/5 text-[#1c1c1b]/60 hover:bg-[#dab055]/10"
+                        }`}
+                        onClick={() => setLanguage(lang as "FR" | "AR" | "EN")}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        aria-pressed={language === lang}
+                        aria-label={`Switch to ${lang === "FR" ? "French" : lang === "AR" ? "Arabic" : "English"}`}
+                      >
+                        {lang}
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                </motion.nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.header>
+      </>
+    </LazyMotion>
+  );
+}

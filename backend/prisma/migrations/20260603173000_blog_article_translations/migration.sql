@@ -1,0 +1,16 @@
+ALTER TABLE `blog_articles`
+  ADD COLUMN `title_fr` VARCHAR(191) NULL,
+  ADD COLUMN `title_en` VARCHAR(191) NULL,
+  ADD COLUMN `title_ar` VARCHAR(191) NULL,
+  ADD COLUMN `excerpt_fr` TEXT NULL,
+  ADD COLUMN `excerpt_en` TEXT NULL,
+  ADD COLUMN `excerpt_ar` TEXT NULL,
+  ADD COLUMN `content_fr` TEXT NULL,
+  ADD COLUMN `content_en` TEXT NULL,
+  ADD COLUMN `content_ar` TEXT NULL,
+  ADD COLUMN `metaTitle_fr` VARCHAR(191) NULL,
+  ADD COLUMN `metaTitle_en` VARCHAR(191) NULL,
+  ADD COLUMN `metaTitle_ar` VARCHAR(191) NULL,
+  ADD COLUMN `metaDescription_fr` TEXT NULL,
+  ADD COLUMN `metaDescription_en` TEXT NULL,
+  ADD COLUMN `metaDescription_ar` TEXT NULL;

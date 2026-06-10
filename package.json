@@ -1,33 +1,27 @@
 {
-  "name": "tawv2",
-  "version": "0.1.0",
+  "name": "taw10v3",
+  "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build && npx shx cp -r .next/static .next/standalone/.next/ && npx shx cp -r public .next/standalone/",
-    "start": "node index.js",
-    "lint": "eslint"
+    "frontend:dev": "npm run dev --workspace frontend",
+    "frontend:build": "npm run build --workspace frontend",
+    "backend:dev": "npm run start:dev --workspace backend",
+    "backend:build": "npm run build --workspace backend",
+    "backend:migrate": "npm run prisma:migrate --workspace backend",
+    "backend:seed": "npm run seed --workspace backend"
   },
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
-    "framer-motion": "^12.38.0",
-    "next": "16.2.2",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "react-icons": "^5.6.0",
-    "tailwindcss": "^4",
-    "@tailwindcss/postcss": "^4",
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19"
-  },
-  "devDependencies": {
-    "critters": "^0.0.23",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.2",
-    "next-sitemap": "^4.2.3"
+    "axios": "^1.17.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.17.0",
+    "tailwind-merge": "^3.6.0",
+    "zustand": "^5.0.14"
   }
 }
