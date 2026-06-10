@@ -83,6 +83,9 @@ const FAQ = () => {
         <div className="space-y-4">
           {sortedQuestions.map((item, index) => {
             const selectedReaction = reactions[item.id];
+            const lang = language.toLowerCase();
+            const question = item[`question_${lang}` as keyof FaqItem] as string || item.question_fr;
+            const answer = item[`answer_${lang}` as keyof FaqItem] as string || item.answer_fr;
 
             return (
               <motion.div
@@ -99,7 +102,7 @@ const FAQ = () => {
                   dir={language === "AR" ? "rtl" : "ltr"}
                 >
                   <span className={`text-lg font-bold transition-colors duration-300 ${activeIndex === index ? "text-[#dab055]" : "text-[#1c1c1b]"}`}>
-                    {item.question}
+                    {question}
                   </span>
                   <motion.span className={`material-symbols-outlined text-[#dab055] transition-transform duration-500 ${activeIndex === index ? "rotate-180" : ""}`}>
                     expand_more
@@ -115,7 +118,7 @@ const FAQ = () => {
                       transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
                     >
                       <div className="px-8 pb-8" dir={language === "AR" ? "rtl" : "ltr"}>
-                        <p className="font-body leading-relaxed text-[#1c1c1b]/60">{item.answer}</p>
+                        <p className="font-body leading-relaxed text-[#1c1c1b]/60">{answer}</p>
                         <div className="mt-6 flex flex-wrap items-center gap-3">
                           <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#8a8172]">
                             {language === "AR" ? "هل كانت مفيدة؟" : language === "EN" ? "Was this helpful?" : "Cette reponse est utile ?"}

@@ -140,8 +140,12 @@ export type ServiceOffering = {
 
 export type FaqItem = {
   id: string;
-  question: string;
-  answer: string;
+  question_fr: string;
+  question_en: string;
+  question_ar: string;
+  answer_fr: string;
+  answer_en: string;
+  answer_ar: string;
   sortOrder: number;
   isActive: boolean;
   likeCount?: number;

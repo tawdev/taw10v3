@@ -26,8 +26,12 @@ export class FaqService {
     await this.ensureSortOrderAvailable(dto.sortOrder);
     return this.prisma.faqItem.create({
       data: {
-        question: dto.question.trim(),
-        answer: dto.answer.trim(),
+        question_fr: dto.question_fr.trim(),
+        question_en: dto.question_en.trim(),
+        question_ar: dto.question_ar.trim(),
+        answer_fr: dto.answer_fr.trim(),
+        answer_en: dto.answer_en.trim(),
+        answer_ar: dto.answer_ar.trim(),
         sortOrder: dto.sortOrder,
         isActive: dto.isActive ?? true,
       },
@@ -41,8 +45,12 @@ export class FaqService {
     return this.prisma.faqItem.update({
       where: { id },
       data: {
-        question: dto.question?.trim(),
-        answer: dto.answer?.trim(),
+        question_fr: dto.question_fr?.trim(),
+        question_en: dto.question_en?.trim(),
+        question_ar: dto.question_ar?.trim(),
+        answer_fr: dto.answer_fr?.trim(),
+        answer_en: dto.answer_en?.trim(),
+        answer_ar: dto.answer_ar?.trim(),
         sortOrder: dto.sortOrder,
         isActive: dto.isActive,
       },

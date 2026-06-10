@@ -126,8 +126,28 @@ export const blogArticles: BlogArticle[] = [
 ];
 
 export const faqs: FaqItem[] = [
-  { id: 'faq-1', question: 'Quels documents sont necessaires ?', answer: 'Une CIN ou passeport, justificatifs et informations de la societe.', sortOrder: 1, isActive: true },
-  { id: 'faq-2', question: 'Combien de temps prend la creation ?', answer: 'Le delai depend du dossier, generalement quelques jours ouvrables.', sortOrder: 2, isActive: true },
+  {
+    id: 'faq-1',
+    question_fr: 'Quels documents sont necessaires ?',
+    question_en: 'What documents are required?',
+    question_ar: 'ما هي الوثائق المطلوبة؟',
+    answer_fr: 'Une CIN ou passeport, justificatifs et informations de la societe.',
+    answer_en: 'An ID or passport, supporting documents and company information.',
+    answer_ar: 'بطاقة تعريف أو جواز سفر، وثائق داعمة ومعلومات الشركة.',
+    sortOrder: 1,
+    isActive: true,
+  },
+  {
+    id: 'faq-2',
+    question_fr: 'Combien de temps prend la creation ?',
+    question_en: 'How long does the creation take?',
+    question_ar: 'كم من الوقت يستغرق الإنشاء؟',
+    answer_fr: 'Le delai depend du dossier, generalement quelques jours ouvrables.',
+    answer_en: 'The timeframe depends on the file, generally a few business days.',
+    answer_ar: 'تعتمد المدة على الملف، عادة بضعة أيام عمل.',
+    sortOrder: 2,
+    isActive: true,
+  },
 ];
 
 export const administrators: AdminUser[] = [

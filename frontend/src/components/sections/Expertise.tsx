@@ -152,16 +152,6 @@ export default function Expertise() {
                 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <div className="relative h-44 overflow-hidden">
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c1b]/60 via-transparent to-transparent" />
-                </div>
                 <div className="absolute inset-0 bg-gradient-to-br from-[#dab055]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10 h-full flex flex-col p-10">
                   <motion.div 

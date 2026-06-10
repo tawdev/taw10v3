@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useEffect, useState } from 'react';
-import { MessageCircleQuestion, Plus, ThumbsDown, ThumbsUp, Trash2 } from 'lucide-react';
+import { Globe2, MessageCircleQuestion, Plus, ThumbsDown, ThumbsUp, Trash2 } from 'lucide-react';
 import { PageHeader } from '@/components/dashboard/PageHeader';
 import { ActiveBadge } from '@/components/dashboard/StatusBadge';
 import { Button } from '@/components/ui/button';
@@ -14,10 +14,30 @@ import { useAdminStore } from '@/store/admin-store';
 import { useToastStore } from '@/store/toast-store';
 import { FaqItem } from '@/types/admin';
 
+const languages = [
+  { key: 'fr', label: 'FRANÇAIS' },
+  { key: 'en', label: 'ENGLISH' },
+  { key: 'ar', label: 'العربية' },
+] as const;
+
+type Language = typeof languages[number]['key'];
+
+const getLocalizedValue = (item: any, field: string, lang: Language) => {
+  return item[`${field}_${lang}`] || '';
+};
+
+const setLocalizedValue = (item: any, field: string, lang: Language, value: string) => {
+  return { ...item, [`${field}_${lang}`]: value };
+};
+
 const emptyFaq = (sortOrder: number): FaqItem => ({
   id: crypto.randomUUID(),
-  question: '',
-  answer: '',
+  question_fr: '',
+  question_en: '',
+  question_ar: '',
+  answer_fr: '',
+  answer_en: '',
+  answer_ar: '',
   sortOrder,
   isActive: true,
   likeCount: 0,
@@ -29,6 +49,7 @@ export default function FaqPage() {
   const toast = useToastStore((state) => state.toast);
   const [editing, setEditing] = useState<FaqItem | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeLanguage, setActiveLanguage] = useState<Language>('fr');
 
   useEffect(() => {
     faqService
@@ -38,7 +59,7 @@ export default function FaqPage() {
       })
       .catch(() => {
         toast({
-          title: 'FAQ locale affichee',
+          title: 'FAQ locale affichée',
           description: "Impossible de synchroniser la FAQ depuis l'API.",
           variant: 'default',
         });
@@ -51,8 +72,12 @@ export default function FaqPage() {
     if (!editing) return;
 
     const payload = {
-      question: editing.question,
-      answer: editing.answer,
+      question_fr: editing.question_fr,
+      question_en: editing.question_en,
+      question_ar: editing.question_ar,
+      answer_fr: editing.answer_fr,
+      answer_en: editing.answer_en,
+      answer_ar: editing.answer_ar,
       sortOrder: editing.sortOrder,
       isActive: editing.isActive,
     };
@@ -62,11 +87,11 @@ export default function FaqPage() {
       const saved = exists ? await faqService.update(editing.id, payload) : await faqService.create(payload);
       upsertFaq(saved);
       setEditing(null);
-      toast({ title: 'FAQ sauvegardee', variant: 'success' });
+      toast({ title: 'FAQ sauvegardée', variant: 'success' });
     } catch {
       toast({
         title: 'Impossible de sauvegarder',
-        description: 'Verifiez que la question existe et que le sort order est unique.',
+        description: 'Vérifiez que la question existe et que le sort order est unique.',
         variant: 'destructive',
       });
     }
@@ -76,10 +101,10 @@ export default function FaqPage() {
     try {
       const updated = await faqService.update(item.id, { isActive: !item.isActive });
       upsertFaq(updated);
-      toast({ title: updated.isActive ? 'FAQ activee' : 'FAQ desactivee', variant: 'success' });
+      toast({ title: updated.isActive ? 'FAQ activée' : 'FAQ désactivée', variant: 'success' });
     } catch {
       toggleFaq(item.id);
-      toast({ title: 'Statut mis a jour localement', variant: 'default' });
+      toast({ title: 'Statut mis à jour localement', variant: 'default' });
     }
   }
 
@@ -89,7 +114,7 @@ export default function FaqPage() {
     try {
       await faqService.delete(id);
       removeFaq(id);
-      toast({ title: 'FAQ supprimee', variant: 'success' });
+      toast({ title: 'FAQ supprimée', variant: 'success' });
     } catch {
       toast({ title: 'Impossible de supprimer la FAQ', variant: 'destructive' });
     }
@@ -101,7 +126,7 @@ export default function FaqPage() {
     <>
       <PageHeader
         title="FAQ"
-        description="Gestion dynamique des questions, reponses, ordre, statut et reactions client."
+        description="Gestion dynamique des questions, réponses, ordre, statut et réactions client en multi-langue."
         actions={
           <Button onClick={() => setEditing(emptyFaq(sortedFaq.length + 1))}>
             <Plus className="h-4 w-4" />Create FAQ
@@ -145,8 +170,8 @@ export default function FaqPage() {
             <thead>
               <tr>
                 <Th className="w-20">Sort</Th>
-                <Th>Question</Th>
-                <Th>Answer</Th>
+                <Th>Question (FR)</Th>
+                <Th>Answer (FR)</Th>
                 <Th>Feedback</Th>
                 <Th className="w-28">Status</Th>
                 <Th className="w-64">Actions</Th>
@@ -161,8 +186,8 @@ export default function FaqPage() {
               {sortedFaq.map((item) => (
                 <tr key={item.id} className="transition-colors hover:bg-[#faf9f6]/80">
                   <Td className="font-bold text-[#a68942]">{item.sortOrder}</Td>
-                  <Td className="font-bold text-[#1f2a24]">{item.question}</Td>
-                  <Td className="max-w-md break-words text-xs leading-relaxed text-[#667085]">{item.answer}</Td>
+                  <Td className="font-bold text-[#1f2a24]">{item.question_fr}</Td>
+                  <Td className="max-w-md break-words text-xs leading-relaxed text-[#667085]">{item.answer_fr}</Td>
                   <Td>
                     <div className="flex items-center gap-2 text-xs font-bold">
                       <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-emerald-700">
@@ -192,50 +217,99 @@ export default function FaqPage() {
         </CardContent>
       </Card>
 
-      <Dialog open={Boolean(editing)} title="FAQ Item" onClose={() => setEditing(null)}>
+      <Dialog 
+        open={Boolean(editing)} 
+        title={
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1f2a24] text-[#dab055] shadow-sm">
+              <MessageCircleQuestion className="h-4 w-4" />
+            </span>
+            <span>FAQ Item</span>
+          </div>
+        } 
+        className="max-w-3xl rounded-[1.25rem]"
+        onClose={() => setEditing(null)}
+      >
         {editing ? (
-          <form onSubmit={save} className="grid gap-5">
-            <Field label="Question">
-              <Input
-                value={editing.question}
-                onChange={(event) => setEditing({ ...editing, question: event.target.value })}
-                required
-                placeholder="e.g. Quels documents sont necessaires ?"
-              />
-            </Field>
-
-            <Field label="Answer">
-              <Textarea
-                value={editing.answer}
-                onChange={(event) => setEditing({ ...editing, answer: event.target.value })}
-                required
-                placeholder="Write the detailed answer here..."
-                className="min-h-32"
-              />
-            </Field>
-
-            <div className="grid items-center gap-4 md:grid-cols-2">
-              <Field label="Sort Order">
-                <Input
-                  type="number"
-                  min={1}
-                  value={editing.sortOrder}
-                  onChange={(event) => setEditing({ ...editing, sortOrder: Number(event.target.value) })}
-                  required
-                />
-              </Field>
-              <label className="mt-5 flex cursor-pointer select-none items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-[#4f5b54]">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 cursor-pointer rounded border-[#d8d1c3] text-[#a68942] transition-all focus:ring-[#a68942]/30"
-                  checked={editing.isActive}
-                  onChange={(event) => setEditing({ ...editing, isActive: event.target.checked })}
-                />
-                Active FAQ Item
-              </label>
+          <form onSubmit={save} className="grid gap-6">
+            <div className="rounded-xl border border-[#e7decc] bg-[#fbf7ee] p-2 shadow-inner">
+              <div className="grid grid-cols-3 gap-2">
+                {languages.map((language) => (
+                  <button
+                    key={language.key}
+                    type="button"
+                    onClick={() => setActiveLanguage(language.key)}
+                    className={`h-11 rounded-lg text-xs font-black tracking-[0.18em] transition-all ${
+                      activeLanguage === language.key
+                        ? 'bg-[#1f2a24] text-white shadow-[0_10px_25px_rgba(31,42,36,0.22)]'
+                        : 'bg-white text-[#6b6255] hover:bg-[#f5eee0] hover:text-[#1f2a24] border border-[#eadfcb]'
+                    }`}
+                  >
+                    {language.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <Button type="submit" className="mt-2 h-11 w-full">
+            <section className="rounded-xl border border-[#e7decc] bg-white shadow-[0_14px_40px_rgba(31,42,36,0.06)] overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-[#efe7d7] bg-[#fbf7ee] px-5 py-4">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1f2a24] text-[#dab055] shadow-sm">
+                  <Globe2 className="h-4 w-4" />
+                </span>
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Content</h3>
+              </div>
+              <div className="grid gap-5 p-5">
+                <Field label={`Question ${activeLanguage.toUpperCase()}`}>
+                  <Input
+                    dir={activeLanguage === 'ar' ? 'rtl' : 'ltr'}
+                    value={getLocalizedValue(editing, 'question', activeLanguage)}
+                    onChange={(event) => setEditing(setLocalizedValue(editing, 'question', activeLanguage, event.target.value))}
+                    required={activeLanguage === 'fr'}
+                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 text-[15px] font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                  />
+                </Field>
+                <Field label={`Answer ${activeLanguage.toUpperCase()}`}>
+                  <Textarea
+                    dir={activeLanguage === 'ar' ? 'rtl' : 'ltr'}
+                    value={getLocalizedValue(editing, 'answer', activeLanguage)}
+                    onChange={(event) => setEditing(setLocalizedValue(editing, 'answer', activeLanguage, event.target.value))}
+                    required={activeLanguage === 'fr'}
+                    className="min-h-32 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 py-3 text-[15px] leading-relaxed shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                  />
+                </Field>
+              </div>
+            </section>
+
+            <section className="rounded-xl border border-[#e7decc] bg-white shadow-[0_14px_40px_rgba(31,42,36,0.06)] overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-[#efe7d7] bg-[#fbf7ee] px-5 py-4">
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Settings</h3>
+              </div>
+              <div className="grid gap-5 p-5 md:grid-cols-2">
+                <Field label="Sort Order">
+                  <Input
+                    type="number"
+                    min={1}
+                    value={editing.sortOrder}
+                    onChange={(event) => setEditing({ ...editing, sortOrder: Number(event.target.value) })}
+                    required
+                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold"
+                  />
+                </Field>
+                <div className="flex items-center pt-8">
+                  <label className="flex cursor-pointer select-none items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-[#4f5b54]">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4 cursor-pointer rounded border-[#d8d1c3] text-[#a68942] transition-all focus:ring-[#a68942]/30"
+                      checked={editing.isActive}
+                      onChange={(event) => setEditing({ ...editing, isActive: event.target.checked })}
+                    />
+                    Active FAQ Item
+                  </label>
+                </div>
+              </div>
+            </section>
+
+            <Button type="submit" className="h-12 w-full rounded-xl bg-[#1f2a24] text-sm font-black uppercase tracking-[0.2em] shadow-[0_16px_35px_rgba(31,42,36,0.24)] hover:bg-[#2b3a32]">
               Save FAQ Item
             </Button>
           </form>

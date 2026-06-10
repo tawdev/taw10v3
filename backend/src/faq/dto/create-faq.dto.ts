@@ -3,11 +3,27 @@ import { IsBoolean, IsInt, IsOptional, IsString, Min, MinLength } from 'class-va
 export class CreateFaqDto {
   @IsString()
   @MinLength(3)
-  question!: string;
+  question_fr!: string;
 
   @IsString()
   @MinLength(3)
-  answer!: string;
+  question_en!: string;
+
+  @IsString()
+  @MinLength(3)
+  question_ar!: string;
+
+  @IsString()
+  @MinLength(3)
+  answer_fr!: string;
+
+  @IsString()
+  @MinLength(3)
+  answer_en!: string;
+
+  @IsString()
+  @MinLength(3)
+  answer_ar!: string;
 
   @IsInt()
   @Min(1)

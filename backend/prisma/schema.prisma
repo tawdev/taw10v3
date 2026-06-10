@@ -197,8 +197,12 @@ model ServiceOffering {
 
 model FaqItem {
   id           String   @id @default(cuid())
-  question     String
-  answer       String   @db.Text
+  question_fr  String
+  question_en  String
+  question_ar  String
+  answer_fr    String   @db.Text
+  answer_en    String   @db.Text
+  answer_ar    String   @db.Text
   sortOrder    Int      @unique
   isActive     Boolean  @default(true)
   likeCount    Int      @default(0)
