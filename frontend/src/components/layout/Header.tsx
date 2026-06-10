@@ -112,7 +112,7 @@ export default function Header() {
         return () => clearTimeout(timer);
       }
     }
-  }, [pathname, isHome]);
+  }, [isHome]); // Removed 'pathname' to prevent scroll-jacking during manual scroll
 
   useEffect(() => {
     if (isMobileMenuOpen) {
