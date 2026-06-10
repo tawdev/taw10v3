@@ -1,7 +1,7 @@
 # TAW10 V3
 
-TAW10 V3 is organized as a two-service project:
-
+TAW10 V3 is organized as a two-service project ::
+ 
 ```text
 taw10V3/
 ├── frontend/   # Existing Next.js application
