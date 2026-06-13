@@ -1,7 +1,7 @@
 import { BlogArticle } from '@/types/admin';
 import { http } from './http';
 
-type BlogArticlePayload = {
+export type BlogArticlePayload = {
   title_fr: string;
   title_en: string;
   title_ar: string;
@@ -22,6 +22,9 @@ type BlogArticlePayload = {
   status: BlogArticle['status'];
   publishedAt?: string | null;
 };
+
+export type ArticlePayload = BlogArticlePayload;
+
 
 export const blogService = {
   list: () => http.get<BlogArticle[]>('/admin/blog').then((res) => res.data),
