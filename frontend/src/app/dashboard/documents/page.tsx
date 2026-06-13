@@ -32,7 +32,7 @@ export default function DocumentsPage() {
         description="Review uploaded CIN, passports, company documents, and contracts."
         actions={
           <div className="flex items-center gap-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#6b6255]">Filter:</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-white/60">Filter:</span>
             <Select
               value={filter}
               onChange={(e) => setFilter(e.target.value as DocumentType | 'ALL')}
@@ -62,8 +62,8 @@ export default function DocumentsPage() {
             </thead>
             <tbody>
               {documents.map((document) => (
-                <tr key={document.id} className="hover:bg-[#faf9f6]/80 transition-colors">
-                  <Td className="font-bold text-[#1f2a24]">{document.name}</Td>
+                <tr key={document.id} className="hover:bg-white/5 transition-colors">
+                  <Td className="font-bold text-white">{document.name}</Td>
                   <Td className="font-semibold">{document.customerName}</Td>
                   <Td>
                     <Badge variant={getDocBadgeVariant(document.type)}>

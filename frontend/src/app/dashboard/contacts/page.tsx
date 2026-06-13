@@ -70,11 +70,11 @@ export default function ContactsPage() {
       <Card>
         <CardContent className="overflow-x-auto p-0">
           {isLoading ? (
-            <div className="flex items-center justify-center p-8 text-sm text-[#667085]">
+            <div className="flex items-center justify-center p-8 text-sm text-white/50">
               Loading messages...
             </div>
           ) : contacts.length === 0 ? (
-            <div className="flex items-center justify-center p-8 text-sm text-[#667085]">
+            <div className="flex items-center justify-center p-8 text-sm text-white/50">
               No contact requests found.
             </div>
           ) : (
@@ -95,20 +95,20 @@ export default function ContactsPage() {
                   <tr
                     key={contact.id}
                     className={cn(
-                      'hover:bg-[#faf9f6]/80 transition-colors',
-                      !contact.isRead && 'bg-[#faf7ee]/30 font-semibold',
+                      'hover:bg-white/5 transition-colors',
+                      !contact.isRead && 'bg-[#dab055]/5 font-semibold',
                     )}
                   >
-                    <Td className="font-bold text-[#1f2a24]">{contact.name}</Td>
-                    <Td className="text-xs text-[#667085]">{contact.email}</Td>
-                    <Td className="text-xs text-[#4f5b54]">{contact.phone}</Td>
+                    <Td className="font-bold text-white">{contact.name}</Td>
+                    <Td className="text-xs text-white/50">{contact.email}</Td>
+                    <Td className="text-xs text-white/60">{contact.phone}</Td>
                     <Td>
-                      <div className="flex items-center gap-2 font-bold text-[#1f2a24] tracking-tight">
+                      <div className="flex items-center gap-2 font-bold text-white tracking-tight">
                         {contact.subject}
                         {!contact.isRead ? <Badge variant="warning">New</Badge> : null}
                       </div>
                     </Td>
-                    <Td className="max-w-md min-w-[280px] break-words text-xs text-[#4f5b54] leading-relaxed font-normal">
+                    <Td className="max-w-md min-w-[280px] break-words text-xs text-white/60 leading-relaxed font-normal">
                       {contact.message}
                     </Td>
                     <Td className="text-xs">{new Date(contact.createdAt).toLocaleDateString()}</Td>

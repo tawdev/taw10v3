@@ -131,8 +131,8 @@ export default function PricingPage() {
         description="Create plans that exactly match public pricing cards, including included/excluded features."
         actions={<Button onClick={() => setEditing({ ...emptyPlan(), sortOrder: pricing.length + 1 })}><Plus className="h-4 w-4" />Create Plan</Button>}
       />
-      <Card className="rounded-3xl border-0 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden bg-white/70 backdrop-blur-xl">
-        <div className="bg-gradient-to-r from-[#1c1c1b] to-[#2a2a29] p-6 text-white flex justify-between items-center">
+      <Card className="overflow-hidden border border-white/10 bg-[#111111]/80 backdrop-blur-xl">
+        <div className="bg-gradient-to-r from-[#0a0f0c] to-[#111b16] p-6 text-white flex justify-between items-center">
           <div>
             <h3 className="text-lg font-black uppercase tracking-widest text-[#dab055]">Manage Plans</h3>
             <p className="text-xs text-white/60 mt-1 font-medium">Overview of your current pricing tiers</p>
@@ -140,38 +140,38 @@ export default function PricingPage() {
         </div>
         <CardContent className="overflow-x-auto p-0">
           <Table>
-            <thead className="bg-[#fcf9f6] border-b border-[#dab055]/10">
+            <thead className="bg-white/5 border-b border-[#dab055]/20">
               <tr>
-                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1c1c1b]/70 py-5">Plan</Th>
-                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1c1c1b]/70 py-5">Price</Th>
-                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1c1c1b]/70 py-5">Theme</Th>
-                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1c1c1b]/70 py-5">Popular</Th>
-                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1c1c1b]/70 py-5">Status</Th>
-                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1c1c1b]/70 py-5">Sort</Th>
-                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1c1c1b]/70 py-5">Features</Th>
-                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1c1c1b]/70 py-5">Actions</Th>
+                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#dab055] py-5">Plan</Th>
+                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#dab055] py-5">Price</Th>
+                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#dab055] py-5">Theme</Th>
+                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#dab055] py-5">Popular</Th>
+                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#dab055] py-5">Status</Th>
+                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#dab055] py-5">Sort</Th>
+                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#dab055] py-5">Features</Th>
+                <Th className="text-[10px] font-black uppercase tracking-[0.2em] text-[#dab055] py-5">Actions</Th>
               </tr>
             </thead>
             <tbody>
               {pricing.map((plan) => (
-                <tr key={plan.id} className="hover:bg-[#dab055]/5 transition-colors duration-300 border-b border-[#dab055]/10 last:border-0 group">
+                <tr key={plan.id} className="hover:bg-[#dab055]/5 transition-colors duration-300 border-b border-white/10 last:border-0 group">
                   <Td className="py-5">
-                    <p className="font-black text-[#1c1c1b] text-sm uppercase tracking-wider">{plan.name}</p>
-                    <p className="text-xs text-[#1c1c1b]/60 mt-1 font-medium">{plan.description}</p>
+                    <p className="font-black text-white text-sm uppercase tracking-wider">{plan.name}</p>
+                    <p className="text-xs text-white/50 mt-1 font-medium">{plan.description}</p>
                   </Td>
                   <Td className="font-black text-[#dab055] tracking-tight text-lg">{plan.price} <span className="text-xs tracking-widest text-[#1c1c1b]/50">MAD</span></Td>
                   <Td><Badge variant={plan.theme === 'DEFAULT' ? 'default' : plan.theme === 'FEATURED' ? 'warning' : 'success'} className="uppercase tracking-widest text-[9px] font-black">{plan.theme}</Badge></Td>
                   <Td>{plan.isPopular ? <Badge variant="success" className="uppercase tracking-widest text-[9px] font-black bg-[#dab055] text-white">Yes</Badge> : <Badge variant="muted" className="uppercase tracking-widest text-[9px] font-black">No</Badge>}</Td>
                   <Td><ActiveBadge active={plan.isActive} /></Td>
-                  <Td className="font-black text-[#1c1c1b]/40">{plan.sortOrder}</Td>
-                  <Td className="text-xs font-bold text-[#1c1c1b]/70">
+                  <Td className="font-black text-white/30">{plan.sortOrder}</Td>
+                  <Td className="text-xs font-bold text-white/50">
                     <span className="text-[#dab055]">{plan.features.filter((feature) => feature.isIncluded).length}</span>
-                    <span className="text-[#1c1c1b]/30 mx-1">/</span>
+                    <span className="text-white/30 mx-1">/</span>
                     {plan.features.length} <span className="text-[10px] uppercase tracking-wider opacity-70 ml-1">inc.</span>
                   </Td>
                   <Td>
                     <div className="flex gap-2 items-center opacity-70 group-hover:opacity-100 transition-opacity">
-                      <div className="flex bg-white rounded-lg shadow-sm border border-[#dab055]/20 overflow-hidden mr-2">
+                      <div className="flex bg-white/5 rounded-lg shadow-sm border border-[#dab055]/20 overflow-hidden mr-2">
                         <Button size="icon" variant="ghost" className="h-8 w-8 rounded-none hover:bg-[#dab055] hover:text-white transition-colors" onClick={() => movePlan(plan.id, 'up')}><ArrowUp className="h-4 w-4" /></Button>
                         <div className="w-[1px] bg-[#dab055]/20"></div>
                         <Button size="icon" variant="ghost" className="h-8 w-8 rounded-none hover:bg-[#dab055] hover:text-white transition-colors" onClick={() => movePlan(plan.id, 'down')}><ArrowDown className="h-4 w-4" /></Button>

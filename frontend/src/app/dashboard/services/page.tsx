@@ -10,6 +10,7 @@ import { Field, Input, Textarea } from '@/components/ui/form';
 import { Table, Td, Th } from '@/components/ui/table';
 import { servicesService, ServiceOfferingPayload } from '@/services/services.service';
 import { ServiceOffering } from '@/types/admin';
+import { ImageUploadField } from '@/components/dashboard/ImageUploadField';
 
 type ServiceLanguage = 'fr' | 'en' | 'ar';
 
@@ -74,7 +75,7 @@ function ServiceImage({ src, title, large = false }: { src: string; title: strin
   const imageSrc = normalizeImageSrc(src);
 
   return (
-    <div className={`${large ? 'h-56 w-full rounded-xl' : 'h-16 w-24 rounded-md'} relative overflow-hidden border border-[#e7decc] bg-[#faf8f5] shadow-sm`}>
+    <div className={`${large ? 'h-56 w-full rounded-xl' : 'h-16 w-24 rounded-md'} relative overflow-hidden border border-white/10 bg-white/5 shadow-sm`}>
       {imageSrc ? (
         <img
           src={imageSrc}
@@ -169,7 +170,7 @@ export default function ServicesAdminPage() {
 
       <Card>
         <CardContent className="overflow-x-auto p-0">
-          {error ? <div className="p-4 text-sm font-semibold text-red-700">{error}</div> : null}
+          {error ? <div className="p-4 text-sm font-semibold text-red-400">{error}</div> : null}
           <Table>
             <thead>
               <tr>
@@ -185,18 +186,22 @@ export default function ServicesAdminPage() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <Td colSpan={7} className="text-center text-sm text-[#8a8172]">Loading services...</Td>
+                  <Td colSpan={7} className="text-center text-sm text-white/50">Loading services...</Td>
                 </tr>
               ) : null}
               {services.map((service) => (
-                <tr key={service.id} className="hover:bg-[#faf9f6]/80 transition-colors">
+                <tr key={service.id} className="hover:bg-white/5 transition-colors">
                   <Td><ServiceImage src={service.imageUrl} title={service.title_fr} /></Td>
-                  <Td className="font-bold text-[#1f2a24]">{service.title_fr}</Td>
-                  <Td className="text-xs font-semibold text-[#8a8172]">{service.slug}</Td>
+                  <Td className="font-bold text-white">{service.title_fr}</Td>
+                  <Td className="text-xs font-semibold text-white/50">{service.slug}</Td>
                   <Td className="text-xs text-[#667085]">{service.icon}</Td>
                   <Td className="text-xs font-bold">{service.sortOrder}</Td>
                   <Td>
-                    <span className={`rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wider ${service.isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-stone-100 text-stone-500'}`}>
+                    <span className={`rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-wider ${
+                      service.isActive
+                        ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
+                        : 'bg-white/5 border border-white/10 text-white/40'
+                    }`}>
                       {service.isActive ? 'Active' : 'Hidden'}
                     </span>
                   </Td>
@@ -222,7 +227,7 @@ export default function ServicesAdminPage() {
         open={Boolean(editing)}
         title={
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1f2a24] text-[#dab055] shadow-sm">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0a0f0c] text-[#dab055] shadow-sm">
               <Sparkles className="h-4 w-4" />
             </span>
             <span>Service</span>
@@ -233,7 +238,7 @@ export default function ServicesAdminPage() {
       >
         {editing ? (
           <form onSubmit={save} className="grid gap-6">
-            <div className="rounded-xl border border-[#e7decc] bg-[#fbf7ee] p-2 shadow-inner">
+            <div className="rounded-xl border border-white/10 bg-[#111111]/80 p-2 shadow-inner">
               <div className="grid grid-cols-3 gap-2">
                 {languages.map((language) => (
                   <button
@@ -242,8 +247,8 @@ export default function ServicesAdminPage() {
                     onClick={() => setActiveLanguage(language.key)}
                     className={`h-11 rounded-lg text-xs font-black tracking-[0.18em] transition-all ${
                       activeLanguage === language.key
-                        ? 'bg-[#1f2a24] text-white shadow-[0_10px_25px_rgba(31,42,36,0.22)]'
-                        : 'bg-white text-[#6b6255] hover:bg-[#f5eee0] hover:text-[#1f2a24] border border-[#eadfcb]'
+                        ? 'bg-[#0a0f0c] text-white shadow-[0_0_15px_rgba(218,176,85,0.3)]'
+                        : 'bg-white text-white/60 hover:bg-white/10 hover:text-white border border-[#eadfcb]'
                     }`}
                   >
                     {language.label}
@@ -252,12 +257,12 @@ export default function ServicesAdminPage() {
               </div>
             </div>
 
-            <section className="rounded-xl border border-[#e7decc] bg-white shadow-[0_14px_40px_rgba(31,42,36,0.06)] overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-[#efe7d7] bg-[#fbf7ee] px-5 py-4">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1f2a24] text-[#dab055] shadow-sm">
+            <section className="rounded-xl border border-white/10 bg-[#111111]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-white/10 bg-[#111111]/80 px-5 py-4">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a0f0c] text-[#dab055] shadow-sm">
                   <Globe2 className="h-4 w-4" />
                 </span>
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Content</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white">Content</h3>
               </div>
               <div className="grid gap-5 p-5">
                 <Field label={`Title ${activeLanguage.toUpperCase()}`}>
@@ -266,7 +271,7 @@ export default function ServicesAdminPage() {
                     value={getLocalizedValue(editing, 'title', activeLanguage)}
                     onChange={(event) => setEditing(setLocalizedValue(editing, 'title', activeLanguage, event.target.value))}
                     required={activeLanguage === 'fr'}
-                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 text-[15px] font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                    className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 text-[15px] font-semibold shadow-lg"
                   />
                 </Field>
                 <Field label={`Description ${activeLanguage.toUpperCase()}`}>
@@ -275,33 +280,36 @@ export default function ServicesAdminPage() {
                     value={getLocalizedValue(editing, 'description', activeLanguage)}
                     onChange={(event) => setEditing(setLocalizedValue(editing, 'description', activeLanguage, event.target.value))}
                     required={activeLanguage === 'fr'}
-                    className="min-h-32 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 py-3 text-[15px] leading-relaxed shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                    className="min-h-32 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 py-3 text-[15px] leading-relaxed shadow-lg"
                   />
                 </Field>
               </div>
             </section>
 
-            <section className="rounded-xl border border-[#e7decc] bg-white shadow-[0_14px_40px_rgba(31,42,36,0.06)] overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-[#efe7d7] bg-[#fbf7ee] px-5 py-4">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1f2a24] text-[#dab055] shadow-sm">
+            <section className="rounded-xl border border-white/10 bg-[#111111]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-white/10 bg-[#111111]/80 px-5 py-4">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a0f0c] text-[#dab055] shadow-sm">
                   <ImageIcon className="h-4 w-4" />
                 </span>
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Media & Display</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white">Media & Display</h3>
               </div>
               <div className="grid gap-5 p-5">
                 <ServiceImage src={editing.imageUrl} title={getLocalizedValue(editing, 'title', activeLanguage)} large />
                 <div className="grid gap-4 md:grid-cols-2">
                   <Field label="Slug">
-                    <Input value={editing.slug} onChange={(event) => setEditing({ ...editing, slug: event.target.value })} required className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold" />
+                    <Input value={editing.slug} onChange={(event) => setEditing({ ...editing, slug: event.target.value })} required className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 font-semibold" />
                   </Field>
                   <Field label="Icon">
-                    <Input value={editing.icon} onChange={(event) => setEditing({ ...editing, icon: event.target.value })} required className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold" />
+                    <Input value={editing.icon} onChange={(event) => setEditing({ ...editing, icon: event.target.value })} required className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 font-semibold" />
                   </Field>
-                  <Field label="Image URL">
-                    <Input value={editing.imageUrl} onChange={(event) => setEditing({ ...editing, imageUrl: event.target.value })} required className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold" />
-                  </Field>
+                  <ImageUploadField
+                    value={editing.imageUrl}
+                    onChange={(url) => setEditing({ ...editing, imageUrl: url })}
+                    label="Image URL"
+                    required
+                  />
                   <Field label="Order">
-                    <Input type="number" min={1} value={editing.sortOrder} onChange={(event) => setEditing({ ...editing, sortOrder: Number(event.target.value) })} required className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold" />
+                    <Input type="number" min={1} value={editing.sortOrder} onChange={(event) => setEditing({ ...editing, sortOrder: Number(event.target.value) })} required className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 font-semibold" />
                   </Field>
                 </div>
                 <button
@@ -316,7 +324,7 @@ export default function ServicesAdminPage() {
               </div>
             </section>
 
-            <Button type="submit" className="h-12 w-full rounded-xl bg-[#1f2a24] text-sm font-black uppercase tracking-[0.2em] shadow-[0_16px_35px_rgba(31,42,36,0.24)] hover:bg-[#2b3a32]">
+            <Button type="submit" className="h-12 w-full rounded-xl bg-[#0a0f0c] text-sm font-black uppercase tracking-[0.2em] shadow-[0_16px_35px_rgba(31,42,36,0.24)] hover:bg-[#2b3a32]">
               Save Service
             </Button>
           </form>

@@ -149,37 +149,37 @@ export default function CustomersPage() {
         <Card>
           <CardContent className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-[#667085]">Clients</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{stats.total}</p>
+              <p className="text-sm font-medium text-white/50">Clients</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{stats.total}</p>
             </div>
-            <Users className="h-10 w-10 rounded-md bg-[#f1ede5] p-2 text-[#a68942]" />
+            <Users className="h-10 w-10 rounded-md bg-[#dab055]/10 border border-[#dab055]/20 p-2 text-[#dab055]" />
           </CardContent>
         </Card>
         <Card>
           <CardContent className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-[#667085]">Companies</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{stats.withCompany}</p>
+              <p className="text-sm font-medium text-white/50">Companies</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{stats.withCompany}</p>
             </div>
-            <Building2 className="h-10 w-10 rounded-md bg-[#eef6f2] p-2 text-[#137333]" />
+            <Building2 className="h-10 w-10 rounded-md bg-emerald-500/10 border border-emerald-500/20 p-2 text-emerald-400" />
           </CardContent>
         </Card>
         <Card>
           <CardContent className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-[#667085]">Phones</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{stats.withPhone}</p>
+              <p className="text-sm font-medium text-white/50">Phones</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{stats.withPhone}</p>
             </div>
-            <Phone className="h-10 w-10 rounded-md bg-[#fff3d6] p-2 text-[#8a5a00]" />
+            <Phone className="h-10 w-10 rounded-md bg-blue-500/10 border border-blue-500/20 p-2 text-blue-400" />
           </CardContent>
         </Card>
         <Card>
           <CardContent className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-[#667085]">Emails</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{stats.withEmail}</p>
+              <p className="text-sm font-medium text-white/50">Emails</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{stats.withEmail}</p>
             </div>
-            <Mail className="h-10 w-10 rounded-md bg-[#edf2ff] p-2 text-[#3559c7]" />
+            <Mail className="h-10 w-10 rounded-md bg-violet-500/10 border border-violet-500/20 p-2 text-violet-400" />
           </CardContent>
         </Card>
       </div>
@@ -187,15 +187,15 @@ export default function CustomersPage() {
       <Card>
         <CardHeader>
           <CardTitle>Clients</CardTitle>
-          <p className="mt-1 text-sm text-[#667085]">
+          <p className="mt-1 text-sm text-white/60">
             Cette page affiche uniquement les informations du client. Les donnees de reservation restent dans Orders.
           </p>
         </CardHeader>
         <CardContent className="overflow-x-auto p-0">
           {isLoading && customers.length === 0 ? (
-            <div className="flex items-center justify-center p-8 text-sm text-[#667085]">Loading customers...</div>
+            <div className="flex items-center justify-center p-8 text-sm text-white/50">Loading customers...</div>
           ) : customers.length === 0 ? (
-            <div className="flex items-center justify-center p-8 text-sm text-[#667085]">No customers found.</div>
+            <div className="flex items-center justify-center p-8 text-sm text-white/50">No customers found.</div>
           ) : (
             <Table>
               <thead>
@@ -210,13 +210,13 @@ export default function CustomersPage() {
               </thead>
               <tbody>
                 {customers.map((customer) => (
-                  <tr key={customer.id} className="transition-colors hover:bg-[#fcfaf7]">
+                  <tr key={customer.id} className="transition-colors hover:bg-white/5">
                     <Td>
-                      <p className="font-bold text-[#1f2a24]">{customer.fullName || 'N/A'}</p>
-                      <p className="mt-1 text-xs text-[#8a8172]">Profil client</p>
+                      <p className="font-bold text-white">{customer.fullName || 'N/A'}</p>
+                      <p className="mt-1 text-xs text-white/50">Profil client</p>
                     </Td>
-                    <Td className="font-semibold text-[#4f5b54]">{customer.email || 'N/A'}</Td>
-                    <Td className="font-semibold text-[#4f5b54]">{customer.phone || 'N/A'}</Td>
+                    <Td className="font-semibold text-white/70">{customer.email || 'N/A'}</Td>
+                    <Td className="font-semibold text-white/70">{customer.phone || 'N/A'}</Td>
                     <Td className="font-semibold">{customer.companyName || 'N/A'}</Td>
                     <Td className="text-xs">{formatDate(customer.createdAt)}</Td>
                     <Td>
@@ -243,22 +243,22 @@ export default function CustomersPage() {
       <Dialog open={Boolean(viewing)} title="Customer Profile" onClose={() => setViewing(null)}>
         {viewing ? (
           <div className="grid gap-4">
-            <div className="rounded-lg border border-[#eee8dd] bg-[#fcfaf7] p-4">
-              <p className="text-lg font-bold text-[#1f2a24]">{viewing.fullName || 'N/A'}</p>
-              <p className="mt-1 text-sm text-[#667085]">Created {formatDate(viewing.createdAt)}</p>
+            <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p className="text-lg font-bold text-white">{viewing.fullName || 'N/A'}</p>
+              <p className="mt-1 text-sm text-white/50">Created {formatDate(viewing.createdAt)}</p>
             </div>
             <div className="grid gap-3 md:grid-cols-2">
-              <div className="rounded-lg border border-[#eee8dd] p-4">
-                <p className="text-xs font-bold uppercase tracking-wider text-[#8a8172]">Email</p>
-                <p className="mt-2 font-semibold text-[#1f2a24]">{viewing.email || 'N/A'}</p>
+              <div className="rounded-lg border border-white/10 p-4">
+                <p className="text-xs font-bold uppercase tracking-wider text-white/50">Email</p>
+                <p className="mt-2 font-semibold text-white">{viewing.email || 'N/A'}</p>
               </div>
-              <div className="rounded-lg border border-[#eee8dd] p-4">
-                <p className="text-xs font-bold uppercase tracking-wider text-[#8a8172]">Phone</p>
-                <p className="mt-2 font-semibold text-[#1f2a24]">{viewing.phone || 'N/A'}</p>
+              <div className="rounded-lg border border-white/10 p-4">
+                <p className="text-xs font-bold uppercase tracking-wider text-white/50">Phone</p>
+                <p className="mt-2 font-semibold text-white">{viewing.phone || 'N/A'}</p>
               </div>
-              <div className="rounded-lg border border-[#eee8dd] p-4 md:col-span-2">
-                <p className="text-xs font-bold uppercase tracking-wider text-[#8a8172]">Company</p>
-                <p className="mt-2 font-semibold text-[#1f2a24]">{viewing.companyName || 'N/A'}</p>
+              <div className="rounded-lg border border-white/10 p-4 md:col-span-2">
+                <p className="text-xs font-bold uppercase tracking-wider text-white/50">Company</p>
+                <p className="mt-2 font-semibold text-white">{viewing.companyName || 'N/A'}</p>
               </div>
             </div>
           </div>

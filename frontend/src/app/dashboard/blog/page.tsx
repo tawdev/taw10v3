@@ -9,8 +9,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Dialog } from '@/components/ui/dialog';
 import { Field, Input, Textarea } from '@/components/ui/form';
 import { Table, Td, Th } from '@/components/ui/table';
-import { blogService } from '@/services/blog.service';
+import { blogService, ArticlePayload } from '@/services/blog.service';
 import { BlogArticle } from '@/types/admin';
+import { ImageUploadField } from '@/components/dashboard/ImageUploadField';
 
 type BlogLanguage = 'fr' | 'en' | 'ar';
 
@@ -67,7 +68,7 @@ function BlogImagePreview({ src, title, size = 'table' }: { src: string; title: 
   const isForm = size === 'form';
 
   return (
-    <div className={`${isForm ? 'h-56 w-full rounded-xl border-[#d9caa9] shadow-[0_18px_45px_rgba(31,42,36,0.12)]' : 'h-16 w-24 rounded-md border-[#eee8dd]'} relative overflow-hidden border bg-[#faf8f5]`}>
+    <div className={`${isForm ? 'h-56 w-full rounded-xl border-white/10 focus:border-[#dab055] shadow-2xl' : 'h-16 w-24 rounded-md border-white/10'} relative overflow-hidden border bg-white/5`}>
       {imageSrc ? (
         <img
           src={imageSrc}
@@ -91,12 +92,12 @@ function BlogImagePreview({ src, title, size = 'table' }: { src: string; title: 
 
 function FormSection({ icon: Icon, title, children }: { icon: LucideIcon; title: string; children: ReactNode }) {
   return (
-    <section className="rounded-xl border border-[#e7decc] bg-white shadow-[0_14px_40px_rgba(31,42,36,0.06)] overflow-hidden">
-      <div className="flex items-center gap-3 border-b border-[#efe7d7] bg-[#fbf7ee] px-5 py-4">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1f2a24] text-[#dab055] shadow-sm">
+    <section className="rounded-xl border border-white/10 bg-[#111111]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
+      <div className="flex items-center gap-3 border-b border-white/10 bg-[#111111]/80 px-5 py-4">
+        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a0f0c] text-[#dab055] shadow-sm">
           <Icon className="h-4 w-4" />
         </span>
-        <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">{title}</h3>
+        <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white">{title}</h3>
       </div>
       <div className="grid gap-5 p-5">{children}</div>
     </section>
@@ -252,16 +253,16 @@ export default function BlogPage() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <Td colSpan={7} className="text-center text-sm text-[#8a8172]">Loading articles...</Td>
+                  <Td colSpan={7} className="text-center text-sm text-white/50">Loading articles...</Td>
                 </tr>
               ) : null}
               {blog.map((article) => (
-                <tr key={article.id} className="hover:bg-[#faf9f6]/80 transition-colors">
+                <tr key={article.id} className="hover:bg-white/5 transition-colors">
                   <Td>
                     <BlogImagePreview src={article.featuredImage} title={getLocalizedValue(article, 'title', 'fr')} />
                   </Td>
-                  <Td className="font-bold text-[#1f2a24]">{getLocalizedValue(article, 'title', 'fr')}</Td>
-                  <Td className="text-xs font-semibold text-[#8a8172]">{article.slug}</Td>
+                  <Td className="font-bold text-white">{getLocalizedValue(article, 'title', 'fr')}</Td>
+                  <Td className="text-xs font-semibold text-white/50">{article.slug}</Td>
                   <Td className="text-xs text-[#667085]">{article.metaTitle}</Td>
                   <Td>
                     <PublishBadge status={article.status} />
@@ -302,7 +303,7 @@ export default function BlogPage() {
         open={Boolean(editing)}
         title={
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1f2a24] text-[#dab055] shadow-sm">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0a0f0c] text-[#dab055] shadow-sm">
               <Sparkles className="h-4 w-4" />
             </span>
             <span>Blog Article</span>
@@ -313,7 +314,7 @@ export default function BlogPage() {
       >
         {editing ? (
           <form onSubmit={save} className="grid gap-6">
-            <div className="rounded-xl border border-[#e7decc] bg-[#fbf7ee] p-2 shadow-inner">
+            <div className="rounded-xl border border-white/10 bg-[#111111]/80 p-2 shadow-inner">
               <div className="grid grid-cols-3 gap-2">
                 {languages.map((language) => (
                   <button
@@ -322,8 +323,8 @@ export default function BlogPage() {
                     onClick={() => setActiveLanguage(language.key)}
                     className={`h-11 rounded-lg text-xs font-black tracking-[0.18em] transition-all ${
                       activeLanguage === language.key
-                        ? 'bg-[#1f2a24] text-white shadow-[0_10px_25px_rgba(31,42,36,0.22)]'
-                        : 'bg-white text-[#6b6255] hover:bg-[#f5eee0] hover:text-[#1f2a24] border border-[#eadfcb]'
+                        ? 'bg-[#0a0f0c] text-white shadow-[0_0_15px_rgba(218,176,85,0.3)]'
+                        : 'bg-white text-white/60 hover:bg-white/10 hover:text-white border border-[#eadfcb]'
                     }`}
                   >
                     {language.label}
@@ -340,7 +341,7 @@ export default function BlogPage() {
                   onChange={(e) => setEditing(setLocalizedValue(editing, 'title', activeLanguage, e.target.value))}
                   required={activeLanguage === 'fr'}
                   placeholder="e.g. 5 steps to domiciliate your business in Marrakech"
-                  className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 text-[15px] font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                  className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 text-[15px] font-semibold shadow-lg"
                 />
               </Field>
 
@@ -351,7 +352,7 @@ export default function BlogPage() {
                   onChange={(e) => setEditing(setLocalizedValue(editing, 'excerpt', activeLanguage, e.target.value))}
                   required={activeLanguage === 'fr'}
                   placeholder="Short summary shown on blog cards..."
-                  className="min-h-28 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 py-3 text-[15px] leading-relaxed shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                  className="min-h-28 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 py-3 text-[15px] leading-relaxed shadow-lg"
                 />
               </Field>
 
@@ -361,7 +362,7 @@ export default function BlogPage() {
                   value={getLocalizedValue(editing, 'content', activeLanguage)}
                   onChange={(e) => setEditing(setLocalizedValue(editing, 'content', activeLanguage, e.target.value))}
                   placeholder="Write your article content here..."
-                  className="min-h-56 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 py-3 text-[15px] leading-7 shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                  className="min-h-56 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 py-3 text-[15px] leading-7 shadow-lg"
                 />
               </Field>
             </FormSection>
@@ -374,17 +375,14 @@ export default function BlogPage() {
                     onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
                     required
                     placeholder="e.g. steps-to-domiciliate-business-marrakech"
-                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                    className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 font-semibold shadow-lg"
                   />
                 </Field>
-                <Field label="Featured Image URL">
-                  <Input
-                    value={editing.featuredImage}
-                    onChange={(e) => setEditing({ ...editing, featuredImage: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
-                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
-                  />
-                </Field>
+                <ImageUploadField
+                  value={editing.featuredImage}
+                  onChange={(url) => setEditing({ ...editing, featuredImage: url })}
+                  label="Featured Image URL"
+                />
               </div>
 
               <BlogImagePreview src={editing.featuredImage} title={getLocalizedValue(editing, 'title', activeLanguage)} size="form" />
@@ -396,7 +394,7 @@ export default function BlogPage() {
                     type="date"
                     value={formatDate(editing.publishedAt)}
                     onChange={(e) => setEditing({ ...editing, publishedAt: e.target.value })}
-                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] pl-11 pr-4 font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                    className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 pl-11 pr-4 font-semibold shadow-lg"
                   />
                 </div>
               </Field>
@@ -409,7 +407,7 @@ export default function BlogPage() {
                   value={getLocalizedValue(editing, 'metaTitle', activeLanguage)}
                   onChange={(e) => setEditing(setLocalizedValue(editing, 'metaTitle', activeLanguage, e.target.value))}
                   placeholder="SEO Search result title"
-                  className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                  className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 font-semibold shadow-lg"
                 />
               </Field>
               <Field label={`Meta Description ${activeLanguage.toUpperCase()}`}>
@@ -418,12 +416,12 @@ export default function BlogPage() {
                   value={getLocalizedValue(editing, 'metaDescription', activeLanguage)}
                   onChange={(e) => setEditing(setLocalizedValue(editing, 'metaDescription', activeLanguage, e.target.value))}
                   placeholder="SEO Search result snippet..."
-                  className="min-h-28 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 py-3 text-[15px] leading-relaxed shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                  className="min-h-28 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 py-3 text-[15px] leading-relaxed shadow-lg"
                 />
               </Field>
             </FormSection>
 
-            <Button type="submit" className="h-12 w-full rounded-xl bg-[#1f2a24] text-sm font-black uppercase tracking-[0.2em] shadow-[0_16px_35px_rgba(31,42,36,0.24)] hover:bg-[#2b3a32]">
+            <Button type="submit" className="h-12 w-full rounded-xl bg-[#0a0f0c] text-sm font-black uppercase tracking-[0.2em] shadow-[0_16px_35px_rgba(31,42,36,0.24)] hover:bg-[#2b3a32]">
               Save Article
             </Button>
           </form>

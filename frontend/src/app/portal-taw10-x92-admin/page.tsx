@@ -9,6 +9,7 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('admin@taw10.com');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -139,14 +140,23 @@ export default function AdminLoginPage() {
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/30">lock</span>
                   <input
                     id="password"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    className="h-14 w-full rounded-xl border border-white/10 bg-white/5 pl-12 pr-4 text-white placeholder-white/20 outline-none backdrop-blur-sm transition focus:border-[#dab055] focus:bg-white/10 focus:ring-1 focus:ring-[#dab055]"
+                    className="h-14 w-full rounded-xl border border-white/10 bg-white/5 pl-12 pr-12 text-white placeholder-white/20 outline-none backdrop-blur-sm transition focus:border-[#dab055] focus:bg-white/10 focus:ring-1 focus:ring-[#dab055]"
                     placeholder="••••••••"
                     autoComplete="current-password"
                     required
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-white/30 transition hover:text-white/60 focus:outline-none"
+                  >
+                    <span className="material-symbols-outlined">
+                      {showPassword ? 'visibility_off' : 'visibility'}
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>

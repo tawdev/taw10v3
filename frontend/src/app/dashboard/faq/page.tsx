@@ -139,7 +139,7 @@ export default function FaqPage() {
           <CardContent className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-[#667085]">Questions</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{faq.length}</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{faq.length}</p>
             </div>
             <MessageCircleQuestion className="h-10 w-10 rounded-md bg-[#f1ede5] p-2 text-[#a68942]" />
           </CardContent>
@@ -148,7 +148,7 @@ export default function FaqPage() {
           <CardContent className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-[#667085]">Likes</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{faq.reduce((sum, item) => sum + (item.likeCount ?? 0), 0)}</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{faq.reduce((sum, item) => sum + (item.likeCount ?? 0), 0)}</p>
             </div>
             <ThumbsUp className="h-10 w-10 rounded-md bg-emerald-50 p-2 text-emerald-700" />
           </CardContent>
@@ -157,7 +157,7 @@ export default function FaqPage() {
           <CardContent className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-[#667085]">Dislikes</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{faq.reduce((sum, item) => sum + (item.dislikeCount ?? 0), 0)}</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{faq.reduce((sum, item) => sum + (item.dislikeCount ?? 0), 0)}</p>
             </div>
             <ThumbsDown className="h-10 w-10 rounded-md bg-red-50 p-2 text-red-700" />
           </CardContent>
@@ -180,13 +180,13 @@ export default function FaqPage() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <Td colSpan={6} className="text-center text-sm text-[#8a8172]">Loading FAQ...</Td>
+                  <Td colSpan={6} className="text-center text-sm text-white/50">Loading FAQ...</Td>
                 </tr>
               ) : null}
               {sortedFaq.map((item) => (
-                <tr key={item.id} className="transition-colors hover:bg-[#faf9f6]/80">
+                <tr key={item.id} className="transition-colors hover:bg-white/5">
                   <Td className="font-bold text-[#a68942]">{item.sortOrder}</Td>
-                  <Td className="font-bold text-[#1f2a24]">{item.question_fr}</Td>
+                  <Td className="font-bold text-white">{item.question_fr}</Td>
                   <Td className="max-w-md break-words text-xs leading-relaxed text-[#667085]">{item.answer_fr}</Td>
                   <Td>
                     <div className="flex items-center gap-2 text-xs font-bold">
@@ -221,7 +221,7 @@ export default function FaqPage() {
         open={Boolean(editing)} 
         title={
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1f2a24] text-[#dab055] shadow-sm">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0a0f0c] text-[#dab055] shadow-sm">
               <MessageCircleQuestion className="h-4 w-4" />
             </span>
             <span>FAQ Item</span>
@@ -232,7 +232,7 @@ export default function FaqPage() {
       >
         {editing ? (
           <form onSubmit={save} className="grid gap-6">
-            <div className="rounded-xl border border-[#e7decc] bg-[#fbf7ee] p-2 shadow-inner">
+            <div className="rounded-xl border border-white/10 bg-[#111111]/80 p-2 shadow-inner">
               <div className="grid grid-cols-3 gap-2">
                 {languages.map((language) => (
                   <button
@@ -241,8 +241,8 @@ export default function FaqPage() {
                     onClick={() => setActiveLanguage(language.key)}
                     className={`h-11 rounded-lg text-xs font-black tracking-[0.18em] transition-all ${
                       activeLanguage === language.key
-                        ? 'bg-[#1f2a24] text-white shadow-[0_10px_25px_rgba(31,42,36,0.22)]'
-                        : 'bg-white text-[#6b6255] hover:bg-[#f5eee0] hover:text-[#1f2a24] border border-[#eadfcb]'
+                        ? 'bg-[#0a0f0c] text-white shadow-[0_0_15px_rgba(218,176,85,0.3)]'
+                        : 'bg-white text-white/60 hover:bg-white/10 hover:text-white border border-[#eadfcb]'
                     }`}
                   >
                     {language.label}
@@ -251,12 +251,12 @@ export default function FaqPage() {
               </div>
             </div>
 
-            <section className="rounded-xl border border-[#e7decc] bg-white shadow-[0_14px_40px_rgba(31,42,36,0.06)] overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-[#efe7d7] bg-[#fbf7ee] px-5 py-4">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1f2a24] text-[#dab055] shadow-sm">
+            <section className="rounded-xl border border-white/10 bg-[#111111]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-white/10 bg-[#111111]/80 px-5 py-4">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a0f0c] text-[#dab055] shadow-sm">
                   <Globe2 className="h-4 w-4" />
                 </span>
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Content</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white">Content</h3>
               </div>
               <div className="grid gap-5 p-5">
                 <Field label={`Question ${activeLanguage.toUpperCase()}`}>
@@ -265,7 +265,7 @@ export default function FaqPage() {
                     value={getLocalizedValue(editing, 'question', activeLanguage)}
                     onChange={(event) => setEditing(setLocalizedValue(editing, 'question', activeLanguage, event.target.value))}
                     required={activeLanguage === 'fr'}
-                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 text-[15px] font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                    className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 text-[15px] font-semibold shadow-lg"
                   />
                 </Field>
                 <Field label={`Answer ${activeLanguage.toUpperCase()}`}>
@@ -274,15 +274,15 @@ export default function FaqPage() {
                     value={getLocalizedValue(editing, 'answer', activeLanguage)}
                     onChange={(event) => setEditing(setLocalizedValue(editing, 'answer', activeLanguage, event.target.value))}
                     required={activeLanguage === 'fr'}
-                    className="min-h-32 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 py-3 text-[15px] leading-relaxed shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                    className="min-h-32 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 py-3 text-[15px] leading-relaxed shadow-lg"
                   />
                 </Field>
               </div>
             </section>
 
-            <section className="rounded-xl border border-[#e7decc] bg-white shadow-[0_14px_40px_rgba(31,42,36,0.06)] overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-[#efe7d7] bg-[#fbf7ee] px-5 py-4">
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Settings</h3>
+            <section className="rounded-xl border border-white/10 bg-[#111111]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-white/10 bg-[#111111]/80 px-5 py-4">
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white">Settings</h3>
               </div>
               <div className="grid gap-5 p-5 md:grid-cols-2">
                 <Field label="Sort Order">
@@ -292,7 +292,7 @@ export default function FaqPage() {
                     value={editing.sortOrder}
                     onChange={(event) => setEditing({ ...editing, sortOrder: Number(event.target.value) })}
                     required
-                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold"
+                    className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 font-semibold"
                   />
                 </Field>
                 <div className="flex items-center pt-8">
@@ -309,7 +309,7 @@ export default function FaqPage() {
               </div>
             </section>
 
-            <Button type="submit" className="h-12 w-full rounded-xl bg-[#1f2a24] text-sm font-black uppercase tracking-[0.2em] shadow-[0_16px_35px_rgba(31,42,36,0.24)] hover:bg-[#2b3a32]">
+            <Button type="submit" className="h-12 w-full rounded-xl bg-[#0a0f0c] text-sm font-black uppercase tracking-[0.2em] shadow-[0_16px_35px_rgba(31,42,36,0.24)] hover:bg-[#2b3a32]">
               Save FAQ Item
             </Button>
           </form>

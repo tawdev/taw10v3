@@ -6,9 +6,9 @@ export function Table({ className, ...props }: HTMLAttributes<HTMLTableElement>)
 }
 
 export function Th({ className, ...props }: ThHTMLAttributes<HTMLTableCellElement>) {
-  return <th className={cn('bg-[#faf8f4] px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#6b6255] border-b border-[#eee8dd]', className)} {...props} />;
+  return <th className={cn('bg-white/5 px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#dab055] border-b border-white/10', className)} {...props} />;
 }
 
 export function Td({ className, ...props }: TdHTMLAttributes<HTMLTableCellElement>) {
-  return <td className={cn('border-b border-[#f3efe7] px-6 py-4 text-[#1f2a24] align-middle font-medium', className)} {...props} />;
+  return <td className={cn('border-b border-white/5 px-6 py-4 text-white/80 align-middle font-medium', className)} {...props} />;
 }

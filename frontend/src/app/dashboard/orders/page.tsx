@@ -98,37 +98,37 @@ export default function OrdersPage() {
         <Card>
           <CardContent className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-[#667085]">Pending Orders</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{pendingOrders}</p>
+              <p className="text-sm font-medium text-white/50">Pending Orders</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{pendingOrders}</p>
             </div>
-            <Clock3 className="h-10 w-10 rounded-md bg-[#fff3d6] p-2 text-[#8a5a00]" />
+            <Clock3 className="h-10 w-10 rounded-md bg-[#dab055]/10 border border-[#dab055]/20 p-2 text-[#dab055]" />
           </CardContent>
         </Card>
         <Card>
           <CardContent className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-[#667085]">Completed</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{completedOrders}</p>
+              <p className="text-sm font-medium text-white/50">Completed</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{completedOrders}</p>
             </div>
-            <CheckCircle2 className="h-10 w-10 rounded-md bg-[#e6f4ea] p-2 text-[#137333]" />
+            <CheckCircle2 className="h-10 w-10 rounded-md bg-emerald-500/10 border border-emerald-500/20 p-2 text-emerald-400" />
           </CardContent>
         </Card>
         <Card>
           <CardContent className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-[#667085]">Cancelled</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{cancelledOrders}</p>
+              <p className="text-sm font-medium text-white/50">Cancelled</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{cancelledOrders}</p>
             </div>
-            <XCircle className="h-10 w-10 rounded-md bg-[#ffe8e5] p-2 text-[#ba1a1a]" />
+            <XCircle className="h-10 w-10 rounded-md bg-red-500/10 border border-red-500/20 p-2 text-red-400" />
           </CardContent>
         </Card>
         <Card>
           <CardContent className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-[#667085]">Revenue</p>
-              <p className="mt-2 text-2xl font-semibold text-[#1f2a24]">{currency.format(totalRevenue)}</p>
+              <p className="text-sm font-medium text-white/50">Revenue</p>
+              <p className="mt-2 text-2xl font-semibold text-white">{currency.format(totalRevenue)}</p>
             </div>
-            <Banknote className="h-10 w-10 rounded-md bg-[#f1ede5] p-2 text-[#a68942]" />
+            <Banknote className="h-10 w-10 rounded-md bg-[#dab055]/10 border border-[#dab055]/20 p-2 text-[#dab055]" />
           </CardContent>
         </Card>
       </div>
@@ -137,18 +137,18 @@ export default function OrdersPage() {
         <CardHeader className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
           <div>
             <CardTitle>Orders List</CardTitle>
-            <p className="mt-1 text-sm text-[#667085]">
+            <p className="mt-1 text-sm text-white/60">
               View customer details, selected package, order price and workflow status.
             </p>
           </div>
         </CardHeader>
         <CardContent className="overflow-x-auto p-0">
           {isLoading ? (
-            <div className="flex items-center justify-center p-8 text-sm text-[#667085]">
+            <div className="flex items-center justify-center p-8 text-sm text-white/50">
               Loading orders...
             </div>
           ) : orders.length === 0 ? (
-            <div className="flex items-center justify-center p-8 text-sm text-[#667085]">
+            <div className="flex items-center justify-center p-8 text-sm text-white/50">
               No orders found.
             </div>
           ) : (
@@ -167,33 +167,33 @@ export default function OrdersPage() {
               </thead>
               <tbody>
                 {orders.map((order) => (
-                  <tr key={order.id} className="transition-colors hover:bg-[#fcfaf7]">
+                  <tr key={order.id} className="transition-colors hover:bg-white/5">
                     <Td>
-                      <p className="font-bold text-[#1f2a24]">{order.orderNumber}</p>
-                      <p className="mt-1 text-xs text-[#8a8172]">#{order.id}</p>
+                      <p className="font-bold text-white">{order.orderNumber}</p>
+                      <p className="mt-1 text-xs text-white/50">#{order.id}</p>
                     </Td>
                     <Td>
-                      <p className="font-semibold text-[#1f2a24]">{order.customerName}</p>
-                      <p className="mt-1 text-xs text-[#667085]">{order.email || 'No email'}</p>
+                      <p className="font-semibold text-white">{order.customerName}</p>
+                      <p className="mt-1 text-xs text-white/40">{order.email || 'No email'}</p>
                     </Td>
                     <Td>
-                      <p className="text-sm font-semibold text-[#4f5b54]">{order.phone || 'N/A'}</p>
-                      <p className="mt-1 text-xs text-[#667085]">{order.email || 'N/A'}</p>
+                      <p className="text-sm font-semibold text-white/70">{order.phone || 'N/A'}</p>
+                      <p className="mt-1 text-xs text-white/40">{order.email || 'N/A'}</p>
                     </Td>
                     <Td>
-                      <span className="inline-flex rounded-full bg-[#f1ede5] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#5a4300]">
+                      <span className="inline-flex rounded-full bg-[#dab055]/10 border border-[#dab055]/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#dab055]">
                         {order.selectedPlan || 'N/A'}
                       </span>
                     </Td>
                     <Td>
                       {getOrderPrice(order) !== null ? (
                         <>
-                          <p className="font-bold text-[#1f2a24]">{currency.format(getOrderPrice(order) ?? 0)}</p>
-                          <p className="mt-1 text-xs font-medium text-[#8a8172]">DH ht</p>
+                          <p className="font-bold text-white">{currency.format(getOrderPrice(order) ?? 0)}</p>
+                          <p className="mt-1 text-xs font-medium text-white/50">DH ht</p>
                         </>
                       ) : (
                         <>
-                          <p className="font-semibold text-[#8a8172]">Non defini</p>
+                          <p className="font-semibold text-white/50">Non defini</p>
                           <p className="mt-1 text-xs font-medium text-[#b0a696]">Aucun prix</p>
                         </>
                       )}

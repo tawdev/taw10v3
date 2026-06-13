@@ -81,8 +81,8 @@ export default function AdministratorsPage() {
             </thead>
             <tbody>
               {administrators.map((admin) => (
-                <tr key={admin.id} className="hover:bg-[#faf9f6]/80 transition-colors">
-                  <Td className="font-bold text-[#1f2a24]">{admin.fullName}</Td>
+                <tr key={admin.id} className="hover:bg-white/5 transition-colors">
+                  <Td className="font-bold text-white">{admin.fullName}</Td>
                   <Td className="text-xs text-[#667085]">{admin.email}</Td>
                   <Td>
                     <Badge variant={admin.role === 'SUPER_ADMIN' ? 'success' : 'default'}>

@@ -10,10 +10,9 @@ import { Field, Input, Textarea } from '@/components/ui/form';
 import { Table, Td, Th } from '@/components/ui/table';
 import { teamService, TeamMemberPayload } from '@/services/team.service';
 import { TeamMember } from '@/types/admin';
+import { ImageUploadField } from '@/components/dashboard/ImageUploadField';
 
 type TeamLanguage = 'fr' | 'en' | 'ar';
-type ImageMode = 'upload' | 'url';
-
 const languages: Array<{ key: TeamLanguage; label: string }> = [
   { key: 'fr', label: 'FR' },
   { key: 'en', label: 'EN' },
@@ -77,7 +76,7 @@ function TeamImage({ src, name, large = false }: { src: string; name: string; la
   const imageSrc = normalizeImageSrc(src);
 
   return (
-    <div className={`${large ? 'h-72 w-full rounded-xl' : 'h-16 w-16 rounded-md'} relative overflow-hidden border border-[#e7decc] bg-[#faf8f5] shadow-sm`}>
+    <div className={`${large ? 'h-72 w-full rounded-xl' : 'h-16 w-16 rounded-md'} relative overflow-hidden border border-white/10 bg-white/5 shadow-sm`}>
       {imageSrc ? (
         <img
           src={imageSrc}
@@ -101,8 +100,6 @@ export default function TeamAdminPage() {
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [editing, setEditing] = useState<TeamMember | null>(null);
   const [activeLanguage, setActiveLanguage] = useState<TeamLanguage>('fr');
-  const [imageMode, setImageMode] = useState<ImageMode>('url');
-  const [isUploading, setIsUploading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -140,28 +137,6 @@ export default function TeamAdminPage() {
     }
   }
 
-  async function uploadImage(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (!file || !editing) return;
-
-    if (!file.type.startsWith('image/')) {
-      setError('Please upload an image file.');
-      return;
-    }
-
-    try {
-      setIsUploading(true);
-      const uploaded = await teamService.uploadImage(file);
-      setEditing({ ...editing, imageUrl: uploaded.imageUrl });
-      setError(null);
-    } catch {
-      setError('Unable to upload image. Max size is 5MB.');
-    } finally {
-      setIsUploading(false);
-      event.target.value = '';
-    }
-  }
-
   async function deleteMember(id: string) {
     try {
       await teamService.delete(id);
@@ -188,7 +163,7 @@ export default function TeamAdminPage() {
         title="Team"
         description="Create, edit, delete and translate team members."
         actions={
-          <Button onClick={() => { setImageMode('upload'); setEditing({ ...emptyMember(), sortOrder: members.length + 1 }); }}>
+          <Button onClick={() => { setEditing({ ...emptyMember(), sortOrder: members.length + 1 }); }}>
             <Plus className="h-4 w-4" />Create Member
           </Button>
         }
@@ -211,13 +186,13 @@ export default function TeamAdminPage() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <Td colSpan={6} className="text-center text-sm text-[#8a8172]">Loading team...</Td>
+                  <Td colSpan={6} className="text-center text-sm text-white/50">Loading team...</Td>
                 </tr>
               ) : null}
               {members.map((member) => (
-                <tr key={member.id} className="hover:bg-[#faf9f6]/80 transition-colors">
+                <tr key={member.id} className="hover:bg-white/5 transition-colors">
                   <Td><TeamImage src={member.imageUrl} name={member.name_fr} /></Td>
-                  <Td className="font-bold text-[#1f2a24]">{member.name_fr}</Td>
+                  <Td className="font-bold text-white">{member.name_fr}</Td>
                   <Td className="text-xs text-[#667085]">{member.role_fr}</Td>
                   <Td className="text-xs font-bold">{member.sortOrder}</Td>
                   <Td>
@@ -227,7 +202,7 @@ export default function TeamAdminPage() {
                   </Td>
                   <Td>
                     <div className="flex items-center gap-1.5">
-                      <Button size="sm" variant="outline" className="h-8 text-xs" onClick={() => { setEditing(member); setImageMode('url'); }}>Edit</Button>
+                      <Button size="sm" variant="outline" className="h-8 text-xs" onClick={() => { setEditing(member); }}>Edit</Button>
                       <Button size="sm" variant="secondary" className="h-8 text-xs" onClick={() => toggleActive(member)}>
                         {member.isActive ? 'Hide' : 'Show'}
                       </Button>
@@ -247,7 +222,7 @@ export default function TeamAdminPage() {
         open={Boolean(editing)}
         title={
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1f2a24] text-[#dab055] shadow-sm">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0a0f0c] text-[#dab055] shadow-sm">
               <Sparkles className="h-4 w-4" />
             </span>
             <span>Team Member</span>
@@ -258,7 +233,7 @@ export default function TeamAdminPage() {
       >
         {editing ? (
           <form onSubmit={save} className="grid gap-6">
-            <div className="rounded-xl border border-[#e7decc] bg-[#fbf7ee] p-2 shadow-inner">
+            <div className="rounded-xl border border-white/10 bg-[#111111]/80 p-2 shadow-inner">
               <div className="grid grid-cols-3 gap-2">
                 {languages.map((language) => (
                   <button
@@ -267,8 +242,8 @@ export default function TeamAdminPage() {
                     onClick={() => setActiveLanguage(language.key)}
                     className={`h-11 rounded-lg text-xs font-black tracking-[0.18em] transition-all ${
                       activeLanguage === language.key
-                        ? 'bg-[#1f2a24] text-white shadow-[0_10px_25px_rgba(31,42,36,0.22)]'
-                        : 'bg-white text-[#6b6255] hover:bg-[#f5eee0] hover:text-[#1f2a24] border border-[#eadfcb]'
+                        ? 'bg-[#0a0f0c] text-white shadow-[0_0_15px_rgba(218,176,85,0.3)]'
+                        : 'bg-white text-white/60 hover:bg-white/10 hover:text-white border border-[#eadfcb]'
                     }`}
                   >
                     {language.label}
@@ -277,12 +252,12 @@ export default function TeamAdminPage() {
               </div>
             </div>
 
-            <section className="rounded-xl border border-[#e7decc] bg-white shadow-[0_14px_40px_rgba(31,42,36,0.06)] overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-[#efe7d7] bg-[#fbf7ee] px-5 py-4">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1f2a24] text-[#dab055] shadow-sm">
+            <section className="rounded-xl border border-white/10 bg-[#111111]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-white/10 bg-[#111111]/80 px-5 py-4">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a0f0c] text-[#dab055] shadow-sm">
                   <Globe2 className="h-4 w-4" />
                 </span>
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Identity</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white">Identity</h3>
               </div>
               <div className="grid gap-5 p-5">
                 <Field label={`Name ${activeLanguage.toUpperCase()}`}>
@@ -291,7 +266,7 @@ export default function TeamAdminPage() {
                     value={getLocalizedValue(editing, 'name', activeLanguage)}
                     onChange={(event) => setEditing(setLocalizedValue(editing, 'name', activeLanguage, event.target.value))}
                     required={activeLanguage === 'fr'}
-                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 text-[15px] font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                    className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 text-[15px] font-semibold shadow-lg"
                   />
                 </Field>
                 <Field label={`Role ${activeLanguage.toUpperCase()}`}>
@@ -300,7 +275,7 @@ export default function TeamAdminPage() {
                     value={getLocalizedValue(editing, 'role', activeLanguage)}
                     onChange={(event) => setEditing(setLocalizedValue(editing, 'role', activeLanguage, event.target.value))}
                     required={activeLanguage === 'fr'}
-                    className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 text-[15px] font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                    className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 text-[15px] font-semibold shadow-lg"
                   />
                 </Field>
                 <Field label={`Description ${activeLanguage.toUpperCase()}`}>
@@ -309,71 +284,27 @@ export default function TeamAdminPage() {
                     value={getLocalizedValue(editing, 'description', activeLanguage)}
                     onChange={(event) => setEditing(setLocalizedValue(editing, 'description', activeLanguage, event.target.value))}
                     required={activeLanguage === 'fr'}
-                    className="min-h-32 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 py-3 text-[15px] leading-relaxed shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                    className="min-h-32 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 py-3 text-[15px] leading-relaxed shadow-lg"
                   />
                 </Field>
               </div>
             </section>
 
-            <section className="rounded-xl border border-[#e7decc] bg-white shadow-[0_14px_40px_rgba(31,42,36,0.06)] overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-[#efe7d7] bg-[#fbf7ee] px-5 py-4">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1f2a24] text-[#dab055] shadow-sm">
+            <section className="rounded-xl border border-white/10 bg-[#111111]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-white/10 bg-[#111111]/80 px-5 py-4">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a0f0c] text-[#dab055] shadow-sm">
                   <UsersRound className="h-4 w-4" />
                 </span>
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Profile</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white">Profile</h3>
               </div>
               <div className="grid gap-5 p-5">
                 <TeamImage src={editing.imageUrl} name={getLocalizedValue(editing, 'name', activeLanguage)} large />
-                <div className="rounded-xl border border-[#eadfcb] bg-[#fbf7ee] p-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setImageMode('upload')}
-                      className={`inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-black uppercase tracking-[0.16em] transition ${
-                        imageMode === 'upload'
-                          ? 'bg-[#1f2a24] text-white shadow-[0_10px_25px_rgba(31,42,36,0.22)]'
-                          : 'border border-[#eadfcb] bg-white text-[#6b6255] hover:bg-[#f5eee0]'
-                      }`}
-                    >
-                      <UploadCloud className="h-4 w-4" /> Upload
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setImageMode('url')}
-                      className={`inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-black uppercase tracking-[0.16em] transition ${
-                        imageMode === 'url'
-                          ? 'bg-[#1f2a24] text-white shadow-[0_10px_25px_rgba(31,42,36,0.22)]'
-                          : 'border border-[#eadfcb] bg-white text-[#6b6255] hover:bg-[#f5eee0]'
-                      }`}
-                    >
-                      <Link2 className="h-4 w-4" /> URL
-                    </button>
-                  </div>
-                </div>
-
-                {imageMode === 'upload' ? (
-                  <div className="rounded-xl border border-dashed border-[#d9caa9] bg-[#fffdf8] p-5">
-                    <label className="flex cursor-pointer flex-col items-center justify-center gap-3 text-center">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1f2a24] text-[#dab055]">
-                        <UploadCloud className="h-5 w-5" />
-                      </span>
-                      <span className="text-sm font-bold text-[#1f2a24]">{isUploading ? 'Uploading image...' : 'Upload member photo'}</span>
-                      <span className="text-xs font-medium text-[#8a8172]">PNG, JPG, WEBP up to 5MB. The uploaded file will be saved as the member image.</span>
-                      <input type="file" accept="image/*" className="sr-only" onChange={uploadImage} disabled={isUploading} />
-                    </label>
-                  </div>
-                ) : (
-                  <Field label="Image URL">
-                    <Input
-                      value={editing.imageUrl}
-                      onChange={(event) => setEditing({ ...editing, imageUrl: event.target.value })}
-                      required
-                      placeholder="/hicham.jpeg or https://example.com/photo.jpg"
-                      className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
-                    />
-                  </Field>
-                )}
-
+                <ImageUploadField
+                  value={editing.imageUrl}
+                  onChange={(url) => setEditing({ ...editing, imageUrl: url })}
+                  label="Image URL"
+                  required
+                />
                 <div className="grid gap-4 md:grid-cols-2">
                   <Field label="Order">
                     <Input
@@ -382,7 +313,7 @@ export default function TeamAdminPage() {
                       value={editing.sortOrder}
                       onChange={(event) => setEditing({ ...editing, sortOrder: Number(event.target.value) })}
                       required
-                      className="h-12 rounded-xl border-[#d9caa9] bg-[#fffdf8] px-4 font-semibold shadow-[0_10px_25px_rgba(31,42,36,0.05)]"
+                      className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 font-semibold shadow-lg"
                     />
                   </Field>
                   <Field label="Visible">
@@ -400,7 +331,7 @@ export default function TeamAdminPage() {
               </div>
             </section>
 
-            <Button type="submit" className="h-12 w-full rounded-xl bg-[#1f2a24] text-sm font-black uppercase tracking-[0.2em] shadow-[0_16px_35px_rgba(31,42,36,0.24)] hover:bg-[#2b3a32]">
+            <Button type="submit" className="h-12 w-full rounded-xl bg-[#0a0f0c] text-sm font-black uppercase tracking-[0.2em] shadow-[0_16px_35px_rgba(31,42,36,0.24)] hover:bg-[#2b3a32]">
               Save Member
             </Button>
           </form>

@@ -7,22 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  SUPER_ADMIN
-  ADMIN
-}
-
-enum PricingTheme {
-  DEFAULT
-  FEATURED
-  PREMIUM
-}
-
-enum BlogStatus {
-  DRAFT
-  PUBLISHED
-}
-
 model AdminUser {
   id        String   @id @default(cuid())
   fullName  String
@@ -82,18 +66,9 @@ model Customer {
   @@map("customers")
 }
 
-enum OrderStatus {
-  PENDING
-  IN_PROGRESS
-  WAITING_DOCUMENTS
-  COMPLETED
-  CANCELLED
-}
-
 model Order {
   id           String      @id @default(cuid())
   orderNumber  String      @unique
-  customerId   String?
   customerName String
   phone        String
   email        String?
@@ -102,7 +77,8 @@ model Order {
   notes        String?     @db.Text
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  customer     Customer?   @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  customerId   String?
+  customer     Customer?   @relation(fields: [customerId], references: [id])
 
   @@index([customerId])
   @@map("orders")
@@ -124,33 +100,33 @@ model ContactMessage {
 }
 
 model BlogArticle {
-  id              String     @id @default(cuid())
-  title           String
-  title_fr        String?
-  title_en        String?
-  title_ar        String?
-  slug            String     @unique
-  featuredImage   String
-  excerpt         String     @db.Text
-  excerpt_fr      String?    @db.Text
-  excerpt_en      String?    @db.Text
-  excerpt_ar      String?    @db.Text
-  content         String     @db.Text
-  content_fr      String?    @db.Text
-  content_en      String?    @db.Text
-  content_ar      String?    @db.Text
-  metaTitle       String
-  metaTitle_fr    String?
-  metaTitle_en    String?
-  metaTitle_ar    String?
-  metaDescription String     @db.Text
-  metaDescription_fr String?  @db.Text
-  metaDescription_en String?  @db.Text
-  metaDescription_ar String?  @db.Text
-  status          BlogStatus @default(DRAFT)
-  publishedAt     DateTime?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  id                 String     @id @default(cuid())
+  title              String
+  slug               String     @unique
+  featuredImage      String
+  excerpt            String     @db.Text
+  content            String     @db.Text
+  metaTitle          String
+  metaDescription    String     @db.Text
+  status             BlogStatus @default(DRAFT)
+  publishedAt        DateTime?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  content_ar         String?    @db.Text
+  content_en         String?    @db.Text
+  content_fr         String?    @db.Text
+  excerpt_ar         String?    @db.Text
+  excerpt_en         String?    @db.Text
+  excerpt_fr         String?    @db.Text
+  metaDescription_ar String?    @db.Text
+  metaDescription_en String?    @db.Text
+  metaDescription_fr String?    @db.Text
+  metaTitle_ar       String?
+  metaTitle_en       String?
+  metaTitle_fr       String?
+  title_ar           String?
+  title_en           String?
+  title_fr           String?
 
   @@index([status, publishedAt])
   @@map("blog_articles")
@@ -164,12 +140,12 @@ model TeamMember {
   role_fr        String
   role_en        String
   role_ar        String
-  description_fr String  @db.Text
-  description_en String  @db.Text
-  description_ar String  @db.Text
+  description_fr String   @db.Text
+  description_en String   @db.Text
+  description_ar String   @db.Text
   imageUrl       String
-  sortOrder      Int     @unique
-  isActive       Boolean @default(true)
+  sortOrder      Int      @unique
+  isActive       Boolean  @default(true)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -182,13 +158,13 @@ model ServiceOffering {
   title_fr       String
   title_en       String
   title_ar       String
-  description_fr String  @db.Text
-  description_en String  @db.Text
-  description_ar String  @db.Text
+  description_fr String   @db.Text
+  description_en String   @db.Text
+  description_ar String   @db.Text
   icon           String
   imageUrl       String
-  sortOrder      Int     @unique
-  isActive       Boolean @default(true)
+  sortOrder      Int      @unique
+  isActive       Boolean  @default(true)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -197,18 +173,42 @@ model ServiceOffering {
 
 model FaqItem {
   id           String   @id @default(cuid())
-  question_fr  String
-  question_en  String
-  question_ar  String
-  answer_fr    String   @db.Text
-  answer_en    String   @db.Text
-  answer_ar    String   @db.Text
   sortOrder    Int      @unique
   isActive     Boolean  @default(true)
   likeCount    Int      @default(0)
   dislikeCount Int      @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  answer_ar    String   @db.Text
+  answer_en    String   @db.Text
+  answer_fr    String   @db.Text
+  question_ar  String
+  question_en  String
+  question_fr  String
 
   @@map("faq_items")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+}
+
+enum PricingTheme {
+  DEFAULT
+  FEATURED
+  PREMIUM
+}
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  WAITING_DOCUMENTS
+  COMPLETED
+  CANCELLED
 }

@@ -20,12 +20,15 @@ import {
   Sparkles,
   UserRoundCog,
   Users,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { ReactNode, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useRequireAdmin } from '@/hooks/useRequireAdmin';
 import { useAuthStore } from '@/store/auth-store';
 import { useLanguage } from '@/context/LanguageContext';
+import { useTheme } from '@/context/ThemeContext';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ToastViewport } from '@/components/ui/toast';
@@ -51,6 +54,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   const { user, isLoading } = useRequireAdmin();
   const logout = useAuthStore((state) => state.logout);
   const { language, setLanguageOnly } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -66,7 +70,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
 
   if (isLoading && !user) {
     return (
-      <div className="min-h-screen bg-[#f7f4ee] p-6">
+      <div className="min-h-screen bg-[#050505] p-6">
         <div className="grid gap-4 md:grid-cols-[260px_1fr]">
           <Skeleton className="h-[calc(100vh-3rem)]" />
           <div className="grid gap-4">
@@ -81,7 +85,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   const sidebar = (
     <aside
       className={cn(
-        'fixed inset-y-0 left-0 z-40 flex border-r border-[#e2dbcf] bg-[#1f2a24] text-white transition-all lg:sticky lg:top-0',
+        'fixed inset-y-0 left-0 z-40 flex border-r border-white/5 bg-[#0a0f0c] text-white transition-all lg:sticky lg:top-0',
         collapsed ? 'w-[84px]' : 'w-[280px]',
         mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
       )}
@@ -107,8 +111,8 @@ export function DashboardShell({ children }: { children: ReactNode }) {
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                  'flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold text-white/78 transition hover:bg-white/10 hover:text-white',
-                  active && 'bg-[#dab055] text-[#1f2a24] hover:bg-[#dab055] hover:text-[#1f2a24]',
+                  'flex h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold text-white/60 transition hover:bg-white/10 hover:text-white',
+                  active && 'bg-[#dab055] text-[#050505] shadow-[0_0_15px_rgba(218,176,85,0.4)] hover:bg-[#dab055] hover:text-[#050505]',
                 )}
               >
                 <Icon className="h-4 w-4 shrink-0" />
@@ -133,28 +137,28 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="min-h-screen bg-[#f7f4ee] text-[#1f2a24]">
+    <div className="min-h-screen bg-[#050505] text-white">
       <div className="lg:grid lg:grid-cols-[auto_1fr]">
         {sidebar}
-        {mobileOpen ? <button type="button" className="fixed inset-0 z-30 bg-black/35 lg:hidden" onClick={() => setMobileOpen(false)} aria-label="Close menu" /> : null}
+        {mobileOpen ? <button type="button" className="fixed inset-0 z-30 bg-black/50 lg:hidden" onClick={() => setMobileOpen(false)} aria-label="Close menu" /> : null}
         <div className="min-w-0">
-          <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-[#e2dbcf] bg-white/90 px-4 backdrop-blur md:px-6">
+          <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-white/5 bg-[#050505]/80 px-4 backdrop-blur md:px-6">
             <div className="flex items-center gap-3">
               <Button type="button" variant="ghost" size="icon" className="lg:hidden" onClick={() => setMobileOpen(true)}>
                 <Menu className="h-5 w-5" />
               </Button>
               <div>
-                <p className="text-sm font-semibold text-[#667085]">TAW10 Platform</p>
-                <p className="text-xs text-[#8a8172]">{user?.email ?? 'Secured admin session'}</p>
+                <p className="text-sm font-semibold text-white/80">TAW10 Platform</p>
+                <p className="text-xs text-white/50">{user?.email ?? 'Secured admin session'}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="hidden items-center gap-2 rounded-full border border-[#e2dbcf] bg-white px-3 py-1.5 text-xs font-bold text-[#4f5b54] sm:flex">
-                <BarChart3 className="h-4 w-4 text-[#a68942]" />
+              <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-[#dab055] sm:flex">
+                <BarChart3 className="h-4 w-4 text-[#dab055]" />
                 {user?.role ?? 'ADMIN'}
               </div>
               {/* Language Switcher */}
-              <div className="flex items-center gap-0.5 rounded-full border border-[#e2dbcf] bg-white p-0.5" role="group" aria-label="Language selection">
+              <div className="flex items-center gap-0.5 rounded-full border border-white/10 bg-white/5 p-0.5" role="group" aria-label="Language selection">
                 {(['FR', 'AR', 'EN'] as const).map((lang) => (
                   <button
                     key={lang}
@@ -165,14 +169,25 @@ export function DashboardShell({ children }: { children: ReactNode }) {
                     className={cn(
                       'h-7 w-9 rounded-full text-[10px] font-black tracking-widest transition-all duration-200',
                       language === lang
-                        ? 'bg-[#dab055] text-white shadow-sm'
-                        : 'text-[#8a8172] hover:text-[#1f2a24]',
+                        ? 'bg-[#dab055] text-[#050505] shadow-[0_0_10px_rgba(218,176,85,0.3)]'
+                        : 'text-white/50 hover:text-white',
                     )}
                   >
                     {lang}
                   </button>
                 ))}
               </div>
+              {/* Theme Toggle */}
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+                className="h-8 w-8 rounded-full border border-white/10 bg-white/5 text-[#dab055] hover:bg-[#dab055]/20 hover:text-[#dab055] transition-all duration-200"
+                aria-label="Toggle Theme"
+              >
+                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </Button>
               <Button type="button" variant="outline" size="sm" onClick={handleLogout}>
                 <LogOut className="h-4 w-4" />
                 Logout
