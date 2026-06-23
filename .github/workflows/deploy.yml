@@ -21,6 +21,19 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /var/www/taw10
-            git pull origin main
-            docker-compose down
-            docker-compose up --build -d
+            git fetch origin
+            git reset --hard origin/main
+            
+            # 1. Backend build & deploy
+            cd /var/www/taw10/backend
+            npm install
+            npx prisma generate
+            npx prisma db push
+            npm run build
+            pm2 restart taw10-backend
+            
+            # 2. Frontend build & deploy
+            cd /var/www/taw10/frontend
+            npm install
+            npm run build
+            pm2 restart taw10-frontend
