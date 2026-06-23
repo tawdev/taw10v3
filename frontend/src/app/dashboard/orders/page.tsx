@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select } from '@/components/ui/form';
 import { Table, Td, Th } from '@/components/ui/table';
+import { Dialog } from '@/components/ui/dialog';
 import { useAdminStore } from '@/store/admin-store';
 import { useToastStore } from '@/store/toast-store';
 import { OrderStatus } from '@/types/admin';
@@ -24,6 +25,8 @@ export default function OrdersPage() {
   const { orders, pricing, setOrders, updateOrderStatus, removeOrder } = useAdminStore();
   const toast = useToastStore((state) => state.toast);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   useEffect(() => {
     ordersService.list()
@@ -80,7 +83,17 @@ export default function OrdersPage() {
       return selectedPlan === planName || selectedPlan.includes(planName) || planName.includes(selectedPlan);
     });
 
-    return plan?.price ?? null;
+    if (plan) return plan.price;
+
+    // Extract price from notes for simulator orders
+    if (order.notes) {
+      const match = order.notes.match(/Prix estimé:\s*([\d,]+)/i);
+      if (match) {
+        return parseInt(match[1].replace(/,/g, ''), 10);
+      }
+    }
+
+    return null;
   };
 
   const totalRevenue = orders
@@ -209,6 +222,10 @@ export default function OrdersPage() {
                           size="icon"
                           className="h-8 w-8"
                           title="View Order"
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            setIsDetailOpen(true);
+                          }}
                         >
                           <Eye className="h-4 w-4" />
                         </Button>
@@ -241,6 +258,95 @@ export default function OrdersPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Order Detail Modal */}
+      <Dialog
+        open={isDetailOpen}
+        onClose={() => setIsDetailOpen(false)}
+        title={`Order Details - ${selectedOrder?.orderNumber || ''}`}
+        className="max-w-xl bg-white border border-[#dab055]/30 text-[#1c1c1b]"
+      >
+        {selectedOrder && (
+          <div className="space-y-6 font-body text-[#1c1c1b]">
+            <div className="flex justify-between items-center pb-4 border-b border-[#eee8dd]">
+              <div>
+                <p className="text-xs text-white/50 bg-[#1c1c1b] px-3 py-1 rounded-full inline-block font-bold">
+                  Status: {selectedOrder.status}
+                </p>
+              </div>
+              <p className="text-xs text-[#1c1c1b]/60">
+                Created: {new Date(selectedOrder.createdAt).toLocaleString()}
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-[#dab055] border-b border-[#dab055]/10 pb-1">
+                Customer Information
+              </h3>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-xs text-[#1c1c1b]/60 font-medium">Full Name</p>
+                  <p className="font-semibold">{selectedOrder.customerName}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-[#1c1c1b]/60 font-medium">Phone Number (WhatsApp)</p>
+                  <p className="font-semibold text-emerald-600 flex items-center gap-1">
+                    <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    {selectedOrder.phone}
+                  </p>
+                </div>
+                {selectedOrder.email && (
+                  <div className="col-span-2">
+                    <p className="text-xs text-[#1c1c1b]/60 font-medium">Email Address</p>
+                    <p className="font-semibold">{selectedOrder.email}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-[#dab055] border-b border-[#dab055]/10 pb-1">
+                Order details
+              </h3>
+              <div className="text-sm space-y-2">
+                <div>
+                  <p className="text-xs text-[#1c1c1b]/60 font-medium">Selected Plan</p>
+                  <p className="font-bold text-lg text-[#1c1c1b]">{selectedOrder.selectedPlan}</p>
+                </div>
+                {getOrderPrice(selectedOrder) !== null && (
+                  <div>
+                    <p className="text-xs text-[#1c1c1b]/60 font-medium">Estimated Price</p>
+                    <p className="font-bold text-xl text-[#dab055]">
+                      {currency.format(getOrderPrice(selectedOrder) ?? 0)} <span className="text-xs font-normal text-[#1c1c1b]/60">HT</span>
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {selectedOrder.notes && (
+              <div className="space-y-4">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-[#dab055] border-b border-[#dab055]/10 pb-1">
+                  Simulation details / Notes
+                </h3>
+                <div className="bg-[#fcf9f6] border border-gray-100 rounded-xl p-4 text-sm whitespace-pre-wrap leading-relaxed text-[#1c1c1b]">
+                  {selectedOrder.notes}
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-end pt-4 border-t border-[#eee8dd]">
+              <Button
+                variant="outline"
+                onClick={() => setIsDetailOpen(false)}
+                className="bg-white border-gray-200 text-[#1c1c1b] hover:bg-gray-50"
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        )}
+      </Dialog>
     </>
   );
 }

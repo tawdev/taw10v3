@@ -105,17 +105,20 @@ Nouveau message depuis le formulaire de contact :
       });
     }
     
+    // Open WhatsApp immediately to bypass popup blocker
+    window.open(whatsappUrl, "_blank");
+
+    setFormData({ 
+      nom: "", 
+      prenom: "", 
+      email: "", 
+      phone: "",
+      service: "", 
+      message: "",
+      website: "" 
+    });
+
     setTimeout(() => {
-      window.open(whatsappUrl, "_blank");
-      setFormData({ 
-        nom: "", 
-        prenom: "", 
-        email: "", 
-        phone: "",
-        service: "", 
-        message: "",
-        website: "" 
-      });
       setSubmitted(false);
     }, 2000);
   };

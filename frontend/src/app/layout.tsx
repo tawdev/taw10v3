@@ -109,6 +109,11 @@ export async function generateMetadata(
       description: descriptions[language],
       images: ["/icon-512.png"],
     },
+    icons: {
+      icon: "/logoo.png",
+      shortcut: "/logoo.png",
+      apple: "/logoo.png",
+    },
     robots: {
       index: true,
       follow: true,
@@ -145,7 +150,9 @@ export default async function RootLayout({
           rel="stylesheet" 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
         />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/logoo.png" type="image/png" />
+        <link rel="shortcut icon" href="/logoo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/logoo.png" />
       </head>
       <body className={`${plusJakarta.variable} ${playfair.variable} ${montserrat.variable} bg-background text-on-background antialiased font-body theme-premium`}>
         <LanguageProvider initialLanguage={initialLanguage}>

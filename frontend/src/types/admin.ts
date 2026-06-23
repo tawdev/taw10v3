@@ -45,6 +45,7 @@ export type Order = {
   status: OrderStatus;
   createdAt: string;
   revenue: number;
+  notes?: string | null;
 };
 
 export type Customer = {

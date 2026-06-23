@@ -3,7 +3,7 @@ import { http } from './http';
 
 export const ordersService = {
   // Public: called from website when user clicks a pricing plan
-  create: (data: { customerName: string; phone: string; email?: string; selectedPlan: string }) =>
+  create: (data: { customerName: string; phone: string; email?: string; selectedPlan: string; notes?: string }) =>
     http.post<Order>('/orders', data).then((res) => res.data),
 
   // Dashboard: list all orders
