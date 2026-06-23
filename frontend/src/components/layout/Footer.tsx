@@ -25,7 +25,7 @@ const scaleIn = {
 };
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -282,6 +282,57 @@ export default function Footer() {
               </motion.button>
             </motion.div>
           </motion.div>
+        </motion.div>
+
+        {/* Zones d'intervention */}
+        <motion.div 
+          className="pt-12 pb-8 border-t border-white/5"
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={staggerContainer}
+        >
+          <motion.h4 
+            className="font-headline text-sm font-bold mb-6 text-white uppercase tracking-widest inline-block relative"
+            variants={fadeInUp}
+          >
+            {language === "AR" ? "مناطق تدخلنا" : language === "EN" ? "Our Areas of Intervention" : "Nos Zones d'intervention"}
+            <motion.span 
+              className="absolute -bottom-2 left-0 h-0.5 bg-[#dab055]"
+              initial={{ width: 0 }}
+              whileInView={{ width: 32 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            />
+          </motion.h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 pt-4">
+            {[
+              { city: "Casablanca", slug: "casablanca", ar: "الدار البيضاء", en: "Casablanca" },
+              { city: "Rabat", slug: "rabat", ar: "الرباط", en: "Rabat" },
+              { city: "Marrakech", slug: "marrakech", ar: "مراكش", en: "Marrakech" },
+              { city: "Agadir", slug: "agadir", ar: "أكادير", en: "Agadir" },
+              { city: "Tanger", slug: "tanger", ar: "طنجة", en: "Tangier" }
+            ].map((zone, idx) => (
+              <motion.div key={zone.city} variants={fadeInUp}>
+                <Link 
+                  href={`/domiciliation-creation/${zone.slug}`}
+                  className="group flex items-center gap-3 text-xs text-white/40 hover:text-[#dab055] transition-all duration-300 bg-white/[0.02] border border-white/5 rounded-xl p-3 hover:bg-white/[0.04] hover:border-[#dab055]/30"
+                >
+                  <span className="material-symbols-outlined text-xs text-[#dab055] group-hover:scale-110 transition-transform">
+                    location_on
+                  </span>
+                  <div className="flex flex-col">
+                    <span className="text-[9px] text-white/20 uppercase tracking-wider font-bold">
+                      {language === "AR" ? "المغرب" : language === "EN" ? "Morocco" : "Maroc"}
+                    </span>
+                    <span className="font-body font-semibold text-white/70 group-hover:text-white transition-colors">
+                      {language === "AR" ? `توطين وتأسيس الشركات في ${zone.ar}` :
+                       language === "EN" ? `Domiciliation & Company Creation ${zone.en}` :
+                       `Domiciliation & Création ${zone.city}`}
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Bottom Bar */}

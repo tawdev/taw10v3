@@ -65,5 +65,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return getSitemapEntries(path, 0.8, 'monthly' as const, lastModified);
   });
 
-  return [...staticEntries, ...serviceEntries, ...blogEntries];
+  // 3. City landing page routes
+  const cityKeys = ['casablanca', 'rabat', 'marrakech', 'agadir', 'tanger'];
+  const cityPaths = cityKeys.map(key => `/domiciliation-creation/${key}`);
+  const cityEntries = cityPaths.flatMap(path => {
+    return getSitemapEntries(path, 0.8, 'monthly' as const);
+  });
+
+  return [...staticEntries, ...serviceEntries, ...blogEntries, ...cityEntries];
 }

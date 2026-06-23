@@ -42,7 +42,8 @@ export default function Header() {
     return false;
   })();
 
-  const useDarkText = isScrolled || (!isHome && !isServiceDetailPage);
+  const isCityLandingPage = pathname.includes("/domiciliation-creation/");
+  const useDarkText = isScrolled || (!isHome && !isServiceDetailPage && !isCityLandingPage);
 
   const [activeHash, setActiveHash] = useState("hero");
 

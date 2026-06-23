@@ -8,8 +8,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { MagneticButton } from "../common/UIComponents";
 import { fadeInUp, staggerContainer } from "../common/Animations";
 
-export default function Hero() {
-  const { t } = useLanguage();
+export default function Hero({ city }: { city?: string }) {
+  const { language, t } = useLanguage();
   const heroRef = useRef<HTMLElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -38,6 +38,19 @@ export default function Hero() {
       });
     }
   };
+
+  const getCityTranslation = (c: string, lang: string) => {
+    const translations: Record<string, Record<string, string>> = {
+      casablanca: { FR: "Casablanca", EN: "Casablanca", AR: "الدار البيضاء" },
+      rabat: { FR: "Rabat", EN: "Rabat", AR: "الرباط" },
+      marrakech: { FR: "Marrakech", EN: "Marrakech", AR: "مراكش" },
+      agadir: { FR: "Agadir", EN: "Agadir", AR: "أكادير" },
+      tanger: { FR: "Tanger", EN: "Tangier", AR: "طنجة" }
+    };
+    return translations[c.toLowerCase()]?.[lang] || c;
+  };
+
+  const currentCityName = city ? getCityTranslation(city, language) : "";
 
   return (
     <section 
@@ -82,7 +95,11 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {t("hero.subtitle")}
+            {city ? (
+              language === "AR" ? `توطين ممتاز — ${currentCityName}` :
+              language === "EN" ? `PREMIUM DOMICILIATION — ${currentCityName.toUpperCase()}` :
+              `DOMICILIATION PREMIUM — ${currentCityName.toUpperCase()}`
+            ) : t("hero.subtitle")}
           </motion.span>
           <motion.h1 
             className="flex flex-col text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl leading-[1.15] md:leading-[1.2] text-white font-bold tracking-tighter mb-10 md:mb-14 font-headline drop-shadow-2xl italic"
@@ -91,15 +108,54 @@ export default function Hero() {
             animate="visible"
             variants={staggerContainer}
           >
-            <motion.span variants={fadeInUp} className="pl-0 block">{t("hero.line1")}</motion.span>
-            <motion.span variants={fadeInUp} className="ps-12 md:ps-24 block text-[#dab055]">{t("hero.line2")}</motion.span>
-            <motion.span variants={fadeInUp} className="pl-0 flex items-center gap-3 flex-wrap">
-              <span className="whitespace-nowrap">{t("hero.line3")}</span>
-              <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase px-2 md:px-3 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap not-italic">
-                {t("hero.title_brand")}
-              </span>
-            </motion.span>
-            <motion.span variants={fadeInUp} className="ps-12 md:ps-24 block">{t("hero.line4")}</motion.span>
+            {city ? (
+              language === "AR" ? (
+                <>
+                  <motion.span variants={fadeInUp} className="pl-0 block">توطين وتأسيس</motion.span>
+                  <motion.span variants={fadeInUp} className="ps-12 md:ps-24 block text-[#dab055]">الشركات في {currentCityName}</motion.span>
+                  <motion.span variants={fadeInUp} className="pl-0 flex items-center gap-3 flex-wrap">
+                    <span className="whitespace-nowrap">في جميع مراكز</span>
+                    <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase px-2 md:px-3 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap not-italic">
+                      {t("hero.title_brand")}
+                    </span>
+                  </motion.span>
+                </>
+              ) : language === "EN" ? (
+                <>
+                  <motion.span variants={fadeInUp} className="pl-0 block">Domiciliation &amp; Company</motion.span>
+                  <motion.span variants={fadeInUp} className="ps-12 md:ps-24 block text-[#dab055]">Creation in {currentCityName}</motion.span>
+                  <motion.span variants={fadeInUp} className="pl-0 flex items-center gap-3 flex-wrap">
+                    <span className="whitespace-nowrap">in all the centers of</span>
+                    <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase px-2 md:px-3 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap not-italic">
+                      {t("hero.title_brand")}
+                    </span>
+                  </motion.span>
+                </>
+              ) : (
+                <>
+                  <motion.span variants={fadeInUp} className="pl-0 block">Domiciliation &amp; Création</motion.span>
+                  <motion.span variants={fadeInUp} className="ps-12 md:ps-24 block text-[#dab055]">d&apos;Entreprise à {currentCityName}</motion.span>
+                  <motion.span variants={fadeInUp} className="pl-0 flex items-center gap-3 flex-wrap">
+                    <span className="whitespace-nowrap">dans tous les centres de</span>
+                    <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase px-2 md:px-3 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap not-italic">
+                      {t("hero.title_brand")}
+                    </span>
+                  </motion.span>
+                </>
+              )
+            ) : (
+              <>
+                <motion.span variants={fadeInUp} className="pl-0 block">{t("hero.line1")}</motion.span>
+                <motion.span variants={fadeInUp} className="ps-12 md:ps-24 block text-[#dab055]">{t("hero.line2")}</motion.span>
+                <motion.span variants={fadeInUp} className="pl-0 flex items-center gap-3 flex-wrap">
+                  <span className="whitespace-nowrap">{t("hero.line3")}</span>
+                  <span className="text-[#dab055] font-label font-black tracking-[0.1em] md:tracking-[0.15em] uppercase px-2 md:px-3 border-b-2 border-[#dab055]/20 inline-block transform hover:scale-105 transition-transform duration-300 whitespace-nowrap not-italic">
+                    {t("hero.title_brand")}
+                  </span>
+                </motion.span>
+                <motion.span variants={fadeInUp} className="ps-12 md:ps-24 block">{t("hero.line4")}</motion.span>
+              </>
+            )}
           </motion.h1>
           <motion.p 
             className="text-base md:text-lg xl:text-xl text-white/90 font-body max-w-3xl mb-8 md:mb-14 leading-relaxed drop-shadow-md text-balance"
@@ -107,7 +163,25 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <span className="text-[#dab055] font-label font-black tracking-widest uppercase italic px-1">TAW 10</span> {t("hero.tagline")}
+            {city ? (
+              language === "AR" ? (
+                <>
+                  ترافق <span className="text-[#dab055] font-label font-black tracking-widest uppercase italic px-1">TAW 10</span> حاملي المشاريع، المقاولين والفروع لتوطين وتأسيس نشاطهم التجاري في {currentCityName} بطريقة بسيطة ومثالية.
+                </>
+              ) : language === "EN" ? (
+                <>
+                  <span className="text-[#dab055] font-label font-black tracking-widest uppercase italic px-1">TAW 10</span> supports project creators, entrepreneurs, and subsidiaries to establish their business activity in {currentCityName} in a simple and optimal way.
+                </>
+              ) : (
+                <>
+                  <span className="text-[#dab055] font-label font-black tracking-widest uppercase italic px-1">TAW 10</span> accompagne les créateurs de projets, entrepreneurs et filiales pour implanter au mieux leur activité commerciale à {currentCityName} de manière simple et optimale.
+                </>
+              )
+            ) : (
+              <>
+                <span className="text-[#dab055] font-label font-black tracking-widest uppercase italic px-1">TAW 10</span> {t("hero.tagline")}
+              </>
+            )}
           </motion.p>
           <motion.div 
             className="flex flex-col sm:flex-row items-center gap-6"
@@ -127,7 +201,7 @@ export default function Hero() {
               className="font-label text-white/60 hover:text-[#dab055] uppercase tracking-[0.3em] text-[10px] font-bold flex items-center gap-4 transition-colors group"
             >
               <span className="w-12 h-px bg-[#dab055]/30 group-hover:w-16 transition-all duration-500"></span>
-              {t("hero.discover")}
+              {language === "AR" ? "اكتشف" : language === "EN" ? "Discover" : "Découvrir"}
             </Link>
           </motion.div>
         </motion.div>
