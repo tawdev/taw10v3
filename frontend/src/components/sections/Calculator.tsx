@@ -3,8 +3,14 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
-import { CONFIG } from "@/data/config";
+import { useSettings } from "@/context/SettingsContext";
 import { ordersService } from "@/services/orders.service";
+
+// inside Calculator:
+// const { t, language } = useLanguage();
+// const { settings } = useSettings();
+// ...
+// const url = `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`;
 
 const modalTranslations = {
   FR: {
@@ -50,6 +56,7 @@ const modalTranslations = {
 
 const Calculator = () => {
   const { t, language } = useLanguage();
+  const { settings } = useSettings();
 
   const [formType, setFormType] = useState<"sarl" | "auto">("sarl");
   const [duration, setDuration] = useState<"none" | "12m" | "24m">("12m");
@@ -127,7 +134,7 @@ const Calculator = () => {
 
       // Prepare WhatsApp text
       const text = `Bonjour, je souhaite un devis personnalisé:\n- Client: *${orderForm.customerName}* (${orderForm.phone})\n- Forme: ${t(`calc.${formType}`)}\n- Domiciliation: ${t(`calc.${duration}`)}\n- Extras: ${extraMail ? 'Courrier' : ''} ${extraLegal ? 'Juridique' : ''}\n- Estimation: ${total} ${t("calc.currency")}`;
-      const url = `https://wa.me/${CONFIG.contact.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`;
+      const url = `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`;
       
       setIsModalOpen(false);
       window.open(url, '_blank');

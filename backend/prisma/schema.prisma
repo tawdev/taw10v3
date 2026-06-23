@@ -189,6 +189,22 @@ model FaqItem {
   @@map("faq_items")
 }
 
+model SystemSetting {
+  id           String   @id @default("default")
+  companyName  String   @default("TAW 10")
+  phoneNumber  String   @default("+212 5 24 30 80 38")
+  email        String   @default("contact@taw10.com")
+  address      String   @default("48 Lot IGUIDER, Allal El Fassi, Marrakech")
+  facebook     String   @default("https://www.facebook.com/taw10.ma/")
+  instagram    String   @default("https://www.instagram.com/tawteen_10/")
+  linkedin     String   @default("https://linkedin.com/company/taw10")
+  logoUrl      String   @default("/logo.jpeg")
+  faviconUrl   String   @default("/favicon.ico")
+  updatedAt    DateTime @updatedAt
+
+  @@map("system_settings")
+}
+
 enum Role {
   SUPER_ADMIN
   ADMIN

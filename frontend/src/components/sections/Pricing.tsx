@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { useSettings } from "@/context/SettingsContext";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { fadeInUp, staggerContainer, scaleIn } from "../common/Animations";
 import { CONFIG } from "@/data/config";
@@ -55,6 +56,7 @@ const modalTranslations = {
 
 export default function Pricing() {
   const { t, language } = useLanguage();
+  const { settings } = useSettings();
   const pricingRef = useRef<HTMLElement>(null);
   const pricingInView = useInView(pricingRef, { once: true, margin: "-100px" });
   const [plans, setPlans] = useState<PricingPlan[]>(fallbackPricingPlans.filter((plan) => plan.isActive));
@@ -106,14 +108,14 @@ export default function Pricing() {
       });
 
       // Prepare WhatsApp message
-      const text = `Bonjour TAW 10,
+      const text = `Bonjour ${settings.companyName},
       
 Je m'appelle *${orderForm.customerName}* (${orderForm.phone}).
 Je viens de réserver l'offre *${selectedPlanForOrder.name}* (${selectedPlanForOrder.price} DH HT) sur votre site web.
 Veuillez s'il vous plaît me contacter pour finaliser ma commande. Merci !`;
 
       const encodedText = encodeURIComponent(text);
-      const whatsappUrl = `https://wa.me/${CONFIG.contact.whatsapp}?text=${encodedText}`;
+      const whatsappUrl = `https://wa.me/${settings.whatsapp}?text=${encodedText}`;
       
       setIsModalOpen(false);
       window.open(whatsappUrl, "_blank");

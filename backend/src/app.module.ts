@@ -14,6 +14,7 @@ import { PricingModule } from './pricing/pricing.module';
 import { ServicesModule } from './services/services.module';
 import { TeamModule } from './team/team.module';
 import { UsersModule } from './users/users.module';
+import { SettingsModule } from './settings/settings.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { UsersModule } from './users/users.module';
     ContactsModule,
     CustomersModule,
     FaqModule,
+    SettingsModule,
   ],
 })
 export class AppModule {}

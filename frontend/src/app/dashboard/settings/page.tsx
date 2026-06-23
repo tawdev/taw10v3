@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Save } from 'lucide-react';
 import { PageHeader } from '@/components/dashboard/PageHeader';
 import { Button } from '@/components/ui/button';
@@ -9,16 +9,46 @@ import { Field, Input } from '@/components/ui/form';
 import { useAdminStore } from '@/store/admin-store';
 import { useToastStore } from '@/store/toast-store';
 import { ImageUploadField } from '@/components/dashboard/ImageUploadField';
+import { settingsService } from '@/services/settings.service';
 
 export default function SettingsPage() {
   const { settings, updateSettings } = useAdminStore();
   const [draft, setDraft] = useState(settings);
+  const [loading, setLoading] = useState(true);
   const toast = useToastStore((state) => state.toast);
 
-  function save(event: FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    settingsService.get()
+      .then((data) => {
+        setDraft(data);
+        updateSettings(data);
+      })
+      .catch((err) => {
+        console.error('Failed to load settings from API:', err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [updateSettings]);
+
+  async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    updateSettings(draft);
-    toast({ title: 'Settings saved', variant: 'success' });
+    try {
+      const updated = await settingsService.update(draft);
+      updateSettings(updated);
+      toast({ title: 'Settings saved successfully', variant: 'success' });
+    } catch (err) {
+      console.error('Failed to save settings:', err);
+      toast({ title: 'Failed to save settings', variant: 'destructive' });
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+      </div>
+    );
   }
 
   return (

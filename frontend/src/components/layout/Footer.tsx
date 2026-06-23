@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import { useSettings } from "@/context/SettingsContext";
 import { motion, useInView, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { CONFIG } from "@/data/config";
 
@@ -26,6 +27,7 @@ const scaleIn = {
 
 export default function Footer() {
   const { language, t } = useLanguage();
+  const { settings } = useSettings();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -63,10 +65,10 @@ export default function Footer() {
                 className="text-white"
                 whileHover={{ scale: 1.05 }}
               >
-                TAW <motion.span 
+                {settings.companyName.split(' ')[0]} <motion.span 
                   className="text-[#dab055]" 
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                >10</motion.span>
+                >{settings.companyName.split(' ').slice(1).join(' ') || ''}</motion.span>
               </motion.span>
             </Link>
             <motion.p 
@@ -79,8 +81,8 @@ export default function Footer() {
             </motion.p>
             <motion.div className="flex items-center gap-4 py-2" variants={scaleIn}>
               {[
-                { icon: 'fa-brands fa-facebook-f', href: CONFIG.socials.facebook, label: 'Facebook' },
-                { icon: 'fa-brands fa-instagram', href: CONFIG.socials.instagram, label: 'Instagram' }
+                { icon: 'fa-brands fa-facebook-f', href: settings.facebook, label: 'Facebook' },
+                { icon: 'fa-brands fa-instagram', href: settings.instagram, label: 'Instagram' }
               ].map((social, idx) => (
                 <motion.a
                   key={social.icon}
@@ -106,20 +108,20 @@ export default function Footer() {
             {/* Added Phone & Address to Footer */}
             <motion.div className="space-y-4 pt-4 border-t border-white/5" variants={fadeInUp}>
               <a 
-                href={CONFIG.contact.mapLink}
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 text-white/40 group hover:text-[#dab055] transition-colors"
                 title="View on Google Maps"
               >
                 <span className="material-symbols-outlined text-[#dab055] text-xl">location_on</span>
-                <span className="text-xs font-body">{CONFIG.contact.address}</span>
+                <span className="text-xs font-body">{settings.address}</span>
               </a>
               <div className="flex items-center gap-4 text-white/40 group">
                 <span className="material-symbols-outlined text-[#dab055] text-xl">call</span>
                 <div className="flex flex-col">
-                  <a href={`tel:${CONFIG.contact.phone.replace(/\s/g, '')}`} className="text-xs font-body hover:text-white transition-colors" dir="ltr">{CONFIG.contact.phone}</a>
-                  <a href={`tel:${CONFIG.contact.mobile.replace(/\s/g, '')}`} className="text-xs font-body hover:text-white transition-colors" dir="ltr">{CONFIG.contact.mobile}</a>
+                  <a href={`tel:${settings.phoneNumber.replace(/\s/g, '')}`} className="text-xs font-body hover:text-white transition-colors" dir="ltr">{settings.phoneNumber}</a>
+                  <a href={`tel:${settings.mobile.replace(/\s/g, '')}`} className="text-xs font-body hover:text-white transition-colors" dir="ltr">{settings.mobile}</a>
                 </div>
               </div>
             </motion.div>

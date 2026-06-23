@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { CONFIG } from '@/data/config';
+import { useSettings } from '@/context/SettingsContext';
 import { getTranslations, Language } from '@/lib/translations';
 
 interface SchemaMarkupProps {
@@ -8,19 +10,20 @@ interface SchemaMarkupProps {
 
 const SchemaMarkup = ({ language }: SchemaMarkupProps) => {
   const t = getTranslations(language);
+  const { settings } = useSettings();
 
   const businessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": CONFIG.brandName,
+    "name": settings.companyName,
     "image": "https://taw10.ma/icon-512.png",
     "@id": "https://taw10.ma",
     "url": "https://taw10.ma",
-    "telephone": CONFIG.contact.phone,
-    "email": CONFIG.contact.email,
+    "telephone": settings.phoneNumber,
+    "email": settings.email,
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "48 Lot IGUIDER, Allal El Fassi",
+      "streetAddress": settings.address,
       "addressLocality": "Marrakech",
       "postalCode": "40000",
       "addressCountry": "MA"
@@ -51,8 +54,8 @@ const SchemaMarkup = ({ language }: SchemaMarkupProps) => {
       }
     ],
     "sameAs": [
-      CONFIG.socials.facebook,
-      CONFIG.socials.instagram
+      settings.facebook,
+      settings.instagram
     ]
   };
 

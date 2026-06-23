@@ -4,6 +4,7 @@ import { Playfair_Display, Plus_Jakarta_Sans, Montserrat } from "next/font/googl
 import "./globals.css";
 import { getLocalizedMetadata } from "@/lib/metadata";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { SettingsProvider } from "@/context/SettingsContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsappContact from "@/components/layout/WhatsappContact";
@@ -156,23 +157,25 @@ export default async function RootLayout({
       </head>
       <body className={`${plusJakarta.variable} ${playfair.variable} ${montserrat.variable} bg-background text-on-background antialiased font-body theme-premium`}>
         <LanguageProvider initialLanguage={initialLanguage}>
-          <ConsentWrapper>
-            <CustomCursor />
-            <ErrorLogger />
-            <RouteChrome
-              header={<Header />}
-              footer={<Footer />}
-              schema={<SchemaMarkup language={initialLanguage as "FR" | "AR" | "EN"} />}
-              floating={
-                <>
-                  <WhatsappContact />
-                  <CookieConsent />
-                </>
-              }
-            >
-              {children}
-            </RouteChrome>
-          </ConsentWrapper>
+          <SettingsProvider>
+            <ConsentWrapper>
+              <CustomCursor />
+              <ErrorLogger />
+              <RouteChrome
+                header={<Header />}
+                footer={<Footer />}
+                schema={<SchemaMarkup language={initialLanguage as "FR" | "AR" | "EN"} />}
+                floating={
+                  <>
+                    <WhatsappContact />
+                    <CookieConsent />
+                  </>
+                }
+              >
+                {children}
+              </RouteChrome>
+            </ConsentWrapper>
+          </SettingsProvider>
         </LanguageProvider>
       </body>
     </html>

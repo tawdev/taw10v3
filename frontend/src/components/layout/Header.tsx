@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
+import { useSettings } from "@/context/SettingsContext";
 import {
   motion,
   AnimatePresence,
@@ -19,8 +20,14 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
+  const { settings } = useSettings();
+
+  useEffect(() => {
+    setLogoError(false);
+  }, [settings.logoUrl]);
 
   const langPrefix = `/${language.toLowerCase()}`;
   const pathParts = pathname.split("/").filter(Boolean);
@@ -265,7 +272,7 @@ export default function Header() {
                 <span className="material-symbols-outlined text-[14px] text-[#dab055]">
                   mail
                 </span>
-                {CONFIG.contact.email}
+                {settings.email}
               </motion.div>
             </motion.div>
             <motion.div
@@ -281,7 +288,7 @@ export default function Header() {
                 <span className="material-symbols-outlined text-[14px] text-[#dab055]">
                   call
                 </span>
-                {CONFIG.contact.phone}
+                {settings.phoneNumber}
               </motion.div>
               <div
                 className="flex items-center gap-3"
@@ -332,11 +339,20 @@ export default function Header() {
               onClick={(e) => scrollToSection(e, "")}
               aria-label="Go to homepage"
             >
-              <span
-                className={`font-headline text-2xl xl:text-3xl font-bold tracking-tighter transition-colors duration-500 ${useDarkText ? "text-[#1c1c1b]" : "text-white"}`}
-              >
-                TAW <span className="text-[#dab055] border-b-2 border-[#dab055] pb-0.5 inline-block">10</span>
-              </span>
+              {isScrolled && settings.logoUrl && settings.logoUrl !== '' && !logoError ? (
+                <img 
+                  src={settings.logoUrl} 
+                  alt={settings.companyName} 
+                  style={{ height: '70px', width: 'auto', objectFit: 'contain', display: 'block' }}
+                  onError={() => setLogoError(true)}
+                />
+              ) : (
+                <span
+                  className={`font-headline text-2xl xl:text-3xl font-bold tracking-tighter transition-colors duration-500 ${useDarkText ? "text-[#1c1c1b]" : "text-white"}`}
+                >
+                  {settings.companyName.split(' ')[0]} <span className="text-[#dab055] border-b-2 border-[#dab055] pb-0.5 inline-block">{settings.companyName.split(' ').slice(1).join(' ') || ''}</span>
+                </span>
+              )}
             </Link>
 
             {/* Desktop Navigation */}

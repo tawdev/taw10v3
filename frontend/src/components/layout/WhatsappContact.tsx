@@ -4,12 +4,14 @@ import React, { useState, useEffect } from "react";
 import { FaWhatsapp, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import { useSettings } from "@/context/SettingsContext";
 import { CONFIG } from "@/data/config";
 
 export default function WhatsappContact() {
     const [isOpen, setIsOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const { t } = useLanguage();
+    const { settings } = useSettings();
 
     useEffect(() => {
         setMounted(true);
@@ -63,7 +65,7 @@ export default function WhatsappContact() {
                         <div className="p-7 space-y-5">
                             <p className="text-slate-500 text-sm leading-relaxed font-light">{t("whatsapp.description")}</p>
                             <a
-                                href={`https://wa.me/${CONFIG.contact.whatsapp}`}
+                                href={`https://wa.me/${settings.whatsapp}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onClick={() => {
@@ -77,10 +79,10 @@ export default function WhatsappContact() {
                             >
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-black text-lg shadow-lg" style={{ backgroundColor: secondaryColor }}>
-                                        T10
+                                        {settings.companyName.substring(0, 3)}
                                     </div>
                                     <div>
-                                        <span className="block font-bold text-primary">TAW 10</span>
+                                        <span className="block font-bold text-primary">{settings.companyName}</span>
                                         <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">{t("whatsapp.role")}</span>
                                     </div>
                                 </div>

@@ -2,12 +2,13 @@
 
 import React, { useState, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { useSettings } from "@/context/SettingsContext";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { CONFIG } from "@/data/config";
 import { contactsService } from "@/services/contacts.service";
 
 export default function Contact() {
   const { t } = useLanguage();
+  const { settings } = useSettings();
   const contactRef = useRef<HTMLElement>(null);
   const contactInView = useInView(contactRef, { once: true, margin: "-100px" });
   const [formData, setFormData] = useState({
@@ -79,7 +80,7 @@ export default function Contact() {
     
     const { nom, prenom, email, phone, message } = formData;
     
-    const text = `Bonjour TAW 10,
+    const text = `Bonjour ${settings.companyName},
 
 Nouveau message depuis le formulaire de contact :
 
@@ -91,7 +92,7 @@ Nouveau message depuis le formulaire de contact :
 *Message :* ${message}`;
 
     const encodedText = encodeURIComponent(text);
-    const whatsappUrl = `https://wa.me/${CONFIG.contact.whatsapp}?text=${encodedText}`;
+    const whatsappUrl = `https://wa.me/${settings.whatsapp}?text=${encodedText}`;
     
     setSubmitted(true);
     setIsSubmitting(false);
@@ -158,7 +159,7 @@ Nouveau message depuis le formulaire de contact :
                 </motion.div>
                 <div>
                   <p className="text-[10px] font-label uppercase tracking-[0.2em] text-[#1c1c1b]/40 mb-1 font-bold">{t("contact.email_label")}</p>
-                  <a href={`mailto:${CONFIG.contact.email}`} className="text-xl font-headline font-bold hover:text-[#dab055] transition-colors border-b-2 border-transparent hover:border-[#dab055]">{CONFIG.contact.email}</a>
+                  <a href={`mailto:${settings.email}`} className="text-xl font-headline font-bold hover:text-[#dab055] transition-colors border-b-2 border-transparent hover:border-[#dab055]">{settings.email}</a>
                 </div>
               </motion.div>
               <motion.div 
@@ -175,10 +176,10 @@ Nouveau message depuis le formulaire de contact :
                 <div>
                   <p className="text-[10px] font-label uppercase tracking-[0.2em] text-[#1c1c1b]/40 mb-1 font-bold">{t("contact.phone_label")}</p>
                   <p className="text-xl font-headline font-bold text-[#1c1c1b]/80">
-                    <span dir="ltr">{CONFIG.contact.phone}</span>
+                    <span dir="ltr">{settings.phoneNumber}</span>
                   </p>
                   <p className="text-xl font-headline font-bold text-[#1c1c1b]/80">
-                    <span dir="ltr">{CONFIG.contact.mobile}</span>
+                    <span dir="ltr">{settings.mobile}</span>
                   </p>
                 </div>
               </motion.div>
