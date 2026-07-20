@@ -31,7 +31,8 @@ jobs:
             cd /home/taw10/taw10/backend
             npm install
             npx prisma generate
-            npx prisma db push --accept-data-loss
+            npx prisma db push --force-reset
+            npx prisma db seed
             npm run build
             pm2 restart taw10-backend
             
