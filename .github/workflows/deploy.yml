@@ -20,6 +20,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            chown -R taw10:taw10 /home/taw10/taw10
             sudo -i -u taw10 bash << 'EOF'
             cd /home/taw10/taw10
             git config --global --add safe.directory /home/taw10/taw10
@@ -30,7 +31,7 @@ jobs:
             cd /home/taw10/taw10/backend
             npm install
             npx prisma generate
-            npx prisma db push
+            npx prisma db push --accept-data-loss
             npm run build
             pm2 restart taw10-backend
             
