@@ -20,12 +20,12 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /var/www/taw10
+            cd /var/www/taw10v3
             git fetch origin
             git reset --hard origin/main
             
             # 1. Backend build & deploy
-            cd /var/www/taw10/backend
+            cd /var/www/taw10v3/backend
             npm install
             npx prisma generate
             npx prisma db push
@@ -33,7 +33,7 @@ jobs:
             pm2 restart taw10-backend
             
             # 2. Frontend build & deploy
-            cd /var/www/taw10/frontend
+            cd /var/www/taw10v3/frontend
             npm install
             npm run build
             pm2 restart taw10-frontend
