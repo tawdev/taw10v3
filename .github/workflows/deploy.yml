@@ -21,19 +21,20 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /home/taw10/taw10
-            git fetch origin
-            git reset --hard origin/main
+            sudo -u taw10 git config --global --add safe.directory /home/taw10/taw10
+            sudo -u taw10 git fetch origin
+            sudo -u taw10 git reset --hard origin/main
             
             # 1. Backend build & deploy
             cd /home/taw10/taw10/backend
-            npm install
-            npx prisma generate
-            npx prisma db push
-            npm run build
-            pm2 restart taw10-backend
+            sudo -u taw10 npm install
+            sudo -u taw10 npx prisma generate
+            sudo -u taw10 npx prisma db push
+            sudo -u taw10 npm run build
+            sudo -u taw10 pm2 restart taw10-backend
             
             # 2. Frontend build & deploy
             cd /home/taw10/taw10/frontend
-            npm install
-            npm run build
-            pm2 restart taw10-frontend
+            sudo -u taw10 npm install
+            sudo -u taw10 npm run build
+            sudo -u taw10 pm2 restart taw10-frontend
