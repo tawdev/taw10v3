@@ -59,7 +59,7 @@ export default function Expertise() {
     <>
       {/* 2. VALUE PROPOSITION / PULL-QUOTE */}
       <motion.section 
-        className="py-24 bg-white relative overflow-hidden"
+        className="py-12 bg-white relative overflow-hidden"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -102,7 +102,7 @@ export default function Expertise() {
       </motion.section>
 
       {/* 3. EXPERTISE SECTION */}
-      <section id="expertise" ref={expertiseRef} className="py-32 bg-white relative overflow-hidden">
+      <section id="expertise" ref={expertiseRef} className="pt-16 pb-32 bg-white relative overflow-hidden">
         <div 
           className="absolute top-20 left-10 w-72 h-72 bg-[#dab055]/5 rounded-full blur-[120px] animate-orb-drift"
           aria-hidden="true"

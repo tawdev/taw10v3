@@ -108,10 +108,11 @@ export default function Pricing() {
       });
 
       // Prepare WhatsApp message
+      const finalPrice = selectedPlanForOrder.pricePromo || selectedPlanForOrder.price;
       const text = `Bonjour ${settings.companyName},
       
 Je m'appelle *${orderForm.customerName}* (${orderForm.phone}).
-Je viens de réserver l'offre *${selectedPlanForOrder.name}* (${selectedPlanForOrder.price} DH HT) sur votre site web.
+Je viens de réserver l'offre *${selectedPlanForOrder.name}* (${finalPrice} DH HT) sur votre site web.
 Veuillez s'il vous plaît me contacter pour finaliser ma commande. Merci !`;
 
       const encodedText = encodeURIComponent(text);
@@ -163,6 +164,11 @@ Veuillez s'il vous plaît me contacter pour finaliser ma commande. Merci !`;
         >
           {plans.map((plan, idx) => {
             const featured = plan.theme === "FEATURED";
+            const promoName = language === "AR" 
+              ? (plan.promoName_ar || t("pricing.summer_promo"))
+              : language === "EN"
+              ? (plan.promoName_en || t("pricing.summer_promo"))
+              : (plan.promoName_fr || t("pricing.summer_promo"));
 
             return (
             <motion.div
@@ -187,14 +193,30 @@ Veuillez s'il vous plaît me contacter pour finaliser ma commande. Merci !`;
               )}
 
               <div className="text-center mb-10 pt-6 relative z-10">
-                <h4 className={`text-xs font-label uppercase tracking-[0.2em] ${featured ? 'text-[#dab055]' : 'text-[#dab055]'} mb-4 font-bold font-headline`}>
+                <h4 className={`text-xs font-label uppercase tracking-[0.2em] ${featured ? 'text-[#dab055]' : 'text-[#dab055]'} mb-2 font-bold font-headline`}>
                   {plan.name}
                 </h4>
+                {plan.pricePromo && (
+                  <span className="inline-block bg-[#dab055] text-white text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider mb-4 animate-pulse">
+                    {promoName}
+                  </span>
+                )}
                 <div className="flex flex-col items-center">
                   <div className={`flex items-baseline gap-1 transition-transform duration-500 ${featured ? 'scale-110 group-hover:scale-125' : 'group-hover:scale-110'}`}>
-                    <span className={`text-5xl font-bold ${featured ? 'text-white' : 'text-[#1c1c1b] group-hover:text-white'} transition-colors tracking-tighter`}>
-                      {plan.price}
-                    </span>
+                    {plan.pricePromo ? (
+                      <>
+                        <span className={`text-2xl line-through opacity-40 mr-1 ${featured ? 'text-white' : 'text-[#1c1c1b] group-hover:text-white'}`}>
+                          {plan.price}
+                        </span>
+                        <span className={`text-5xl font-bold ${featured ? 'text-[#dab055]' : 'text-[#dab055]'} transition-colors tracking-tighter`}>
+                          {plan.pricePromo}
+                        </span>
+                      </>
+                    ) : (
+                      <span className={`text-5xl font-bold ${featured ? 'text-white' : 'text-[#1c1c1b] group-hover:text-white'} transition-colors tracking-tighter`}>
+                        {plan.price}
+                      </span>
+                    )}
                     <span className="text-lg font-bold text-[#dab055]">DH ht</span>
                   </div>
 
@@ -271,7 +293,7 @@ Veuillez s'il vous plaît me contacter pour finaliser ma commande. Merci !`;
               <p className="text-xs text-[#1c1c1b]/60 mb-6 font-body leading-relaxed">
                 {modalTranslations[language as keyof typeof modalTranslations]?.subtitle || modalTranslations.FR.subtitle}
                 <span className="font-bold text-[#dab055] block mt-1">
-                  {selectedPlanForOrder.name} ({selectedPlanForOrder.price} DH HT)
+                  {selectedPlanForOrder.name} ({selectedPlanForOrder.pricePromo || selectedPlanForOrder.price} DH HT)
                 </span>
               </p>
 

@@ -104,8 +104,26 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
     );
   }
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": service.title,
+    "description": service.subtitle,
+    "provider": {
+      "@type": "Organization",
+      "name": "TAW 10 Consulting",
+      "url": "https://taw10.ma"
+    },
+    "areaServed": "MA",
+    "logo": "https://taw10.ma/icon-512.png"
+  };
+
   return (
     <div className="min-h-screen bg-white font-body">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       {/* Hero Section */}
       <section className="relative h-[85vh] flex items-center overflow-hidden bg-[#0f172a]">
         <div className="absolute inset-0 z-0">

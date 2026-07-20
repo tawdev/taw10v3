@@ -1,6 +1,6 @@
 {
   "hero.line1": "Parmi les meilleures sociétés",
-  "hero.line2": "de domiciliation et création sur Internet",
+  "hero.line2": "de domiciliation et création d'entreprise",
   "hero.line3": "ou dans tous les centres de",
   "hero.line4": "au Maroc",
   "hero.title_brand": "TAW 10",
@@ -20,6 +20,7 @@
   "expertise.admin": "Cabinet Comptable Marrakech",
   "expertise.strategic": "Investissement Étranger",
   "pricing.title": "Nos Tarifs",
+  "pricing.summer_promo": "Promo d'été",
   "pricing.intilaqa": "INTILAQA",
   "pricing.intilaqa_pro": "INTILAQA PRO",
   "pricing.intilaqa_plus": "INTILAQA PLUS",
@@ -122,5 +123,6 @@
   "calc.currency": "Dhs ht",
   "calc.submit": "Confirmer par WhatsApp",
   "blog.title": "Actualités & Conseils",
-  "blog.subtitle": "Notre expertise à votre service."
+  "blog.subtitle": "Notre expertise à votre service.",
+  "blog.view_all": "Voir tous les articles"
 }

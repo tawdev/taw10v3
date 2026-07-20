@@ -14,9 +14,6 @@ import SchemaMarkup from "@/components/common/SchemaMarkup";
 import { CONFIG } from "@/data/config";
 import ConsentWrapper from "@/components/common/ConsentWrapper";
 import ErrorLogger from "@/components/common/ErrorLogger";
-
-import CustomCursor from "@/components/common/CustomCursor";
-
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
@@ -126,6 +123,9 @@ export async function generateMetadata(
         'max-snippet': -1,
       },
     },
+    verification: {
+      google: '13n6w5hVjaRY_m32zwg2z9Zev9jb8fPATkMTECvHsJ8',
+    },
     ...localizedMeta,
   };
 }
@@ -159,7 +159,6 @@ export default async function RootLayout({
         <LanguageProvider initialLanguage={initialLanguage}>
           <SettingsProvider>
             <ConsentWrapper>
-              <CustomCursor />
               <ErrorLogger />
               <RouteChrome
                 header={<Header />}

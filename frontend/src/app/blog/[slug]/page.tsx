@@ -2,7 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
 import Link from 'next/link';
-import { BLOG_POSTS } from '@/data/blog';
+import { formatBlogDate, getPublishedBlogArticleBySlug } from '@/lib/blog';
 import { getLocalizedMetadata } from '@/lib/metadata';
 
 type Language = 'fr' | 'en' | 'ar';
@@ -13,10 +13,43 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const rawLang = headersList.get("x-locale")?.toUpperCase() || "FR";
   const language = ["FR", "AR", "EN"].includes(rawLang) ? rawLang.toLowerCase() as Language : "fr";
   
-  const post = BLOG_POSTS.find((p) => p.slug === resolvedParams.slug);
+  const post = await getPublishedBlogArticleBySlug(resolvedParams.slug, language);
   if (!post) return { title: 'Article introuvable | TAW 10' };
   
-  return getLocalizedMetadata(`${post.title[language]} | TAW 10`, post.excerpt[language]);
+  const baseMeta = await getLocalizedMetadata(`${post.title} | TAW 10`, post.excerpt);
+  
+  return {
+    ...baseMeta,
+    keywords: post.keywords ? post.keywords.split(',').map(k => k.trim()) : ["domiciliation", "creation entreprise", "Marrakech"],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.publishedAt || post.createdAt,
+      authors: [post.author || 'TAW 10'],
+      section: post.category || 'Business',
+      images: [
+        {
+          url: post.featuredImage,
+          alt: post.title,
+        }
+      ]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [post.featuredImage],
+    }
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -25,25 +58,26 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const rawLang = headersList.get('x-locale')?.toLowerCase() || 'fr';
   const language = ['fr', 'ar', 'en'].includes(rawLang) ? rawLang as Language : 'fr';
   
-  const post = BLOG_POSTS.find((p) => p.slug === resolvedParams.slug);
+  const post = await getPublishedBlogArticleBySlug(resolvedParams.slug, language);
 
   if (!post) {
     notFound();
   }
 
+  const publishedDate = post.publishedAt || post.createdAt;
+
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    "headline": post.title[language],
+    "@type": "BlogPosting",
+    "headline": post.title,
     "image": [
-      post.image.startsWith("http") ? post.image : `https://taw10.ma${post.image}`
+      post.featuredImage.startsWith("http") ? post.featuredImage : `https://taw10.ma${post.featuredImage}`
     ],
-    "datePublished": new Date(post.date).toISOString(),
-    "dateModified": new Date(post.date).toISOString(),
+    "datePublished": new Date(publishedDate).toISOString(),
+    "dateModified": new Date(publishedDate).toISOString(),
     "author": {
-      "@type": "Organization",
-      "name": "TAW 10 Consulting",
-      "url": "https://taw10.ma"
+      "@type": "Person",
+      "name": post.author || "TAW 10"
     },
     "publisher": {
       "@type": "Organization",
@@ -53,7 +87,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         "url": "https://taw10.ma/icon-512.png"
       }
     },
-    "description": post.excerpt[language]
+    "description": post.excerpt
   };
 
   // Language specific labels
@@ -235,15 +269,29 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
         
         <header className="mb-16">
-          <p className="text-[#dab055] font-bold text-sm tracking-widest uppercase mb-6">{post.date}</p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[#1c1c1b]/60 text-xs font-bold uppercase tracking-widest mb-6">
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[16px] text-[#dab055]">person</span>
+              {post.author || 'TAW 10'}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[16px] text-[#dab055]">folder</span>
+              {post.category || 'Business'}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[16px] text-[#dab055]">schedule</span>
+              {post.readingTime || 5} min
+            </span>
+            <span className="text-[#dab055]/80">{formatBlogDate(post.publishedAt || post.createdAt)}</span>
+          </div>
           <h1 className="text-4xl md:text-6xl font-headline font-black text-[#1c1c1b] leading-tight mb-12">
-            {post.title[language]}
+            {post.title}
           </h1>
           
           <div className="w-full h-[60vh] rounded-[3rem] overflow-hidden shadow-2xl relative">
             <img 
-              src={post.image} 
-              alt={post.title[language]} 
+              src={post.featuredImage} 
+              alt={post.title} 
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
@@ -251,7 +299,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </header>
 
         <div className="prose prose-lg prose-[#1c1c1b] max-w-none text-[#1c1c1b]/80 font-body leading-relaxed text-lg bg-white p-10 md:p-16 rounded-[3rem] shadow-xl border border-[#dab055]/5">
-          {formatContent(post.content[language])}
+          {formatContent(post.content)}
         </div>
       </article>
     </div>

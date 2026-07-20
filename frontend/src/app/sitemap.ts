@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
-import { BLOG_POSTS } from '@/data/blog';
+import { getPublishedBlogArticles } from '@/lib/blog';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://taw10.ma';
   const languages = ['fr', 'ar', 'en'];
 
@@ -59,9 +59,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return getSitemapEntries(path, 0.8, 'monthly' as const);
   });
 
-  const blogEntries = BLOG_POSTS.flatMap(post => {
+  // Fetch dynamic published articles for sitemap
+  const dynamicPosts = await getPublishedBlogArticles('fr');
+
+  const blogEntries = dynamicPosts.flatMap(post => {
     const path = `/blog/${post.slug}`;
-    const lastModified = new Date(post.date);
+    const lastModified = new Date(post.publishedAt || post.createdAt);
     return getSitemapEntries(path, 0.8, 'monthly' as const, lastModified);
   });
 
@@ -72,5 +75,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return getSitemapEntries(path, 0.8, 'monthly' as const);
   });
 
-  return [...staticEntries, ...serviceEntries, ...blogEntries, ...cityEntries];
+  // Custom Local SEO Landing Pages entries (Primary URLs only)
+  const landingEntries = [
+    { url: `${baseUrl}/fr/domiciliation-entreprise-marrakech`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
+    { url: `${baseUrl}/fr/creation-entreprise-marrakech`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
+    { url: `${baseUrl}/fr/creation-societe-maroc`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
+    { url: `${baseUrl}/en/business-domiciliation-marrakech`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
+    { url: `${baseUrl}/en/company-formation-morocco`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
+    { url: `${baseUrl}/ar/%D8%AA%D9%88%D8%B7%D9%8A%D9%86-%D8%A7%D9%84%D8%B4%D8%B1%D9%83%D8%A7%D8%AA-%D9%85%D8%B1%D8%A7%D9%83%D8%B4`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
+    { url: `${baseUrl}/ar/%D8%A7%D9%86%D8%B4%D8%A7%D8%A1-%D8%B4%D8%B1%D9%83%D8%A9-%D9%81%D9%8A-%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.8 },
+  ];
+
+  return [...staticEntries, ...serviceEntries, ...blogEntries, ...cityEntries, ...landingEntries];
 }

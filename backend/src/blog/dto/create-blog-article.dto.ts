@@ -96,4 +96,28 @@ export class CreateBlogArticleDto {
   @IsOptional()
   @IsString()
   publishedAt?: string | null;
+
+  @ApiProperty({ required: false, example: 'domiciliation, creation, Marrakech' })
+  @IsOptional()
+  @IsString()
+  keywords?: string | null;
+
+  @ApiProperty({ required: false, example: 'fr' })
+  @IsOptional()
+  @IsString()
+  language?: string;
+
+  @ApiProperty({ required: false, example: 'TAW 10' })
+  @IsOptional()
+  @IsString()
+  author?: string;
+
+  @ApiProperty({ required: false, example: 'Business' })
+  @IsOptional()
+  @IsString()
+  category?: string;
+
+  @ApiProperty({ required: false, example: 5 })
+  @IsOptional()
+  readingTime?: number;
 }

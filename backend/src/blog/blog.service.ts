@@ -21,6 +21,16 @@ export class BlogService {
     });
   }
 
+  async findBySlug(slug: string) {
+    const article = await this.prisma.blogArticle.findUnique({
+      where: { slug },
+    });
+    if (!article || article.status !== BlogStatus.PUBLISHED) {
+      throw new NotFoundException('Blog article not found');
+    }
+    return article;
+  }
+
   async create(dto: CreateBlogArticleDto) {
     return this.prisma.blogArticle.create({
       data: this.toCreateData(dto),
@@ -48,7 +58,13 @@ export class BlogService {
     return article;
   }
 
+  private calculateReadingTime(content: string): number {
+    const words = content.trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.ceil(words / 200));
+  }
+
   private toCreateData(dto: CreateBlogArticleDto): Prisma.BlogArticleCreateInput {
+    const readingTime = dto.readingTime !== undefined ? dto.readingTime : this.calculateReadingTime(dto.content_fr || '');
     return {
       title: dto.title_fr.trim(),
       title_fr: dto.title_fr.trim(),
@@ -72,12 +88,21 @@ export class BlogService {
       metaDescription_fr: dto.metaDescription_fr.trim(),
       metaDescription_en: dto.metaDescription_en.trim(),
       metaDescription_ar: dto.metaDescription_ar.trim(),
+      keywords: dto.keywords?.trim() || null,
+      language: dto.language?.trim() || 'fr',
+      author: dto.author?.trim() || 'TAW 10',
+      category: dto.category?.trim() || 'Business',
+      readingTime: readingTime,
       status: dto.status,
       publishedAt: this.parsePublishedAt(dto.publishedAt),
     };
   }
 
   private toUpdateData(dto: UpdateBlogArticleDto): Prisma.BlogArticleUpdateInput {
+    let readingTime = dto.readingTime;
+    if (readingTime === undefined && dto.content_fr !== undefined) {
+      readingTime = this.calculateReadingTime(dto.content_fr);
+    }
     return {
       title: dto.title_fr?.trim(),
       title_fr: dto.title_fr?.trim(),
@@ -101,6 +126,11 @@ export class BlogService {
       metaDescription_fr: dto.metaDescription_fr?.trim(),
       metaDescription_en: dto.metaDescription_en?.trim(),
       metaDescription_ar: dto.metaDescription_ar?.trim(),
+      keywords: dto.keywords === null ? null : dto.keywords?.trim(),
+      language: dto.language?.trim(),
+      author: dto.author?.trim(),
+      category: dto.category?.trim(),
+      readingTime: readingTime,
       status: dto.status,
       publishedAt: dto.publishedAt === null ? null : this.parsePublishedAt(dto.publishedAt),
     };

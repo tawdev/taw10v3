@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const language = ["FR", "AR", "EN"].includes(rawLang) ? rawLang : "FR";
 
   const titles: Record<string, string> = {
-    FR: "Domiciliation Maroc & Création Entreprise Marrakech | TAW 10",
+    FR: "Domiciliation Maroc & Création d'Entreprise Marrakech | TAW 10",
     AR: "توطين الشركات وإنشاء المقاولات في المغرب | TAW 10",
     EN: "Business Domiciliation & Company Creation Morocco | TAW 10",
   };
@@ -38,9 +38,65 @@ import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TAW 10 Consulting",
+    "alternateName": "TAW 10",
+    "url": "https://taw10.ma",
+    "logo": "https://taw10.ma/icon-512.png",
+    "sameAs": [
+      "https://www.facebook.com/taw10.ma/",
+      "https://www.instagram.com/tawteen_10/",
+      "https://linkedin.com/company/taw10"
+    ]
+  };
+
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "TAW 10",
+    "image": "https://taw10.ma/icon-512.png",
+    "telephone": "+212 5 24 30 80 38",
+    "email": "contact@taw10.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "48 Lot IGUIDER, Allal El Fassi",
+      "addressLocality": "Marrakech",
+      "postalCode": "40000",
+      "addressCountry": "MA"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 31.6497,
+      "longitude": -8.0125
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "09:00",
+      "closes": "20:00"
+    }
+  };
+
   return (
     <LazyMotion features={domAnimation}>
       <main>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
         <Hero />
         <Expertise />
         <Pricing />

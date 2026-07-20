@@ -24,7 +24,15 @@ export async function generateMetadata(): Promise<Metadata> {
     EN: "Discover our articles, advice, and practical guides on business domiciliation in Morocco and company creation in Marrakech.",
   };
 
-  return getLocalizedMetadata(titles[language], descriptions[language]);
+  const baseMeta = await getLocalizedMetadata(titles[language], descriptions[language]);
+  return {
+    ...baseMeta,
+    keywords: ["domiciliation marrakech", "creation entreprise maroc", "domiciliation maroc", "conseils juridiques maroc"],
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
 }
 
 export default async function BlogPage() {
@@ -53,8 +61,58 @@ export default async function BlogPage() {
   const t = content[language];
   const posts = await getPublishedBlogArticles(language);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": language === 'ar' ? "الرئيسية" : language === 'en' ? "Home" : "Accueil",
+        "item": `https://taw10.ma/${language}`
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": `https://taw10.ma/${language}/blog`
+      }
+    ]
+  };
+
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": t.title,
+    "description": language === 'ar' ? "مدونة TAW 10 الرسمية" : language === 'en' ? "The Official TAW 10 Blog" : "Le Journal Officiel de TAW 10",
+    "publisher": {
+      "@type": "Organization",
+      "name": "TAW 10 Consulting",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://taw10.ma/icon-512.png"
+      }
+    },
+    "blogPost": posts.map((post) => ({
+      "@type": "BlogPosting",
+      "headline": post.title,
+      "image": post.featuredImage,
+      "datePublished": new Date(post.publishedAt || post.createdAt).toISOString(),
+      "description": post.excerpt,
+      "url": `https://taw10.ma/${language}/blog/${post.slug}`
+    }))
+  };
+
   return (
     <div className="min-h-screen pt-40 pb-20 bg-[#fcf9f6]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
       <div className="max-w-7xl mx-auto px-8" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <span className="text-[#dab055] font-bold uppercase tracking-[0.3em] text-xs mb-4 block text-center">
           {t.subtitle}
@@ -68,20 +126,33 @@ export default async function BlogPage() {
             <Link 
               key={post.slug} 
               href={`/${language}/blog/${post.slug}`}
-              className="group bg-white rounded-[3rem] p-12 border border-[#dab055]/10 shadow-xl hover:shadow-2xl transition-all duration-500"
+              className="group bg-white rounded-[3rem] border border-[#dab055]/10 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col h-full"
             >
-              <p className="text-[#dab055] font-bold text-xs mb-4">{formatBlogDate(post.publishedAt ?? post.createdAt)}</p>
-              <h2 className="text-3xl font-bold mb-6 group-hover:text-[#dab055] transition-colors">
-                {post.title}
-              </h2>
-              <p className="text-[#1c1c1b]/60 leading-relaxed mb-8">
-                {post.excerpt}
-              </p>
-              <div className="flex items-center gap-2 text-[#dab055] font-black text-xs uppercase tracking-widest">
-                {t.readMore}
-                <span className={`material-symbols-outlined text-sm ${language === 'ar' ? 'rotate-180' : ''}`}>
-                  arrow_forward
-                </span>
+              <div className="h-64 overflow-hidden relative w-full">
+                <img 
+                  src={post.featuredImage} 
+                  alt={post.title} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
+              </div>
+
+              <div className="p-12 flex-grow flex flex-col justify-between">
+                <div>
+                  <p className="text-[#dab055] font-bold text-xs mb-4">{formatBlogDate(post.publishedAt ?? post.createdAt)}</p>
+                  <h2 className="text-3xl font-bold mb-6 group-hover:text-[#dab055] transition-colors line-clamp-2">
+                    {post.title}
+                  </h2>
+                  <p className="text-[#1c1c1b]/60 leading-relaxed mb-8 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-[#dab055] font-black text-xs uppercase tracking-widest mt-auto">
+                  {t.readMore}
+                  <span className={`material-symbols-outlined text-sm ${language === 'ar' ? 'rotate-180' : ''}`}>
+                    arrow_forward
+                  </span>
+                </div>
               </div>
             </Link>
           ))}

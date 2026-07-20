@@ -232,7 +232,7 @@ export default function FaqPage() {
       >
         {editing ? (
           <form onSubmit={save} className="grid gap-6">
-            <div className="rounded-xl border border-white/10 bg-[#111111]/80 p-2 shadow-inner">
+            <div className="rounded-xl border border-[#d8d1c3]/60 bg-[#faf8f5] p-2 shadow-inner">
               <div className="grid grid-cols-3 gap-2">
                 {languages.map((language) => (
                   <button
@@ -242,7 +242,7 @@ export default function FaqPage() {
                     className={`h-11 rounded-lg text-xs font-black tracking-[0.18em] transition-all ${
                       activeLanguage === language.key
                         ? 'bg-[#0a0f0c] text-white shadow-[0_0_15px_rgba(218,176,85,0.3)]'
-                        : 'bg-white text-white/60 hover:bg-white/10 hover:text-white border border-[#eadfcb]'
+                        : 'bg-white text-[#6b6255] hover:bg-[#faf8f5] hover:text-[#1f2a24] border border-[#eadfcb]'
                     }`}
                   >
                     {language.label}
@@ -251,12 +251,12 @@ export default function FaqPage() {
               </div>
             </div>
 
-            <section className="rounded-xl border border-white/10 bg-[#111111]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-white/10 bg-[#111111]/80 px-5 py-4">
+            <section className="rounded-xl border border-[#d8d1c3]/60 bg-[#fcfbf9] shadow-sm overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-[#d8d1c3]/60 bg-[#f1ede5] px-5 py-4">
                 <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0a0f0c] text-[#dab055] shadow-sm">
                   <Globe2 className="h-4 w-4" />
                 </span>
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white">Content</h3>
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Content</h3>
               </div>
               <div className="grid gap-5 p-5">
                 <Field label={`Question ${activeLanguage.toUpperCase()}`}>
@@ -265,7 +265,7 @@ export default function FaqPage() {
                     value={getLocalizedValue(editing, 'question', activeLanguage)}
                     onChange={(event) => setEditing(setLocalizedValue(editing, 'question', activeLanguage, event.target.value))}
                     required={activeLanguage === 'fr'}
-                    className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 text-[15px] font-semibold shadow-lg"
+                    className="h-12 rounded-xl border-[#d8d1c3] focus:border-[#dab055] bg-white text-[#1f2a24] placeholder-[#a29b8f]/70 px-4 text-[15px] font-semibold shadow-sm focus:ring-2 focus:ring-[#dab055]/15 focus:ring-offset-0"
                   />
                 </Field>
                 <Field label={`Answer ${activeLanguage.toUpperCase()}`}>
@@ -274,15 +274,15 @@ export default function FaqPage() {
                     value={getLocalizedValue(editing, 'answer', activeLanguage)}
                     onChange={(event) => setEditing(setLocalizedValue(editing, 'answer', activeLanguage, event.target.value))}
                     required={activeLanguage === 'fr'}
-                    className="min-h-32 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 py-3 text-[15px] leading-relaxed shadow-lg"
+                    className="min-h-32 rounded-xl border-[#d8d1c3] focus:border-[#dab055] bg-white text-[#1f2a24] placeholder-[#a29b8f]/70 px-4 py-3 text-[15px] leading-relaxed shadow-sm focus:ring-2 focus:ring-[#dab055]/15 focus:ring-offset-0"
                   />
                 </Field>
               </div>
             </section>
 
-            <section className="rounded-xl border border-white/10 bg-[#111111]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-white/10 bg-[#111111]/80 px-5 py-4">
-                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-white">Settings</h3>
+            <section className="rounded-xl border border-[#d8d1c3]/60 bg-[#fcfbf9] shadow-sm overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-[#d8d1c3]/60 bg-[#f1ede5] px-5 py-4">
+                <h3 className="text-sm font-black uppercase tracking-[0.18em] text-[#1f2a24]">Settings</h3>
               </div>
               <div className="grid gap-5 p-5 md:grid-cols-2">
                 <Field label="Sort Order">
@@ -292,7 +292,7 @@ export default function FaqPage() {
                     value={editing.sortOrder}
                     onChange={(event) => setEditing({ ...editing, sortOrder: Number(event.target.value) })}
                     required
-                    className="h-12 rounded-xl border-white/10 focus:border-[#dab055] bg-white/5 text-white placeholder-white/20 px-4 font-semibold"
+                    className="h-12 rounded-xl border-[#d8d1c3] focus:border-[#dab055] bg-white text-[#1f2a24] placeholder-[#a29b8f]/70 px-4 font-semibold shadow-sm focus:ring-2 focus:ring-[#dab055]/15 focus:ring-offset-0"
                   />
                 </Field>
                 <div className="flex items-center pt-8">

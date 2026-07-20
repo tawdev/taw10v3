@@ -39,7 +39,15 @@ export function proxy(request: NextRequest) {
     requestHeaders.set('x-base-pathname', newPath);
     
     // Check if it's a homepage section
-    const targetPath = homepageSections.includes(newPath) ? '/' : newPath;
+    let targetPath = homepageSections.includes(newPath) ? '/' : newPath;
+
+    // Handle Arabic landing page rewrites (ASCII folder fallbacks to avoid Next.js build crash on Windows)
+    const decodedNewPath = decodeURIComponent(newPath);
+    if (decodedNewPath === '/توطين-الشركات-مراكش') {
+      targetPath = '/ar-domiciliation-marrakech';
+    } else if (decodedNewPath === '/انشاء-شركة-في-المغرب') {
+      targetPath = '/ar-company-creation-morocco';
+    }
     
     const response = NextResponse.rewrite(new URL(targetPath, request.url), {
       request: {

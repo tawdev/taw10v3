@@ -159,7 +159,18 @@ export default function PricingPage() {
                     <p className="font-black text-white text-sm uppercase tracking-wider">{plan.name}</p>
                     <p className="text-xs text-white/50 mt-1 font-medium">{plan.description}</p>
                   </Td>
-                  <Td className="font-black text-[#dab055] tracking-tight text-lg">{plan.price} <span className="text-xs tracking-widest text-[#1c1c1b]/50">MAD</span></Td>
+                  <Td className="font-black text-[#dab055] tracking-tight text-lg">
+                    {plan.pricePromo ? (
+                      <div>
+                        <span className="line-through text-xs text-white/40 mr-1.5">{plan.price}</span>
+                        <span>{plan.pricePromo}</span>
+                        <div className="text-[9px] uppercase tracking-wider text-[#dab055] opacity-80 mt-0.5">Promo Active</div>
+                      </div>
+                    ) : (
+                      <span>{plan.price}</span>
+                    )}
+                    <span className="text-xs tracking-widest text-[#1c1c1b]/50 ml-1">MAD</span>
+                  </Td>
                   <Td><Badge variant={plan.theme === 'DEFAULT' ? 'default' : plan.theme === 'FEATURED' ? 'warning' : 'success'} className="uppercase tracking-widest text-[9px] font-black">{plan.theme}</Badge></Td>
                   <Td>{plan.isPopular ? <Badge variant="success" className="uppercase tracking-widest text-[9px] font-black bg-[#dab055] text-white">Yes</Badge> : <Badge variant="muted" className="uppercase tracking-widest text-[9px] font-black">No</Badge>}</Td>
                   <Td><ActiveBadge active={plan.isActive} /></Td>
@@ -212,10 +223,16 @@ export default function PricingPage() {
             <div className="grid gap-6 md:grid-cols-2 bg-[#fcf9f6] p-6 rounded-3xl border border-[#dab055]/20 shadow-inner">
               <Field label="Plan Name"><Input className="bg-white border-[#dab055]/30 focus:border-[#dab055] focus:ring-[#dab055]/20 font-bold" value={editing.name} onChange={(event) => setEditing({ ...editing, name: event.target.value })} required /></Field>
               <Field label="Price (MAD)"><Input type="number" min={0} className="bg-white border-[#dab055]/30 focus:border-[#dab055] focus:ring-[#dab055]/20 font-black text-[#dab055]" value={editing.price} onChange={(event) => setEditing({ ...editing, price: Number(event.target.value) })} required /></Field>
+              <Field label="Promo Price (MAD) - Optional"><Input type="number" min={0} className="bg-white border-[#dab055]/30 focus:border-[#dab055] focus:ring-[#dab055]/20 font-black text-[#dab055]" value={editing.pricePromo || ''} onChange={(event) => setEditing({ ...editing, pricePromo: event.target.value ? Number(event.target.value) : null })} /></Field>
               <Field label="Theme Visual"><Select className="bg-white border-[#dab055]/30 focus:border-[#dab055]" value={editing.theme} onChange={(event) => setEditing({ ...editing, theme: event.target.value as PricingTheme })}><option value="DEFAULT">DEFAULT (Light)</option><option value="FEATURED">FEATURED (Dark + Gold)</option><option value="PREMIUM">PREMIUM (Elite)</option></Select></Field>
               <Field label="Display Order"><Input type="number" min={1} className="bg-white border-[#dab055]/30 focus:border-[#dab055]" value={editing.sortOrder} onChange={(event) => setEditing({ ...editing, sortOrder: Number(event.target.value) })} required /></Field>
               <div className="md:col-span-2">
                 <Field label="Short Description"><Textarea className="bg-white border-[#dab055]/30 focus:border-[#dab055] resize-none h-20" value={editing.description} onChange={(event) => setEditing({ ...editing, description: event.target.value })} required /></Field>
+              </div>
+              <div className="md:col-span-2 grid gap-4 grid-cols-1 md:grid-cols-3 border-t border-[#dab055]/10 pt-4 mt-2">
+                <Field label="Promo Name (FR)"><Input className="bg-white border-[#dab055]/30 focus:border-[#dab055]" placeholder="Defaults to Promo d'été" value={editing.promoName_fr || ''} onChange={(event) => setEditing({ ...editing, promoName_fr: event.target.value || null })} /></Field>
+                <Field label="Promo Name (AR)"><Input className="bg-white border-[#dab055]/30 focus:border-[#dab055] text-right font-arabic" placeholder="Defaults to عرض الصيف" dir="rtl" value={editing.promoName_ar || ''} onChange={(event) => setEditing({ ...editing, promoName_ar: event.target.value || null })} /></Field>
+                <Field label="Promo Name (EN)"><Input className="bg-white border-[#dab055]/30 focus:border-[#dab055]" placeholder="Defaults to Summer Promo" value={editing.promoName_en || ''} onChange={(event) => setEditing({ ...editing, promoName_en: event.target.value || null })} /></Field>
               </div>
               <div className="md:col-span-2 flex flex-wrap gap-8 items-center pt-2 border-t border-[#dab055]/20 mt-2">
                 <label className="flex items-center gap-3 text-xs font-black uppercase tracking-[0.2em] text-[#1c1c1b] cursor-pointer group">

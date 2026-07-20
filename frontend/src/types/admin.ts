@@ -17,6 +17,10 @@ export type PricingPlan = {
   id: string;
   name: string;
   price: number;
+  pricePromo?: number | null;
+  promoName_fr?: string | null;
+  promoName_ar?: string | null;
+  promoName_en?: string | null;
   description: string;
   theme: PricingTheme;
   isPopular: boolean;

@@ -20,6 +20,7 @@
   "expertise.admin": "مكتب محاسبة مراكش",
   "expertise.strategic": "الاستثمار الأجنبي",
   "pricing.title": "أسعارنا",
+  "pricing.summer_promo": "عرض الصيف",
   "pricing.intilaqa": "انطلاقة",
   "pricing.intilaqa_pro": "انطلاقة برو",
   "pricing.intilaqa_plus": "انطلاقة بلس",
@@ -122,5 +123,6 @@
   "calc.currency": "درهم (HT)",
   "calc.submit": "تأكيد عبر واتساب",
   "blog.title": "الأخبار والنصائح",
-  "blog.subtitle": "خبرتنا في خدمتكم."
+  "blog.subtitle": "خبرتنا في خدمتكم.",
+  "blog.view_all": "عرض جميع المقالات"
 }

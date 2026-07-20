@@ -20,6 +20,7 @@
   "expertise.admin": "Accounting Cabinet Marrakech",
   "expertise.strategic": "Foreign Investment",
   "pricing.title": "Our Pricing",
+  "pricing.summer_promo": "Summer Promo",
   "pricing.intilaqa": "INTILAQA",
   "pricing.intilaqa_pro": "INTILAQA PRO",
   "pricing.intilaqa_plus": "INTILAQA PLUS",
@@ -122,5 +123,6 @@
   "calc.currency": "Dhs ht",
   "calc.submit": "Confirm via WhatsApp",
   "blog.title": "News & Insights",
-  "blog.subtitle": "Our expertise at your service."
+  "blog.subtitle": "Our expertise at your service.",
+  "blog.view_all": "View all articles"
 }

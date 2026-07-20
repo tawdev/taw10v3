@@ -13,7 +13,7 @@ import {
 } from "framer-motion";
 import { CONFIG } from "@/data/config";
 
-const homepageSections = ["how-it-works", "expertise", "pricing", "lineup", "blog", "contact", "hero"];
+const homepageSections = ["how-it-works", "expertise", "pricing", "lineup", "contact", "hero"];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -339,7 +339,7 @@ export default function Header() {
               onClick={(e) => scrollToSection(e, "")}
               aria-label="Go to homepage"
             >
-              {isScrolled && settings.logoUrl && settings.logoUrl !== '' && !logoError ? (
+              {settings.logoUrl && settings.logoUrl !== '' && !logoError ? (
                 <img 
                   src={settings.logoUrl} 
                   alt={settings.companyName} 

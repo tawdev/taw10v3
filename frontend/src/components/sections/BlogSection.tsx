@@ -1,15 +1,62 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { BLOG_POSTS } from '@/data/blog';
+import { getPublishedBlogArticles, formatBlogDate } from '@/lib/blog';
+
+interface NormalizedPost {
+  slug: string;
+  image: string;
+  title: string;
+  excerpt: string;
+  date: string;
+}
 
 const BlogSection = () => {
   const { t, language } = useLanguage();
   const langPrefix = `/${language.toLowerCase()}`;
+
+  const getInitialPosts = (): NormalizedPost[] => {
+    const lang = language.toLowerCase() as 'fr' | 'en' | 'ar';
+    return BLOG_POSTS.slice(0, 2).map((post) => ({
+      slug: post.slug,
+      image: post.image,
+      title: post.title[lang] || post.title['fr'],
+      excerpt: post.excerpt[lang] || post.excerpt['fr'],
+      date: post.date,
+    }));
+  };
+
+  const [posts, setPosts] = useState<NormalizedPost[]>(getInitialPosts());
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const lang = language.toLowerCase() as 'fr' | 'en' | 'ar';
+        const rawArticles = await getPublishedBlogArticles(lang);
+        
+        // Map dynamic articles to NormalizedPost type, limiting to latest 2 articles
+        const normalized = rawArticles.slice(0, 2).map((art) => ({
+          slug: art.slug,
+          image: art.featuredImage,
+          title: art.title,
+          excerpt: art.excerpt,
+          date: formatBlogDate(art.publishedAt || art.createdAt),
+        }));
+        
+        if (normalized.length > 0) {
+          setPosts(normalized);
+        }
+      } catch (err) {
+        console.error("Failed to load dynamic blog posts for homepage:", err);
+      }
+    };
+    fetchPosts();
+  }, [language]);
 
   return (
     <section className="py-24 bg-white relative overflow-hidden" id="blog">
@@ -30,7 +77,7 @@ const BlogSection = () => {
         </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12" dir={language === "AR" ? "rtl" : "ltr"}>
-          {BLOG_POSTS.map((post, index) => (
+          {posts.map((post, index) => (
             <motion.div
               key={post.slug}
               initial={{ opacity: 0, y: 30 }}
@@ -47,7 +94,7 @@ const BlogSection = () => {
                 <div className="h-64 overflow-hidden relative z-10 w-full mb-6">
                   <Image 
                     src={post.image} 
-                    alt={post.title[language.toLowerCase() as keyof typeof post.title]} 
+                    alt={post.title} 
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
                   />
@@ -57,10 +104,10 @@ const BlogSection = () => {
                 <div className="px-10 md:px-12 pb-10 md:pb-12 relative z-10">
                   <p className="text-[#dab055] font-bold text-xs mb-4">{post.date}</p>
                   <h3 className="text-2xl font-bold mb-6 text-[#1c1c1b] group-hover:text-[#dab055] transition-colors">
-                    {post.title[language.toLowerCase() as keyof typeof post.title]}
+                    {post.title}
                   </h3>
                   <p className="text-[#1c1c1b]/60 leading-relaxed mb-8 font-body line-clamp-3">
-                    {post.excerpt[language.toLowerCase() as keyof typeof post.excerpt]}
+                    {post.excerpt}
                   </p>
                   
                   <div className="flex items-center gap-2 text-[#dab055] font-black text-xs uppercase tracking-widest">
@@ -74,6 +121,23 @@ const BlogSection = () => {
             </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <Link 
+            href={`${langPrefix}/blog`}
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-[#dab055] to-[#a68942] text-white px-10 py-5 rounded-full text-[11px] font-black uppercase tracking-[0.2em] shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all duration-300"
+          >
+            {t("blog.view_all")}
+            <span className={`material-symbols-outlined text-[14px] ${language === "AR" ? "rotate-180" : ""}`}>
+              arrow_forward
+            </span>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

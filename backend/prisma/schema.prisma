@@ -21,17 +21,21 @@ model AdminUser {
 }
 
 model PricingPlan {
-  id          String           @id @default(cuid())
-  name        String
-  price       Int
-  description String           @db.Text
-  theme       PricingTheme     @default(DEFAULT)
-  isPopular   Boolean          @default(false)
-  isActive    Boolean          @default(true)
-  sortOrder   Int              @unique
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  features    PricingFeature[]
+  id           String           @id @default(cuid())
+  name         String
+  price        Int
+  pricePromo   Int?
+  promoName_fr String?
+  promoName_ar String?
+  promoName_en String?
+  description  String           @db.Text
+  theme        PricingTheme     @default(DEFAULT)
+  isPopular    Boolean          @default(false)
+  isActive     Boolean          @default(true)
+  sortOrder    Int              @unique
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  features     PricingFeature[]
 
   @@map("pricing_plans")
 }
@@ -103,15 +107,20 @@ model BlogArticle {
   id                 String     @id @default(cuid())
   title              String
   slug               String     @unique
-  featuredImage      String
+  featuredImage      String     @map("featured_image")
   excerpt            String     @db.Text
   content            String     @db.Text
-  metaTitle          String
-  metaDescription    String     @db.Text
+  metaTitle          String     @map("meta_title")
+  metaDescription    String     @db.Text @map("meta_description")
+  keywords           String?    @db.Text
+  language           String     @default("fr")
+  author             String     @default("TAW 10")
+  category           String     @default("Business")
+  readingTime        Int        @default(5) @map("reading_time")
   status             BlogStatus @default(DRAFT)
-  publishedAt        DateTime?
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
+  publishedAt        DateTime?  @map("published_at")
+  createdAt          DateTime   @default(now()) @map("created_at")
+  updatedAt          DateTime   @updatedAt @map("updated_at")
   content_ar         String?    @db.Text
   content_en         String?    @db.Text
   content_fr         String?    @db.Text

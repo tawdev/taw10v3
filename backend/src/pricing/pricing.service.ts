@@ -50,6 +50,10 @@ export class PricingService {
       data: {
         name: dto.name,
         price: dto.price,
+        pricePromo: dto.pricePromo,
+        promoName_fr: dto.promoName_fr?.trim() || null,
+        promoName_ar: dto.promoName_ar?.trim() || null,
+        promoName_en: dto.promoName_en?.trim() || null,
         description: dto.description,
         theme: dto.theme,
         isPopular: dto.isPopular,
@@ -84,6 +88,10 @@ export class PricingService {
         data: {
           name: dto.name,
           price: dto.price,
+          pricePromo: dto.pricePromo === undefined ? undefined : dto.pricePromo,
+          promoName_fr: dto.promoName_fr === undefined ? undefined : (dto.promoName_fr?.trim() || null),
+          promoName_ar: dto.promoName_ar === undefined ? undefined : (dto.promoName_ar?.trim() || null),
+          promoName_en: dto.promoName_en === undefined ? undefined : (dto.promoName_en?.trim() || null),
           description: dto.description,
           theme: dto.theme,
           isPopular: dto.isPopular,

@@ -17,6 +17,11 @@ export class BlogController {
   findPublished() {
     return this.blogService.findPublished();
   }
+
+  @Get(':slug')
+  findBySlug(@Param('slug') slug: string) {
+    return this.blogService.findBySlug(slug);
+  }
 }
 
 @ApiTags('Admin Blog')

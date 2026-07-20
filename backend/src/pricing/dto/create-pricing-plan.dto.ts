@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PricingTheme } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { ArrayMinSize, IsArray, IsBoolean, IsEnum, IsInt, IsNotEmpty, IsString, Min, ValidateNested } from 'class-validator';
+import { ArrayMinSize, IsArray, IsBoolean, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Min, ValidateNested } from 'class-validator';
 import { PricingFeatureDto } from './pricing-feature.dto';
 
 export class CreatePricingPlanDto {
@@ -14,6 +14,27 @@ export class CreatePricingPlanDto {
   @IsInt()
   @Min(0)
   price!: number;
+
+  @ApiProperty({ example: 1999, required: false })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  pricePromo?: number;
+
+  @ApiProperty({ example: 'Promo d\'été', required: false })
+  @IsOptional()
+  @IsString()
+  promoName_fr?: string;
+
+  @ApiProperty({ example: 'عرض الصيف', required: false })
+  @IsOptional()
+  @IsString()
+  promoName_ar?: string;
+
+  @ApiProperty({ example: 'Summer Promo', required: false })
+  @IsOptional()
+  @IsString()
+  promoName_en?: string;
 
   @ApiProperty({ example: 'Pack essentiel pour creer votre societe.' })
   @IsString()

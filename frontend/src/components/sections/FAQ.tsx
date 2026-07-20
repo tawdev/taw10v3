@@ -61,8 +61,32 @@ const FAQ = () => {
     }
   }
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": sortedQuestions.map((q) => {
+      const lang = language.toLowerCase();
+      const question = q[`question_${lang}` as keyof FaqItem] as string || q.question_fr;
+      const answer = q[`answer_${lang}` as keyof FaqItem] as string || q.answer_fr;
+      return {
+        "@type": "Question",
+        "name": question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": answer,
+        }
+      };
+    })
+  };
+
   return (
     <section className="relative overflow-hidden bg-[#fcf9f6] py-24" id="faq">
+      {sortedQuestions.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-[#dab055]/5 blur-3xl"></div>
       <div className="absolute bottom-0 left-0 h-96 w-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-[#1c1c1b]/5 blur-3xl"></div>
 
